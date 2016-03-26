@@ -1,0 +1,3 @@
+include ':app', ':teemo'
+project(':teemo').projectDir = new File(rootDir, '../Teemo/teemo/')
+
