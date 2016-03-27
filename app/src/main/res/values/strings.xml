@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TonsOfDamage</string>
+    <string name="choose_region">Choose region</string>
+    <string name="Ok">OK</string>
 </resources>
