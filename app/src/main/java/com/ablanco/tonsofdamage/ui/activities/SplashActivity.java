@@ -1,11 +1,11 @@
 package com.ablanco.tonsofdamage.ui.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.ui.fragments.ChooseRegionDialogFragment;
+import com.ablanco.tonsofdamage.utils.NavigationHandler;
 import com.ablanco.tonsofdamage.utils.SettingsHandler;
 
 public class SplashActivity extends AppCompatActivity {
@@ -16,24 +16,19 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if(SettingsHandler.geRegion(this) == null){
-            ChooseRegionDialogFragment.newInstance(new ChooseRegionDialogFragment.ChooseRegionDialogChooseListener() {
-                @Override
-                public void onRegionChoosed(String region) {
-                    //SettingsHandler.setRegion(SplashActivity.this, region);
-                    Log.d("SplashActivity", "region choosed " + region);
-                    goHome();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (SettingsHandler.isSetupNeeded(SplashActivity.this)) {
+                    NavigationHandler.navigateTo(SplashActivity.this, NavigationHandler.SETUP);
+                } else {
+                    NavigationHandler.navigateTo(SplashActivity.this, NavigationHandler.HOME);
                 }
 
-            }).show(getSupportFragmentManager(), "choose_region");
-
-        }else {
-            goHome();
-        }
-
+                finish();
+            }
+        }, 750);
     }
 
-    private void goHome(){
-
-    }
 }

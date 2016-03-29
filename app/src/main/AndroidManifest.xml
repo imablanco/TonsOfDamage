@@ -13,7 +13,8 @@
             android:name="com.ablanco.teemo.apikey"
             android:value="ce700ddc-51d4-44f5-b220-139e33e3d92d" />
 
-        <activity android:name=".ui.activities.SplashActivity"
+        <activity
+            android:name=".ui.activities.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activities.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activities.FirstAccessSetupActivity"></activity>
     </application>
 
 </manifest>

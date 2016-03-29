@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 /**
  * Created by Álvaro Blanco Cabrero on 27/3/16
@@ -29,17 +30,13 @@ public class ChooseRegionDialogFragment extends BaseAnimatedDialog {
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private List<String> mregions = new ArrayList<>();
+    private List<String> mRegions = new ArrayList<>();
+    private Action1<String> callback;
 
-    public interface ChooseRegionDialogChooseListener{
-        void onRegionChoosed(String region);
-    }
 
-    private ChooseRegionDialogChooseListener listener;
-
-    public static ChooseRegionDialogFragment newInstance(ChooseRegionDialogChooseListener listener){
+    public static ChooseRegionDialogFragment newInstance(Action1<String> callback){
         ChooseRegionDialogFragment f = new ChooseRegionDialogFragment();
-        f.setListener(listener);
+        f.setCallback(callback);
         return f;
     }
 
@@ -64,15 +61,15 @@ public class ChooseRegionDialogFragment extends BaseAnimatedDialog {
 
         ButterKnife.bind(this, view);
 
-        mregions.addAll(Regions.getAll());
+        mRegions.addAll(Regions.getAll());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new RegionAdapter());
 
     }
 
-    public void setListener(ChooseRegionDialogChooseListener listener){
-        this.listener = listener;
+    public void setCallback(Action1<String> callback){
+        this.callback = callback;
     }
 
     class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder>{
@@ -84,12 +81,12 @@ public class ChooseRegionDialogFragment extends BaseAnimatedDialog {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            holder.tv.setText(mregions.get(position));
+            holder.tv.setText(mRegions.get(position));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(listener != null){
-                        listener.onRegionChoosed(mregions.get(position));
+                    if(callback != null){
+                        callback.call(mRegions.get(position));
                         dismiss();
                     }
                 }
@@ -99,7 +96,7 @@ public class ChooseRegionDialogFragment extends BaseAnimatedDialog {
 
         @Override
         public int getItemCount() {
-            return mregions.size();
+            return mRegions.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
