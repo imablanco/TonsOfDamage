@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,6 +63,11 @@ public class ChooseRegionFragment extends BaseFragment {
     @OnClick(R.id.fab_choose_region)
     public void setRegionAndNavigate(){
         SettingsHandler.setRegion(getActivity(), selectedRegion);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.content, PickSummonerFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
     }
 
     class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder>{

@@ -10,6 +10,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Álvaro Blanco on 30/03/2016.
  * TonsOfDamage
+ *
+ * Base fragment that binds Views with ButterKnife once onViewCreated has been called. Its mandatory to do view related operations after this call and make sure to call super {@link #onViewCreated(View, Bundle)}
  */
 public class BaseFragment extends Fragment {
 
