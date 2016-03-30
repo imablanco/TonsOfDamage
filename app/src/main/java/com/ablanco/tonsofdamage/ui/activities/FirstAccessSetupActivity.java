@@ -13,6 +13,6 @@ public class FirstAccessSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_access_setup);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, new FirstAccessSetupFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, FirstAccessSetupFragment.newInstance()).commit();
     }
 }

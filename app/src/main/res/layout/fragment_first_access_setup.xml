@@ -13,6 +13,7 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:textSize="20sp"
         android:text="GO"
         style="?attr/borderlessButtonStyle"
         android:layout_margin="20dp"
