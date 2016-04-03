@@ -31,9 +31,8 @@ public class ChampionListAdapter extends ItemClickAdapter<ChampionListAdapter.Ch
     private List<ChampionDto> champions = new ArrayList<>();
     private Map<Integer, Boolean> freeToPlayChampions = new HashMap<>();
 
-    public ChampionListAdapter(Context context, List<ChampionDto> champions){
+    public ChampionListAdapter(Context context){
         this.context = context;
-        this.champions = champions;
     }
 
     @Override
@@ -71,8 +70,11 @@ public class ChampionListAdapter extends ItemClickAdapter<ChampionListAdapter.Ch
     }
 
     public void setChampions(List<ChampionDto> champions){
-        this.champions = champions;
+        this.champions.clear();
         notifyDataSetChanged();
+        this.champions.addAll(champions);
+        notifyDataSetChanged();
+
     }
 
     public class ChampionViewHolder extends RecyclerView.ViewHolder{

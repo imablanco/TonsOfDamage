@@ -100,7 +100,7 @@ public class ChampionsFragment extends BaseHomeFragment {
 
         setHasOptionsMenu(true);
 
-        adapter = new ChampionListAdapter(getActivity(), mChampions);
+        adapter = new ChampionListAdapter(getActivity());
         adapter.setOnItemClickListener(new ItemClickAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position) {
@@ -136,7 +136,7 @@ public class ChampionsFragment extends BaseHomeFragment {
 
                 sortByName(mChampions);
 
-                mRecyclerView.getAdapter().notifyDataSetChanged();
+                adapter.setChampions(mChampions);
 
                 loading.setVisibility(View.GONE);
             }
