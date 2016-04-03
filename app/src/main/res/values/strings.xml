@@ -28,4 +28,5 @@
     <string name="marksman">Marksman</string>
     <string name="action_search">Search</string>
     <string name="search_hint">Champion name…</string>
+    <string name="action_view_mode">View Mode</string>
 </resources>

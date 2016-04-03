@@ -13,11 +13,6 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -25,14 +20,11 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco on 03/04/2016.
  * TonsOfDamage
  */
-public class ChampionListAdapter extends ItemClickAdapter<ChampionListAdapter.ChampionViewHolder> {
+public class ChampionListGridAdapter extends ChampionsBaseAdapter<ChampionListGridAdapter.ChampionViewHolder> {
 
-    private Context context;
-    private List<ChampionDto> champions = new ArrayList<>();
-    private Map<Integer, Boolean> freeToPlayChampions = new HashMap<>();
 
-    public ChampionListAdapter(Context context){
-        this.context = context;
+    public ChampionListGridAdapter(Context context) {
+        super(context);
     }
 
     @Override
@@ -59,22 +51,6 @@ public class ChampionListAdapter extends ItemClickAdapter<ChampionListAdapter.Ch
         Glide.with(context).load(ImageUris.getChampionSquareIcon(championDto.getImage().getFull())).into(holder.img);
     }
 
-    @Override
-    public int getItemCount() {
-        return champions.size();
-    }
-
-    public void setFreeToPlayChampions(Map<Integer, Boolean> freeToPlayChampions){
-        this.freeToPlayChampions = freeToPlayChampions;
-        notifyDataSetChanged();
-    }
-
-    public void setChampions(List<ChampionDto> champions){
-        this.champions.clear();
-        notifyDataSetChanged();
-        this.champions.addAll(champions);
-        notifyDataSetChanged();
-    }
 
     public class ChampionViewHolder extends RecyclerView.ViewHolder{
 

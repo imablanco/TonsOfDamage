@@ -12,6 +12,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private final int mSpace;
 
+    // TODO: 03/04/2016 make customizabe as RM
+
     public DividerItemDecoration(int mSpace) {
         this.mSpace = mSpace;
     }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -30,7 +31,9 @@ import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.ChampionListDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.adapter.ChampionListAdapter;
+import com.ablanco.tonsofdamage.adapter.ChampionListGridAdapter;
+import com.ablanco.tonsofdamage.adapter.ChampionListListAdapter;
+import com.ablanco.tonsofdamage.adapter.ChampionsBaseAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ListPopUpWindowAdapter;
 import com.ablanco.tonsofdamage.ui.views.DividerItemDecoration;
@@ -57,6 +60,9 @@ import rx.functions.Func1;
  */
 public class ChampionsFragment extends BaseHomeFragment implements SearchView.OnQueryTextListener {
 
+    private final static int MODE_LIST = 0;
+    private final static int MODE_GRID = 1;
+
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -65,12 +71,14 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
     private List<ChampionDto> mChampions = new ArrayList<>();
     private List<ChampionDto> mFilteredChampions = new ArrayList<>();
+    private List<ChampionDto> mSearchedChampions = new ArrayList<>();
     private ListPopupWindow listPopupWindow;
 
     private ListAdapter filterAdapter;
-    private ListAdapter orderAdapter;
     private Map<Integer, Boolean> mFreeToPlayChampions = new HashMap<>();
-    private ChampionListAdapter adapter;
+    private ChampionsBaseAdapter adapter;
+
+    private int mMode = MODE_GRID;
 
     public static Fragment newInstance(){
         return new ChampionsFragment();
@@ -102,7 +110,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
         setHasOptionsMenu(true);
 
-        adapter = new ChampionListAdapter(getActivity());
+        adapter = new ChampionListGridAdapter(getActivity());
         adapter.setOnItemClickListener(new ItemClickAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position) {
@@ -130,13 +138,15 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
             }
         });
 
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampions(Locale.getDefault().toString(), null, null, StaticAPIQueryParams.Champions.IMAGE.concat(",").concat(StaticAPIQueryParams.Champions.TAGS), new ServiceResponseListener<ChampionListDto>() {
+        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampions(Locale.getDefault().toString(), null, null, getSearchQueryTerms(), new ServiceResponseListener<ChampionListDto>() {
             @Override
             public void onResponse(ChampionListDto response) {
 
                 mChampions.addAll(response.getData().values());
+                mFilteredChampions.addAll(response.getData().values());
 
                 sortByName(mChampions);
+                sortByName(mFilteredChampions);
                 adapter.setChampions(mChampions);
 
 
@@ -154,7 +164,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.champions, menu);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setOnQueryTextListener(this);
     }
 
@@ -198,9 +208,28 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
                 }
             });
             listPopupWindow.show();
+        } else if(id == R.id.action_view_mode){
+            item.setIcon(mMode == MODE_GRID ? R.drawable.ic_grid : R.drawable.ic_list);
+            mMode = mMode == MODE_GRID ? MODE_LIST : MODE_GRID;
+            toggleMode();
         }
 
         return true;
+    }
+
+    private void toggleMode(){
+        if(mMode == MODE_GRID){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            adapter = new ChampionListGridAdapter(getActivity());
+
+        }else{
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            adapter = new ChampionListListAdapter(getActivity());
+        }
+
+        adapter.setChampions(mFilteredChampions);
+        adapter.setFreeToPlayChampions(mFreeToPlayChampions);
+        mRecyclerView.setAdapter(adapter);
     }
 
     private void sortByName(List<ChampionDto> championDtos){
@@ -213,6 +242,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
     }
 
     private void filterAll(){
+        mFilteredChampions.addAll(mChampions);
         adapter.setChampions(mChampions);
     }
 
@@ -278,8 +308,8 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
     }
 
     private void search(final String queryText){
-        mFilteredChampions.clear();
-        Observable.from(mChampions).filter(new Func1<ChampionDto, Boolean>() {
+        mSearchedChampions.clear();
+        Observable.from(mFilteredChampions).filter(new Func1<ChampionDto, Boolean>() {
             @Override
             public Boolean call(ChampionDto championDto) {
                 return championDto.getName().toLowerCase().contains(queryText.toLowerCase());
@@ -287,7 +317,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         }).subscribe(new Action1<ChampionDto>() {
             @Override
             public void call(ChampionDto championDto) {
-                mFilteredChampions.add(championDto);
+                mSearchedChampions.add(championDto);
             }
         }, new Action1<Throwable>() {
             @Override
@@ -297,8 +327,12 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         }, new Action0() {
             @Override
             public void call() {
-                adapter.setChampions(mFilteredChampions);
+                adapter.setChampions(mSearchedChampions);
             }
         });
+    }
+
+    private String getSearchQueryTerms(){
+        return StaticAPIQueryParams.Champions.IMAGE.concat(",").concat(StaticAPIQueryParams.Champions.TAGS).concat(",").concat(StaticAPIQueryParams.Champions.SKINS).concat(",").concat(StaticAPIQueryParams.Champions.INFO);
     }
 }

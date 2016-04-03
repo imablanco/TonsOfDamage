@@ -11,4 +11,8 @@
     <color name="white">#FFF</color>
     <color name="black">#000</color>
     <color name="black_alpha">#bb000000</color>
+    <color name="red">#DF0101</color>
+    <color name="green">#088A08</color>
+    <color name="blue">#0040FF</color>
+    <color name="magenta">#8000FF</color>
 </resources>
