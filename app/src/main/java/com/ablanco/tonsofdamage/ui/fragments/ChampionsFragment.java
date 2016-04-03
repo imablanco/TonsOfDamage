@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,7 +55,7 @@ import rx.functions.Func1;
  * Created by Álvaro Blanco on 03/04/2016.
  * TonsOfDamage
  */
-public class ChampionsFragment extends BaseHomeFragment {
+public class ChampionsFragment extends BaseHomeFragment implements SearchView.OnQueryTextListener {
 
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -135,8 +137,8 @@ public class ChampionsFragment extends BaseHomeFragment {
                 mChampions.addAll(response.getData().values());
 
                 sortByName(mChampions);
-
                 adapter.setChampions(mChampions);
+
 
                 loading.setVisibility(View.GONE);
             }
@@ -152,6 +154,8 @@ public class ChampionsFragment extends BaseHomeFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.champions, menu);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+        searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -261,4 +265,40 @@ public class ChampionsFragment extends BaseHomeFragment {
         });
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        search(query);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        search(newText);
+        return true;
+    }
+
+    private void search(final String queryText){
+        mFilteredChampions.clear();
+        Observable.from(mChampions).filter(new Func1<ChampionDto, Boolean>() {
+            @Override
+            public Boolean call(ChampionDto championDto) {
+                return championDto.getName().toLowerCase().contains(queryText.toLowerCase());
+            }
+        }).subscribe(new Action1<ChampionDto>() {
+            @Override
+            public void call(ChampionDto championDto) {
+                mFilteredChampions.add(championDto);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                //nothing
+            }
+        }, new Action0() {
+            @Override
+            public void call() {
+                adapter.setChampions(mFilteredChampions);
+            }
+        });
+    }
 }

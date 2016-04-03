@@ -74,7 +74,6 @@ public class ChampionListAdapter extends ItemClickAdapter<ChampionListAdapter.Ch
         notifyDataSetChanged();
         this.champions.addAll(champions);
         notifyDataSetChanged();
-
     }
 
     public class ChampionViewHolder extends RecyclerView.ViewHolder{
