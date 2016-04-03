@@ -11,10 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.ui.fragments.ChampionsFragment;
+import com.ablanco.tonsofdamage.handler.HomeContentHandler;
 import com.ablanco.tonsofdamage.ui.views.ProfileHeaderNavigationView;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
+import com.roughike.bottombar.OnTabClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +35,6 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.title_activity_home);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -46,6 +46,8 @@ public class HomeActivity extends AppCompatActivity
         ProfileHeaderNavigationView profileHeaderNavigationView = new ProfileHeaderNavigationView(this);
         mNavigationView.addHeaderView(profileHeaderNavigationView);
         profileHeaderNavigationView.update();
+
+        final HomeContentHandler mHomeContentHandler = new HomeContentHandler(getSupportFragmentManager());
 
         BottomBar mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.coordinator_layout),
                 findViewById(R.id.content), savedInstanceState);
@@ -60,9 +62,18 @@ public class HomeActivity extends AppCompatActivity
                 new BottomBarTab(R.drawable.ic_champion, "Champions")
         );
 
+        mBottomBar.setOnTabClickListener(new OnTabClickListener() {
+            @Override
+            public void onTabSelected(int i) {
+                toolbar.setTitle(mHomeContentHandler.getTitleForContent(getApplicationContext(), i));
+                mHomeContentHandler.showContent(i);
+            }
 
-        //first we add the champions screen, in a future we should add HOME
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, ChampionsFragment.newInstance()).commit();
+            @Override
+            public void onTabReSelected(int i) {
+
+            }
+        });
 
     }
 
