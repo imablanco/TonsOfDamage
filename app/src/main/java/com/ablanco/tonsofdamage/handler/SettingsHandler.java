@@ -1,4 +1,4 @@
-package com.ablanco.tonsofdamage.utils;
+package com.ablanco.tonsofdamage.handler;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

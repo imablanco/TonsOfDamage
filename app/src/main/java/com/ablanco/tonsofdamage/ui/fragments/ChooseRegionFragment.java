@@ -12,10 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.constants.Regions;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.AnimationUtils;
-import com.ablanco.tonsofdamage.utils.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.Animationutils;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
 import java.util.List;
 
@@ -56,17 +57,17 @@ public class ChooseRegionFragment extends BaseFragment {
     public void revealChooseRegionFab(){
 
         if(mChooseRegionFab.getVisibility() != View.VISIBLE){
-            AnimationUtils.revealView(mChooseRegionFab);
+            Animationutils.revealView(mChooseRegionFab);
         }
     }
 
     @OnClick(R.id.fab_choose_region)
     public void setRegionAndNavigate(){
         SettingsHandler.setRegion(getActivity(), selectedRegion);
+        Teemo.getInstance(getActivity()).setRegion(selectedRegion);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.content, PickSummonerFragment.newInstance())
-                .addToBackStack(null)
                 .commit();
     }
 

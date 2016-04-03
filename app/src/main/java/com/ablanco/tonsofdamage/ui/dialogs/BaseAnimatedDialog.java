@@ -18,8 +18,6 @@ public class BaseAnimatedDialog extends DialogFragment {
         if (getDialog() == null) {
             return;
         }
-
-
         // set the animations to use on showing and hiding the dialog
         getDialog().getWindow().setWindowAnimations(
                 R.style.DialogAnimationFade);

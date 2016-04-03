@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import java.util.Arrays;
+
 import butterknife.ButterKnife;
 
 /**
@@ -20,4 +22,26 @@ public class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
     }
+
+
+    protected void showViews(View... views){
+        ButterKnife.apply(Arrays.asList(views), ENABLE);
+    }
+
+    protected void hideViews(View... views){
+        ButterKnife.apply(Arrays.asList(views), DISABLE);
+
+    }
+
+    private final ButterKnife.Action<View> DISABLE = new ButterKnife.Action<View>() {
+        @Override public void apply(View view, int index) {
+            view.setVisibility(View.GONE);
+        }
+    };
+
+    private final ButterKnife.Action<View> ENABLE = new ButterKnife.Action<View>() {
+        @Override public void apply(View view, int index) {
+            view.setVisibility(View.VISIBLE);
+        }
+    };
 }

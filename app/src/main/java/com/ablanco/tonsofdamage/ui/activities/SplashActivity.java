@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.NavigationHandler;
-import com.ablanco.tonsofdamage.utils.SettingsHandler;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
 public class SplashActivity extends AppCompatActivity {
 

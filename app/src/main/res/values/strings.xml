@@ -3,7 +3,7 @@
     <string name="choose_region">Choose region</string>
     <string name="summoner">Summoner name…</string>
     <string name="Ok">OK</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Home</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -11,4 +11,6 @@
     <string name="action_settings">Settings</string>
     <string name="first_setup_explain">Welcome to TonsOfDamage, we need to do an initial setup before you can start enyoing the app.</string>
     <string name="pick_summoner_hint">Enter your summoner name and enjoy</string>
+    <string name="region">Region</string>
+    <string name="summoner_not_found">Summoner not found</string>
 </resources>

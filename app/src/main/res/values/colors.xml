@@ -10,4 +10,5 @@
     <!--Base colors-->
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="black_alpha">#aa000000</color>
 </resources>

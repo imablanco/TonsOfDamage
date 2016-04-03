@@ -9,7 +9,7 @@ import android.view.ViewAnimationUtils;
  * Created by Álvaro Blanco on 30/03/2016.
  * TonsOfDamage
  */
-public class AnimationUtils {
+public class Animationutils {
 
     public static void revealView(final View view){
 
@@ -33,6 +33,7 @@ public class AnimationUtils {
                     view.setAlpha((Float) anim.getAnimatedValue());
                 }
             });
+
 
             anim.start();
         }

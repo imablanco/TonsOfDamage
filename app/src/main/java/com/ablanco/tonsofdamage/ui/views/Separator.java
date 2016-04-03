@@ -30,7 +30,6 @@ public class Separator extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //MUST CALL THIS
         setMeasuredDimension(MeasureSpec.getSize(heightMeasureSpec), SizeUtils.convertDpToPixel(1));
     }
 }

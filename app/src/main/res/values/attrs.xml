@@ -8,4 +8,8 @@
     <declare-styleable name="Separator">
         <attr name="separatorColor" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="AvatarImageView">
+        <attr name="showLevel" format="boolean"/>
+    </declare-styleable>
 </resources>
