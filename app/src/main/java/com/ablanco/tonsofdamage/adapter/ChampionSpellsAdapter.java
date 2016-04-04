@@ -73,13 +73,17 @@ public class ChampionSpellsAdapter extends ToroAdapter<ChampionSpellsAdapter.Cha
         private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(isPlaying()){
-                    pauseAnimate();
-                    pause();
-                }else {
-                    playAnimate();
-                    start();
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if(isPlaying()){
+                        pauseAnimate();
+                        pause();
+                    }else {
+                        playAnimate();
+                        start();
+                    }
                 }
+
                 return false;
             }
         };
