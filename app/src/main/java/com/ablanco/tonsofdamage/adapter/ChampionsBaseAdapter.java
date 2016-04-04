@@ -36,6 +36,9 @@ public abstract class ChampionsBaseAdapter<VH extends RecyclerView.ViewHolder> e
         this.champions.addAll(champions);
         notifyDataSetChanged();
     }
+    public ChampionDto getItemAtPosition(int position){
+        return champions.get(position);
+    }
 
     @Override
     public final int getItemCount() {

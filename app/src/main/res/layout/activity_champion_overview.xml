@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/colorPrimaryDarkAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:padding="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/attributes_layout"
+                    android:padding="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ic_attack"
+                        android:src="@drawable/ic_sword"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <ProgressBar
+                        android:id="@+id/pg_attack"
+                        android:max="10"
+                        android:layout_marginLeft="10dp"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_toRightOf="@id/ic_attack"
+                        android:layout_alignBottom="@id/ic_attack"
+                        android:layout_alignTop="@id/ic_attack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@id/ic_attack"
+                        android:id="@+id/ic_tank"
+                        android:src="@drawable/ic_cross"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <ProgressBar
+                        android:id="@+id/pg_tank"
+                        android:max="10"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/ic_tank"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_alignBottom="@id/ic_tank"
+                        android:layout_alignTop="@id/ic_tank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@id/ic_tank"
+                        android:id="@+id/ic_magic"
+                        android:src="@drawable/ic_flame"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <ProgressBar
+                        android:id="@+id/pg_magic"
+                        android:max="10"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/ic_magic"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_alignBottom="@id/ic_magic"
+                        android:layout_alignTop="@id/ic_magic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@id/ic_magic"
+                        android:id="@+id/ic_difficult"
+                        android:src="@drawable/ic_stairs"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <ProgressBar
+                        android:id="@+id/pg_difficult"
+                        android:max="10"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/ic_difficult"
+                        android:layout_alignBottom="@id/ic_difficult"
+                        android:layout_alignTop="@id/ic_difficult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/attributes_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:padding="7dp"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="left"
+                            android:id="@+id/tv_health"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_mana"
+                            android:gravity="left"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_attack"
+                            android:gravity="left"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_attack_speed"
+                            style="@style/ChampionOverviewTextView"
+                            android:gravity="left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_crit"
+                            style="@style/ChampionOverviewTextView"
+                            android:gravity="left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_range"
+                            android:gravity="left"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:padding="7dp"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_health_regen"
+                            android:gravity="center"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:gravity="center"
+                            android:id="@+id/tv_mana_regen"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_armor"
+                            android:gravity="center"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_magic_resist"
+                            android:gravity="center"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginTop="7dp"
+                            android:id="@+id/tv_movement"
+                            android:gravity="center"
+                            style="@style/ChampionOverviewTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/colorPrimaryDarkAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:text="Lore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:padding="7dp"
+                    android:id="@+id/tv_lore"
+                    android:lineSpacingExtra="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

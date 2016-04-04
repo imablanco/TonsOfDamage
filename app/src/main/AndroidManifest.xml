@@ -22,19 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.activities.FirstAccessSetupActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".ui.activities.FirstAccessSetupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activities.HomeActivity"
-            android:theme="@style/HomeTheme"
-            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_home"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentStatusBarTheme"
+            android:windowSoftInputMode="adjustResize" />
 
-
+        <activity android:name=".ui.activities.ChampionDetailActivity"
+            android:theme="@style/TranslucentStatusBarTheme"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.activities.HomeActivity"/>
     </application>
 
 </manifest>

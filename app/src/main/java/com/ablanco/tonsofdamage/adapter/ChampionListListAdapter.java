@@ -73,6 +73,7 @@ public class ChampionListListAdapter extends ChampionsBaseAdapter<ChampionListLi
         Glide.with(context).load(ImageUris.getChampionSquareIcon(championDto.getImage().getFull())).dontAnimate().into(holder.imgChampionSquare);
 
         if(championDto.getSkins() != null && !championDto.getSkins().isEmpty()){
+            Glide.clear(holder.imgChampionSplash);
             Glide.with(context).load(ImageUris.getChampionSplashArt(championDto.getName(), championDto.getSkins().get(0).getNum())).into(holder.imgChampionSplash);
         }
     }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#9C27B0</color>
-    <color name="colorPrimaryDark">#7B1FA2</color>
-    <color name="colorAccent">#68EFAD</color>
-    <color name="colorFallBackAccent">#B9F6CA</color>
-    <color name="colorPrimarySemiLight">#AB47BC</color>
-    <color name="colorPrimaryLight">#BA68C8</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorPrimaryDarkAccent">#054036</color>
+    <color name="colorAccent">#FFC107</color>
+    <color name="colorFallBackAccent">#FFD740</color>
+    <color name="colorPrimarySemiLight">#26A69A</color>
+    <color name="colorPrimaryLight">#4DB6AC</color>
 
     <!--Base colors-->
     <color name="white">#FFF</color>
@@ -15,4 +16,6 @@
     <color name="green">#088A08</color>
     <color name="blue">#0040FF</color>
     <color name="magenta">#8000FF</color>
+    <color name="card_bg">#ff303030</color>
+
 </resources>

@@ -29,4 +29,19 @@
     <string name="action_search">Search</string>
     <string name="search_hint">Champion name…</string>
     <string name="action_view_mode">View Mode</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="champion_overview">Overview</string>
+
+    <string name="health">Health: </string>
+    <string name="mana">Mana: </string>
+    <string name="health_regen">Health Regen: </string>
+    <string name="mana_regen">Mana Regen: </string>
+    <string name="attack">Attack: </string>
+    <string name="attack_speed">Attack Speed: </string>
+    <string name="armor">Armor: </string>
+    <string name="magic_resist">Magic Resist: </string>
+    <string name="range">Range: </string>
+    <string name="movement">Movement: </string>
+    <string name="crit">Crit. chance: </string>
+
 </resources>

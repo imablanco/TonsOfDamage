@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,8 +35,11 @@ import com.ablanco.tonsofdamage.adapter.ChampionListListAdapter;
 import com.ablanco.tonsofdamage.adapter.ChampionsBaseAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ListPopUpWindowAdapter;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
+import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.ui.views.DividerItemDecoration;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
+import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,6 +82,15 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
     private int mMode = MODE_GRID;
 
+    private ItemClickAdapter.OnItemClickListener itemClickListener = new ItemClickAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClicked(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(ChampionDetailActivity.EXTRA_CHAMPION_ID, adapter.getItemAtPosition(position).getId());
+            NavigationHandler.navigateTo(getActivity(), NavigationHandler.CHAMPION_DETAIL, bundle);
+        }
+    };
+
     public static Fragment newInstance(){
         return new ChampionsFragment();
     }
@@ -111,13 +122,8 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         setHasOptionsMenu(true);
 
         adapter = new ChampionListGridAdapter(getActivity());
-        adapter.setOnItemClickListener(new ItemClickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int position) {
-                Log.d("ChampionsFragment", "clieck" + position);
-            }
-        });
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        adapter.setOnItemClickListener(itemClickListener);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(SizeUtils.convertDpToPixel(4)));
 
@@ -138,7 +144,9 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
             }
         });
 
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampions(Locale.getDefault().toString(), null, null, getSearchQueryTerms(), new ServiceResponseListener<ChampionListDto>() {
+        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampions(Locale.getDefault().toString(), null, null,
+                Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.IMAGE, StaticAPIQueryParams.Champions.INFO, StaticAPIQueryParams.Champions.TAGS, StaticAPIQueryParams.Champions.SKINS),
+                new ServiceResponseListener<ChampionListDto>() {
             @Override
             public void onResponse(ChampionListDto response) {
 
@@ -229,6 +237,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
         adapter.setChampions(mFilteredChampions);
         adapter.setFreeToPlayChampions(mFreeToPlayChampions);
+        adapter.setOnItemClickListener(itemClickListener);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -332,7 +341,4 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         });
     }
 
-    private String getSearchQueryTerms(){
-        return StaticAPIQueryParams.Champions.IMAGE.concat(",").concat(StaticAPIQueryParams.Champions.TAGS).concat(",").concat(StaticAPIQueryParams.Champions.SKINS).concat(",").concat(StaticAPIQueryParams.Champions.INFO);
-    }
 }
