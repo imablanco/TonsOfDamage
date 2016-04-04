@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00796B</color>
-    <color name="colorPrimaryDarkAccent">#054036</color>
+    <color name="colorPrimaryDarkAlpha">#7700796B</color>
+    <color name="colorPrimaryDarkAccent">#083931</color>
     <color name="colorAccent">#FFC107</color>
     <color name="colorFallBackAccent">#FFD740</color>
     <color name="colorPrimarySemiLight">#26A69A</color>

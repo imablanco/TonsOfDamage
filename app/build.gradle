@@ -41,6 +41,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.roughike:bottom-bar:1.2.7'
+    compile 'com.github.eneim:Toro:1.1.0'
 
     compile 'io.reactivex:rxandroid:1.1.0'
 // Because RxAndroid releases are few and far between, it is recommended you also

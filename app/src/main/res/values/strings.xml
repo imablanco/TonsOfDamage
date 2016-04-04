@@ -31,6 +31,7 @@
     <string name="action_view_mode">View Mode</string>
     <string name="add_to_favorites">Add to favorites</string>
     <string name="champion_overview">Overview</string>
+    <string name="champion_abilities">Abilities</string>
 
     <string name="health">Health: </string>
     <string name="mana">Mana: </string>

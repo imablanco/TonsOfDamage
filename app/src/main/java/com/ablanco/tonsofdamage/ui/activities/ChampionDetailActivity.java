@@ -21,6 +21,7 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionOverviewFragment;
+import com.ablanco.tonsofdamage.ui.fragments.ChampionSpellsFragment;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
@@ -28,12 +29,14 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.ene.lab.toro.Toro;
 
 public class ChampionDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_CHAMPION_ID = "championId";
 
     private static final int CHAMPION_OVERVIEW = 0;
+    private static final int CHAMPION_ABILITIES = 1;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -59,6 +62,8 @@ public class ChampionDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_champion_detail);
         ButterKnife.bind(this);
+
+        Toro.attach(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -87,6 +92,13 @@ public class ChampionDetailActivity extends AppCompatActivity {
                     });
         }
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toro.detach(this);
     }
 
     private void setUpViewPager(){
@@ -127,6 +139,8 @@ public class ChampionDetailActivity extends AppCompatActivity {
             switch (position) {
                 case CHAMPION_OVERVIEW:default:
                     return ChampionOverviewFragment.newInstance(mChampion);
+                case CHAMPION_ABILITIES:
+                    return ChampionSpellsFragment.newInstance(mChampion);
             }
         }
 
@@ -136,12 +150,14 @@ public class ChampionDetailActivity extends AppCompatActivity {
             switch (position){
                 case CHAMPION_OVERVIEW:default:
                     return getString(R.string.champion_overview);
+                case CHAMPION_ABILITIES:
+                    return getString(R.string.champion_abilities);
             }
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
     }
 }

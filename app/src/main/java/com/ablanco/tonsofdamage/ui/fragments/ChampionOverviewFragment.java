@@ -21,7 +21,7 @@ import butterknife.Bind;
  * Created by Álvaro Blanco on 04/04/2016.
  * TonsOfDamage
  */
-public class ChampionOverviewFragment extends BaseFragment {
+public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
 
     @Bind(R.id.pg_attack)
     ProgressBar pgAttack;
@@ -49,17 +49,12 @@ public class ChampionOverviewFragment extends BaseFragment {
 
     @Bind(R.id.tv_lore) TextView tvLore;
 
-    private ChampionDto mChampion;
-
     public static Fragment newInstance(ChampionDto champion){
-        ChampionOverviewFragment f = new ChampionOverviewFragment();
+        ChampionDetailBaseFragment f = new ChampionOverviewFragment();
         f.setChampion(champion);
         return f;
     }
 
-    public void setChampion(ChampionDto champion){
-        this.mChampion = champion;
-    }
 
     @Nullable
     @Override

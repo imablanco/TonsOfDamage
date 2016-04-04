@@ -21,4 +21,8 @@ public class Utils {
 
         return queryParamsBuilder.toString();
     }
+
+    public static String getChampionAbilityVideoUrl(int championId, int abilityNumber){
+        return Constants.CHAMPION_VIDEO_URI.replace("{0}",championId <= 10 ? ("00").concat(String.valueOf(championId)) : championId <= 100 ?("0").concat(String.valueOf(championId)) : String.valueOf(championId)).replace("{1}", String.valueOf(abilityNumber));
+    }
 }
