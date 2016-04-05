@@ -8,6 +8,8 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <include layout="@layout/base_bg"/>
+
     <include
         layout="@layout/content_home"
         android:layout_width="match_parent"

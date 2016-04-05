@@ -125,7 +125,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         adapter.setOnItemClickListener(itemClickListener);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(SizeUtils.convertDpToPixel(4)));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(SizeUtils.convertDpToPixel(1)));
 
 
         Teemo.getInstance(getActivity()).getChampionsHandler().getChampions(true, new ServiceResponseListener<ChampionList>() {

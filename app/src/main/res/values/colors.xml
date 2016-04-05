@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796B</color>
-    <color name="colorPrimaryDarkAlpha">#7700796B</color>
-    <color name="colorPrimaryDarkAccent">#083931</color>
-    <color name="colorAccent">#FFC107</color>
-    <color name="colorFallBackAccent">#FFD740</color>
-    <color name="colorPrimarySemiLight">#26A69A</color>
-    <color name="colorPrimaryLight">#4DB6AC</color>
+    <color name="colorPrimary">#02101F</color>
+    <color name="colorPrimaryDark">#010A13</color>
+    <color name="colorPrimaryDarkAccent">#010A13</color>
+    <color name="colorAccent">#C89C3C</color>
+    <color name="colorFallBackAccent">#C9AB6E</color>
+    <color name="colorPrimarySemiLight">#bb02101F</color>
+
 
     <!--Base colors-->
     <color name="white">#FFF</color>
+    <color name="controlWhite">#bbFFFFFF</color>
     <color name="black">#000</color>
     <color name="black_alpha">#bb000000</color>
     <color name="red">#DF0101</color>

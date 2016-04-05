@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:background="@color/black_alpha"
         android:id="@+id/img"
         tools:src= "@drawable/base_diamond"
         android:scaleType="fitCenter"

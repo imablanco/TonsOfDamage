@@ -66,7 +66,6 @@ public class ChampionDetailActivity extends AppCompatActivity {
         Toro.attach(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
         collapsingToolbarLayout.setTitleEnabled(false);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

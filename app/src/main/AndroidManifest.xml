@@ -36,6 +36,7 @@
 
         <activity android:name=".ui.activities.ChampionDetailActivity"
             android:theme="@style/TranslucentStatusBarTheme"
+            android:label=""
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.activities.HomeActivity"/>
     </application>

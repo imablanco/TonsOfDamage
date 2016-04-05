@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity
         mBottomBar.noNavBarGoodness();
 
         mBottomBar.setItems(
-                new BottomBarTab(R.drawable.ic_home, "Home"),
+                new BottomBarTab(R.drawable.home, "Home"),
                 new BottomBarTab(R.drawable.ic_champion, "Champions"),
                 new BottomBarTab(R.drawable.ic_champion, "Champions"),
                 new BottomBarTab(R.drawable.ic_champion, "Champions")

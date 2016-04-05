@@ -58,16 +58,4 @@ public class ChampionSpellsFragment extends ChampionDetailBaseFragment {
         Toro.register(mRecyclerView);
         super.onResume();
     }
-
-    @Override
-    public void onDestroyView() {
-        Toro.unregister(mRecyclerView);
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        Toro.unregister(mRecyclerView);
-        super.onDestroy();
-    }
 }
