@@ -71,6 +71,7 @@ public class ChampionSpellParser {
         return championSpellText;
     }
 
+
     public static String getChampionSpellCost(ChampionSpellDto championSpellDto){
         String cost = championSpellDto.getResource().replace(REPLACEMENT_COST, championSpellDto.getCostBurn());
 

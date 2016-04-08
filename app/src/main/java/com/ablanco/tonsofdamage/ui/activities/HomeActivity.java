@@ -1,6 +1,7 @@
 package com.ablanco.tonsofdamage.ui.activities;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +27,7 @@ public class HomeActivity extends AppCompatActivity
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @Bind(R.id.nav_view) NavigationView mNavigationView;
+    private BottomBar mBottomBar;
 
 
     @Override
@@ -49,7 +51,7 @@ public class HomeActivity extends AppCompatActivity
 
         final HomeContentHandler mHomeContentHandler = new HomeContentHandler(getSupportFragmentManager());
 
-        BottomBar mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.coordinator_layout),
+        mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.coordinator_layout),
                 findViewById(R.id.content), savedInstanceState);
 
         mBottomBar.noTabletGoodness();
@@ -84,6 +86,12 @@ public class HomeActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        mBottomBar.onSaveInstanceState(outState);
     }
 
     @Override

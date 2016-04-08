@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.adapter.ChampionSpellsAdapter;
+import com.ablanco.tonsofdamage.adapter.championspells.ChampionSpellsAdapter;
 
 import butterknife.Bind;
 import im.ene.lab.toro.Toro;
@@ -43,7 +43,7 @@ public class ChampionSpellsFragment extends ChampionDetailBaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new ChampionSpellsAdapter(getActivity(), mChampion.getId(), mChampion.getSpells()));
+        mRecyclerView.setAdapter(new ChampionSpellsAdapter(getActivity(), mChampion.getId(), mChampion.getPassive(), mChampion.getSpells()));
 
     }
 
