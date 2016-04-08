@@ -1,10 +1,11 @@
 package com.ablanco.tonsofdamage.adapter;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.ChampionSpellDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.utils.ChampionSpellParser;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
@@ -106,7 +108,13 @@ public class ChampionSpellsAdapter extends ToroAdapter<ChampionSpellsAdapter.Cha
             imgPlay.setImageResource(R.drawable.ic_replay);
             imgPlay.animate().alpha(1).setDuration(300).start();
             mHandler.removeCallbacks(mRunnable);
-            start();
+        }
+
+        public void errorAnimate(){
+            imgShadow.animate().alpha(1).setDuration(300).start();
+            imgPlay.setImageResource(R.drawable.ic_link_error);
+            imgPlay.animate().alpha(1).setDuration(300).start();
+            mHandler.removeCallbacks(mRunnable);
         }
 
 
@@ -135,17 +143,17 @@ public class ChampionSpellsAdapter extends ToroAdapter<ChampionSpellsAdapter.Cha
         public void bind(@Nullable Object object) {
             // TODO: 04/04/2016 pending open video in external activity
 
-            Log.d("ChampionViewHolder", "binded " + getAdapterPosition());
             int position = getAdapterPosition();
             ChampionSpellDto spell = spells.get(position);
             mVideoView.setVideoURI(Uri.parse(Utils.getChampionAbilityVideoUrl(championId, position + 1)));
             Glide.with(context).load(ImageUris.getChampionAbilityIcon(spell.getImage().getFull())).into(imgSpell);
 
+            ChampionSpellParser.buildChampionSpellText(spell);
             tvAbilityName.setText(spell.getName());
-            tvAbilityCooldown.setText(spell.getCooldownBurn());
-            tvAbilityCost.setText(spell.getCostBurn());
-            tvAbilityRange.setText(spell.getRangeBurn());
-            tvAbilityDescription.setText(spell.getDescription());
+            tvAbilityCooldown.setText(context.getString(R.string.cooldown).concat(" ").concat(spell.getCooldownBurn()).concat("s"));
+            tvAbilityCost.setText(context.getString(R.string.cost).concat(" ").concat(ChampionSpellParser.getChampionSpellCost(spell)));
+            tvAbilityRange.setText(context.getString(R.string.range).concat(" ").concat(spell.getRangeBurn()));
+            tvAbilityDescription.setText(Html.fromHtml(ChampionSpellParser.buildChampionSpellText(spell)));
 
             mVideoView.setOnTouchListener(mOnTouchListener);
         }
@@ -161,6 +169,12 @@ public class ChampionSpellsAdapter extends ToroAdapter<ChampionSpellsAdapter.Cha
             return String.valueOf(getAdapterPosition());
         }
 
+
+        @Override
+        public void onPlaybackError(MediaPlayer mp, int what, int extra) {
+            super.onPlaybackError(mp, what, extra);
+            errorAnimate();
+        }
 
         @Override public void onPlaybackStarted() {
             playAnimate();

@@ -181,7 +181,6 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         int id = item.getItemId();
 
         if (id == R.id.action_filter) {
-            mFilteredChampions.clear();
             listPopupWindow.setAdapter(filterAdapter);
             listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -251,6 +250,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
     }
 
     private void filterAll(){
+        mFilteredChampions.clear();
         mFilteredChampions.addAll(mChampions);
         adapter.setChampions(mChampions);
     }
@@ -286,6 +286,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
 
     private void filter(Func1<ChampionDto, Boolean> filter){
+        mFilteredChampions.clear();
         Observable.from(mChampions).filter(filter).subscribe(new Action1<ChampionDto>() {
             @Override
             public void call(ChampionDto championDto) {
