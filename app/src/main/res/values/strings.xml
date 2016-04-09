@@ -46,5 +46,11 @@
     <string name="range">Range: </string>
     <string name="movement">Movement: </string>
     <string name="crit">Crit. chance: </string>
+    <string name="tips">Tips</string>
+    <string name="allytips">Ally Tips</string>
+    <string name="enemytips">Enemy Tips</string>
+    <string name="recommended_items">Recommended Items</string>
+    <string name="champion_recommended">Recommended</string>
+    <string name="mode">Mode:</string>
 
 </resources>

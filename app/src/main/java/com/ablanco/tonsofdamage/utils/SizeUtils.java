@@ -1,7 +1,10 @@
 package com.ablanco.tonsofdamage.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 /**
  * Created by Álvaro Blanco on 30/03/2016.
@@ -29,5 +32,12 @@ public class SizeUtils {
     public static int convertPixelsToDp(int px){
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         return (int) (px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    public static int getScreenWidth(Context context){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point size = new Point();
+        wm.getDefaultDisplay().getSize(size);
+        return size.x;
     }
 }

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.HomeContentHandler;
 import com.ablanco.tonsofdamage.ui.views.ProfileHeaderNavigationView;
+import com.ablanco.tonsofdamage.utils.Utils;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabClickListener;
@@ -69,6 +70,7 @@ public class HomeActivity extends AppCompatActivity
             public void onTabSelected(int i) {
                 toolbar.setTitle(mHomeContentHandler.getTitleForContent(getApplicationContext(), i));
                 mHomeContentHandler.showContent(i);
+                Utils.hideKeyBoard(HomeActivity.this);
             }
 
             @Override
@@ -115,5 +117,11 @@ public class HomeActivity extends AppCompatActivity
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

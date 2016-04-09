@@ -44,4 +44,10 @@ public class BaseFragment extends Fragment {
             view.setVisibility(View.VISIBLE);
         }
     };
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

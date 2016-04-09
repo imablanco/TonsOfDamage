@@ -186,4 +186,10 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

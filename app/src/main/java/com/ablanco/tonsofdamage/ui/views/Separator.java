@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.SizeUtils;
 
 /**
  * Created by Álvaro Blanco on 30/03/2016.
@@ -28,8 +27,4 @@ public class Separator extends View {
         this.setBackgroundColor(color);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(MeasureSpec.getSize(heightMeasureSpec), SizeUtils.convertDpToPixel(1));
-    }
 }

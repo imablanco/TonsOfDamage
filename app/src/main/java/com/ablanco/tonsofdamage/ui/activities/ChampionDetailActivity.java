@@ -21,6 +21,7 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionOverviewFragment;
+import com.ablanco.tonsofdamage.ui.fragments.ChampionRecommendedItemsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionSpellsFragment;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -37,6 +38,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
 
     private static final int CHAMPION_OVERVIEW = 0;
     private static final int CHAMPION_ABILITIES = 1;
+    private static final int CHAMPION_RECOMMENDED = 2;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -100,6 +102,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Toro.detach(this);
+        ButterKnife.unbind(this);
     }
 
     private void setUpViewPager(){
@@ -142,6 +145,8 @@ public class ChampionDetailActivity extends AppCompatActivity {
                     return ChampionOverviewFragment.newInstance(mChampion);
                 case CHAMPION_ABILITIES:
                     return ChampionSpellsFragment.newInstance(mChampion);
+                case CHAMPION_RECOMMENDED:
+                    return ChampionRecommendedItemsFragment.newInstance(mChampion);
             }
         }
 
@@ -153,12 +158,14 @@ public class ChampionDetailActivity extends AppCompatActivity {
                     return getString(R.string.champion_overview);
                 case CHAMPION_ABILITIES:
                     return getString(R.string.champion_abilities);
+                case CHAMPION_RECOMMENDED:
+                    return getString(R.string.champion_recommended);
             }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 }
