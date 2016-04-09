@@ -31,7 +31,7 @@ public class ChampionSpellParser {
             Matcher matcherDigit = patternDigit.matcher(effectMatcher.group());
             while (matcherDigit.find()) {
                 String value = "0";
-                if(championSpellDto.getEffectBurn() != null && championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group())) != null){
+                if (championSpellDto.getEffectBurn() != null && championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group())) != null) {
                     value = championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group()));
                 }
                 championSpellText = championSpellText.replace(effectMatcher.group(), value);
@@ -43,19 +43,19 @@ public class ChampionSpellParser {
             Matcher matcherWordDigit = patternWordDigit.matcher(varMatcher.group());
             while (matcherWordDigit.find()) {
                 SpellVarsDto matchingSpellVar = null;
-                if(championSpellDto.getVars() != null){
-                    for (SpellVarsDto spellVar : championSpellDto.getVars()){
-                        if(spellVar.getKey().equals(matcherWordDigit.group())){
+                if (championSpellDto.getVars() != null) {
+                    for (SpellVarsDto spellVar : championSpellDto.getVars()) {
+                        if (spellVar.getKey().equals(matcherWordDigit.group())) {
                             matchingSpellVar = spellVar;
                             break;
                         }
                     }
                 }
                 StringBuilder builder = new StringBuilder();
-                if(matchingSpellVar != null){
-                    if(matchingSpellVar.getCoeff() != null){
-                        for (Double coeff : matchingSpellVar.getCoeff()){
-                            if(!builder.toString().isEmpty()){
+                if (matchingSpellVar != null) {
+                    if (matchingSpellVar.getCoeff() != null) {
+                        for (Double coeff : matchingSpellVar.getCoeff()) {
+                            if (!builder.toString().isEmpty()) {
                                 builder.append("/");
                             }
 
@@ -72,18 +72,21 @@ public class ChampionSpellParser {
     }
 
 
-    public static String getChampionSpellCost(ChampionSpellDto championSpellDto){
-        String cost = championSpellDto.getResource().replace(REPLACEMENT_COST, championSpellDto.getCostBurn());
+    public static String getChampionSpellCost(ChampionSpellDto championSpellDto) {
+        String cost = championSpellDto.getResource();
+        if(cost != null){
+            cost = championSpellDto.getResource().replace(REPLACEMENT_COST, championSpellDto.getCostBurn());
 
-        Matcher effectMatcher = patternEffect.matcher(cost);
-        while (effectMatcher.find()) {
-            Matcher matcherDigit = patternDigit.matcher(effectMatcher.group());
-            while (matcherDigit.find()) {
-                String value = "0";
-                if(championSpellDto.getEffectBurn() != null && championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group())) != null){
-                    value = championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group()));
+            Matcher effectMatcher = patternEffect.matcher(cost);
+            while (effectMatcher.find()) {
+                Matcher matcherDigit = patternDigit.matcher(effectMatcher.group());
+                while (matcherDigit.find()) {
+                    String value = "0";
+                    if (championSpellDto.getEffectBurn() != null && championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group())) != null) {
+                        value = championSpellDto.getEffectBurn().get(Integer.parseInt(matcherDigit.group()));
+                    }
+                    cost = cost.replace(effectMatcher.group(), value);
                 }
-                cost = cost.replace(effectMatcher.group(), value);
             }
         }
 

@@ -39,6 +39,10 @@
             android:label=""
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.activities.HomeActivity"/>
+
+        <activity android:name=".ui.activities.VideoPlayerActivity"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

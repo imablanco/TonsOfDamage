@@ -1,10 +1,8 @@
 package com.ablanco.tonsofdamage.adapter.championspells;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,17 +71,18 @@ public class ChampionSpellsAdapter extends ToroAdapter<ToroVideoViewHolder> {
     class ChampionPassiveSpellViewHolder extends ChampionSpellBaseViewHolder{
 
         public ChampionPassiveSpellViewHolder(View itemView) {
-            super(itemView);
+            super(context, itemView);
+        }
+
+        @Override
+        protected String getVideoUri() {
+            return Utils.getChampionAbilityVideoUrl(championId, getAdapterPosition() + 1);
         }
 
         @Override
         public void bind(@Nullable Object object) {
-            // TODO: 04/04/2016 pending open video in external activity
-
             super.bind(object);
-            mVideoView.setVideoURI(Uri.parse(Utils.getChampionAbilityVideoUrl(championId, getAdapterPosition() + 1)));
-            Log.d("ChampionPassiveSpellVie", "getting " + getAdapterPosition());
-            Glide.with(context).load(ImageUris.getPassiveAbilityIcon(passive.getImage().getFull())).into(imgSpell);
+            Glide.with(mContext).load(ImageUris.getPassiveAbilityIcon(passive.getImage().getFull())).into(imgSpell);
 
             tvAbilityName.setText(passive.getName());
             tvAbilityDescription.setText(Html.fromHtml(passive.getDescription()));
@@ -98,26 +97,36 @@ public class ChampionSpellsAdapter extends ToroAdapter<ToroVideoViewHolder> {
         private TextView tvAbilityCooldown;
 
         public ChampionSpellViewHolder(View itemView) {
-            super(itemView);
+            super(context, itemView);
             tvAbilityCost = (TextView) itemView.findViewById(R.id.tv_spell_cost);
             tvAbilityRange = (TextView) itemView.findViewById(R.id.tv_spell_range);
             tvAbilityCooldown = (TextView) itemView.findViewById(R.id.tv_spell_cooldown);
         }
 
         @Override
+        protected String getVideoUri() {
+            return Utils.getChampionAbilityVideoUrl(championId, getAdapterPosition() + 1);
+        }
+
+        @Override
         public void bind(@Nullable Object object) {
-            // TODO: 04/04/2016 pending open video in external activity
             super.bind(object);
             int position = getAdapterPosition();
             ChampionSpellDto spell = spells.get(position-1);
-            Log.d("ChampionSpellViewHolder", "getting " + getAdapterPosition());
-            mVideoView.setVideoURI(Uri.parse(Utils.getChampionAbilityVideoUrl(championId, position + 1)));
-            Glide.with(context).load(ImageUris.getChampionAbilityIcon(spell.getImage().getFull())).into(imgSpell);
+            Glide.with(mContext).load(ImageUris.getChampionAbilityIcon(spell.getImage().getFull())).into(imgSpell);
 
             ChampionSpellParser.buildChampionSpellText(spell);
             tvAbilityName.setText(spell.getName());
-            tvAbilityCooldown.setText(context.getString(R.string.cooldown).concat(" ").concat(spell.getCooldownBurn()).concat("s"));
-            tvAbilityCost.setText(context.getString(R.string.cost).concat(" ").concat(ChampionSpellParser.getChampionSpellCost(spell)));
+            tvAbilityCooldown.setText(context.getString(R.string.cooldown).concat(" ").concat(spell.getCooldownBurn()).concat(" s"));
+
+            String cost = ChampionSpellParser.getChampionSpellCost(spell);
+            if(cost != null){
+                tvAbilityCost.setVisibility(View.VISIBLE);
+                tvAbilityCost.setText(context.getString(R.string.cost).concat(" ").concat(ChampionSpellParser.getChampionSpellCost(spell)));
+            }else {
+                tvAbilityCost.setVisibility(View.GONE);
+            }
+
             tvAbilityRange.setText(context.getString(R.string.range).concat(" ").concat(spell.getRangeBurn()));
             tvAbilityDescription.setText(Html.fromHtml(ChampionSpellParser.buildChampionSpellText(spell)));
 

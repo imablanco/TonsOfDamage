@@ -76,12 +76,14 @@ public class ChampionDetailActivity extends AppCompatActivity {
                     Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.ALL), new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {
-                            getSupportActionBar().setTitle(response.getName());
-                            getSupportActionBar().setSubtitle(response.getTitle());
-                            Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getName(), response.getSkins().get(0).getNum())).into(championSplashImage);
+                            if(getSupportActionBar() != null){
+                                getSupportActionBar().setTitle(response.getName());
+                                getSupportActionBar().setSubtitle(response.getTitle());
+                                Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getName(), response.getSkins().get(0).getNum())).into(championSplashImage);
 
-                            mChampion = response;
-                            setUpViewPager();
+                                mChampion = response;
+                                setUpViewPager();
+                            }
                         }
 
                         @Override
