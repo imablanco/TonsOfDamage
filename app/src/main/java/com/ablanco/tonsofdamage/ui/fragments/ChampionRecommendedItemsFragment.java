@@ -106,7 +106,7 @@ public class ChampionRecommendedItemsFragment extends ChampionDetailBaseFragment
                     public Boolean call(RecommendedDto recommendedDto) {
                         if(recommendedDto.getTitle().equalsIgnoreCase(Constants.Maps.HOWLING_ABYSS_BLOCK_ITEM_LITERAL)){
                             return true;
-                        }else{getView()
+                        }else{
                             return recommendedDto.getTitle().equalsIgnoreCase(mChampion.getName().concat(acronym));
                         }
                     }
