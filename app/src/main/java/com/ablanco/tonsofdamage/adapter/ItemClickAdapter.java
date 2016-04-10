@@ -20,12 +20,12 @@ public abstract class ItemClickAdapter<VH extends RecyclerView.ViewHolder> exten
     }
 
     @Override
-    public void onBindViewHolder(VH holder, final int position) {
+    public void onBindViewHolder(final VH holder, int position) {
         if(mOnItemClickListener != null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClicked(position);
+                    mOnItemClickListener.onItemClicked(holder.getAdapterPosition());
                 }
             });
         }

@@ -20,6 +20,7 @@ import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionOverviewFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionRecommendedItemsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionSkinsFragment;
@@ -59,6 +60,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
 
 
     private ChampionDto mChampion;
+    private int championId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitleEnabled(false);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        int championId = getIntent().getIntExtra(EXTRA_CHAMPION_ID, -1);
+        championId = getIntent().getIntExtra(EXTRA_CHAMPION_ID, -1);
 
         if(championId >= 0){
             Teemo.getInstance(this).getStaticDataHandler().getChampionById(championId, Locale.getDefault().toString(), null,
@@ -115,6 +117,11 @@ public class ChampionDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.champion_detail, menu);
+        MenuItem m = menu.findItem(R.id.action_like);
+        if(m != null){
+            m.setIcon(SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId) ? R.drawable.ic_like_filled : R.drawable.ic_like);
+            m.setTitle(SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId) ? R.string.remove_from_favorites : R.string.add_to_favorites);
+        }
         return true;
     }
 
@@ -126,7 +133,15 @@ public class ChampionDetailActivity extends AppCompatActivity {
         if(id == android.R.id.home){
             NavigationHandler.navigateTo(ChampionDetailActivity.this, NavigationHandler.HOME);
         }else if(id == R.id.action_like){
-
+            if(!SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId)){
+                SettingsHandler.addFavoriteChampion(ChampionDetailActivity.this, championId);
+                item.setIcon(R.drawable.ic_like_filled);
+                item.setTitle(R.string.remove_from_favorites);
+            }else {
+                SettingsHandler.removeFavoriteChampion(ChampionDetailActivity.this, championId);
+                item.setIcon(R.drawable.ic_like);
+                item.setTitle(R.string.add_to_favorites);
+            }
         }
 
         return true;

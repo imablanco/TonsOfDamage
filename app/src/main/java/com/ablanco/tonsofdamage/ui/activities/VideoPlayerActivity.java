@@ -40,8 +40,6 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
     @Bind(R.id.img_shadow)
     View mImgShadow;
 
-    MediaPlayer mMediaPlayer;
-
     private Runnable mProgressRunnable = new Runnable() {
         @Override
         public void run() {
@@ -89,17 +87,14 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
     @Override
     protected void onPause() {
         super.onPause();
-        if (mMediaPlayer != null && videoView.isPlaying()) {
-            mMediaPlayer.pause();
-        }
+        videoView.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mMediaPlayer != null) {
-            mMediaPlayer.start();
-        }
+        videoView.start();
+
     }
 
     @Override
@@ -123,7 +118,6 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mMediaPlayer = mp;
         mLoading.setVisibility(View.GONE);
         mImgShadow.animate().alpha(0).setDuration(CONTROLS_DIM_TIME);
         mSeekProgress.animate().alpha(1).setDuration(CONTROLS_DIM_TIME);
@@ -136,8 +130,8 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (fromUser && mMediaPlayer != null) {
-            mMediaPlayer.seekTo(progress);
+        if (fromUser && videoView != null) {
+            videoView.seekTo(progress);
         }
     }
 
@@ -153,17 +147,17 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN && mMediaPlayer != null) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN && videoView != null) {
             if (videoView.isPlaying()) {
                 mImgPlay.setImageResource(R.drawable.ic_play);
-                mMediaPlayer.pause();
+                videoView.pause();
                 mImgPlay.animate().alpha(1).setDuration(CONTROLS_DIM_TIME);
                 mImgShadow.animate().alpha(1).setDuration(CONTROLS_DIM_TIME);
                 mSeekProgress.animate().alpha(0).setDuration(CONTROLS_DIM_TIME);
                 mControlsHandler.removeCallbacks(mControlsRunnable);
             } else {
                 mImgPlay.setImageResource(R.drawable.ic_pause);
-                mMediaPlayer.start();
+                videoView.start();
                 mProgressHandler.post(mProgressRunnable);
                 mImgShadow.animate().alpha(0).setDuration(CONTROLS_DIM_TIME);
                 mSeekProgress.animate().alpha(1).setDuration(CONTROLS_DIM_TIME);

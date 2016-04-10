@@ -38,4 +38,11 @@ public class BaseAnimatedDialog extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
     }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

@@ -18,6 +18,7 @@ public class BaseHomeFragment extends BaseFragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //remove previously menu items added
         if(menu != null){
             menu.clear();
         }

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.HomeFragment;
+import com.ablanco.tonsofdamage.ui.fragments.ItemsFragment;
 
 /**
  * Created by Álvaro Blanco on 03/04/2016.
@@ -17,6 +18,7 @@ public class HomeContentHandler {
 
     public final static int HOME = 0;
     public final static int CHAMPIONS = 1;
+    public final static int ITEMS = 2;
 
     private FragmentManager mManager;
 
@@ -36,6 +38,9 @@ public class HomeContentHandler {
             case CHAMPIONS:
                 fragment = ChampionsFragment.newInstance();
                 break;
+            case ITEMS:
+                fragment = ItemsFragment.newInstance();
+                break;
         }
 
         transaction.replace(R.id.content, fragment).commit();
@@ -48,6 +53,8 @@ public class HomeContentHandler {
                 return context.getString(R.string.title_home);
             case CHAMPIONS:
                 return context.getString(R.string.title_champions);
+            case ITEMS:
+                return context.getString(R.string.title_items);
         }
     }
 }

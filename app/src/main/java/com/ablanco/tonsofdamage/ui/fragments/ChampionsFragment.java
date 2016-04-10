@@ -157,13 +157,16 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
                 sortByName(mFilteredChampions);
                 adapter.setChampions(mChampions);
 
-
-                loading.setVisibility(View.GONE);
+                if(loading != null){
+                    loading.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onError(TeemoException e) {
-                loading.setVisibility(View.GONE);
+                if(loading != null){
+                    loading.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -265,6 +268,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
                     for (String tag : championDto.getTags()){
                         if(tag.equalsIgnoreCase(type)){
                             shouldReturn = true;
+                            break;
                         }
                     }
                 }

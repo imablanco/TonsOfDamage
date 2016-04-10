@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.HomeContentHandler;
+import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.ui.views.ProfileHeaderNavigationView;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.roughike.bottombar.BottomBar;
@@ -52,6 +53,9 @@ public class HomeActivity extends AppCompatActivity
 
         final HomeContentHandler mHomeContentHandler = new HomeContentHandler(getSupportFragmentManager());
 
+        //// TODO: 10/04/2016 in future, save in DB
+        ResourcesHandler.init(getApplicationContext());
+
         mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.coordinator_layout),
                 findViewById(R.id.content), savedInstanceState);
 
@@ -59,9 +63,9 @@ public class HomeActivity extends AppCompatActivity
         mBottomBar.noNavBarGoodness();
 
         mBottomBar.setItems(
-                new BottomBarTab(R.drawable.home, "Home"),
-                new BottomBarTab(R.drawable.ic_champion, "Champions"),
-                new BottomBarTab(R.drawable.ic_champion, "Champions"),
+                new BottomBarTab(R.drawable.ic_home, R.string.title_home),
+                new BottomBarTab(R.drawable.ic_champion, R.string.title_champions),
+                new BottomBarTab(R.drawable.ic_items, R.string.title_items),
                 new BottomBarTab(R.drawable.ic_champion, "Champions")
         );
 
