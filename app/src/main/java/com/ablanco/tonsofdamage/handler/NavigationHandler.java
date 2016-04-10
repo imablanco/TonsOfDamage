@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
+import com.ablanco.tonsofdamage.ui.activities.ChampionSkinDetailActivity;
 import com.ablanco.tonsofdamage.ui.activities.FirstAccessSetupActivity;
 import com.ablanco.tonsofdamage.ui.activities.HomeActivity;
 
@@ -17,6 +18,7 @@ public class NavigationHandler {
     public static final String SETUP = "SETUP";
     public static final String HOME = "HOME";
     public static final String CHAMPION_DETAIL = "CHAMPION_DETAIL";
+    public static final String CHAMPION_SKIN_DETAIL = "CHAMPION_SKIN_DETAIL";
 
     private NavigationHandler(){}
 
@@ -50,6 +52,8 @@ public class NavigationHandler {
             classDestination = FirstAccessSetupActivity.class;
         } else if(destination.equalsIgnoreCase(CHAMPION_DETAIL)){
             classDestination = ChampionDetailActivity.class;
+        } else if(destination.equalsIgnoreCase(CHAMPION_SKIN_DETAIL)){
+            classDestination = ChampionSkinDetailActivity.class;
         }
 
         return classDestination;

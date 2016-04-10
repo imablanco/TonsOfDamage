@@ -52,5 +52,12 @@
     <string name="recommended_items">Recommended Items</string>
     <string name="champion_recommended">Recommended</string>
     <string name="mode">Mode:</string>
+    <string name="champion_skins">Skins</string>
+    <string name="download">Download</string>
+    <string name="downloading">Downloading</string>
+    <string name="permisson_needed">Permisson needed to download the image</string>
+    <string name="give_permisson">Grant it</string>
+    <string name="download_completed">Download completed</string>
+    <string name="show">Show</string>
 
 </resources>

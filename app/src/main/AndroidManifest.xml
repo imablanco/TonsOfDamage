@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ablanco.tonsofdamage">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".TODApplication"
         android:allowBackup="true"
@@ -33,16 +35,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentStatusBarTheme"
             android:windowSoftInputMode="adjustResize" />
-
-        <activity android:name=".ui.activities.ChampionDetailActivity"
-            android:theme="@style/TranslucentStatusBarTheme"
+        <activity
+            android:name=".ui.activities.ChampionDetailActivity"
             android:label=""
+            android:parentActivityName=".ui.activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".ui.activities.HomeActivity"/>
+            android:theme="@style/TranslucentStatusBarTheme" />
+        <activity
+            android:name=".ui.activities.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape" />
 
-        <activity android:name=".ui.activities.VideoPlayerActivity"
-            android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".ui.activities.ChampionSkinDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".ui.activities.ChampionDetailActivity"/>
     </application>
 
 </manifest>

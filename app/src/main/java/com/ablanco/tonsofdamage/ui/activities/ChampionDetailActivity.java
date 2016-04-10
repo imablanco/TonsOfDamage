@@ -22,6 +22,7 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionOverviewFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionRecommendedItemsFragment;
+import com.ablanco.tonsofdamage.ui.fragments.ChampionSkinsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionSpellsFragment;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -39,6 +40,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
     private static final int CHAMPION_OVERVIEW = 0;
     private static final int CHAMPION_ABILITIES = 1;
     private static final int CHAMPION_RECOMMENDED = 2;
+    private static final int CHAMPION_SKINS = 3;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -81,7 +83,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
                             if(getSupportActionBar() != null){
                                 getSupportActionBar().setTitle(response.getName());
                                 getSupportActionBar().setSubtitle(response.getTitle());
-                                Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getName(), response.getSkins().get(0).getNum())).into(championSplashImage);
+                                Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getKey(), response.getSkins().get(0).getNum())).into(championSplashImage);
 
                                 mChampion = response;
                                 setUpViewPager();
@@ -147,6 +149,8 @@ public class ChampionDetailActivity extends AppCompatActivity {
                     return ChampionSpellsFragment.newInstance(mChampion);
                 case CHAMPION_RECOMMENDED:
                     return ChampionRecommendedItemsFragment.newInstance(mChampion);
+                case CHAMPION_SKINS:
+                    return ChampionSkinsFragment.newInstance(mChampion);
             }
         }
 
@@ -160,12 +164,14 @@ public class ChampionDetailActivity extends AppCompatActivity {
                     return getString(R.string.champion_abilities);
                 case CHAMPION_RECOMMENDED:
                     return getString(R.string.champion_recommended);
+                case CHAMPION_SKINS:
+                    return getString(R.string.champion_skins);
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 }

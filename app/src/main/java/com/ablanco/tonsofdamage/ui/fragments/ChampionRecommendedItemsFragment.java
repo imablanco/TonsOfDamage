@@ -57,9 +57,15 @@ public class ChampionRecommendedItemsFragment extends ChampionDetailBaseFragment
         return f;
     }
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+         return inflater.inflate(R.layout.activity_champion_recommended, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         mNames = new ArrayList<>();
         mNameAcronymMap = new HashMap<>();
@@ -74,20 +80,6 @@ public class ChampionRecommendedItemsFragment extends ChampionDetailBaseFragment
 
             mRecommendedByMap.get(recommendedDto.getMap()).add(recommendedDto);
         }
-
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_champion_recommended, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,7 +99,7 @@ public class ChampionRecommendedItemsFragment extends ChampionDetailBaseFragment
                         if(recommendedDto.getTitle().equalsIgnoreCase(Constants.Maps.HOWLING_ABYSS_BLOCK_ITEM_LITERAL)){
                             return true;
                         }else{
-                            return recommendedDto.getTitle().equalsIgnoreCase(mChampion.getName().concat(acronym));
+                            return recommendedDto.getTitle().equalsIgnoreCase(mChampion.getKey().concat(acronym));
                         }
                     }
                 }).subscribe(new Action1<RecommendedDto>() {
