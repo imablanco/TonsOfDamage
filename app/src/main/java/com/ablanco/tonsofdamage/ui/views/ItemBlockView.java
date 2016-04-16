@@ -21,15 +21,14 @@ import butterknife.ButterKnife;
  */
 public class ItemBlockView extends LinearLayout {
 
-    private final static int ITEM_VIEW_SIZE = 50;//dp
-    private static final int ROW_SIZE = 5;
+    private final static int ITEM_VIEW_SIZE = 75;//dp
+    private static final int ROW_SIZE = 4;
     @Bind(R.id.tv_type)
     TextView mTvType;
     @Bind(R.id.layout_items)
     LinearLayout mLayoutItems;
 
     private int dp5 = SizeUtils.convertDpToPixel(5);
-    private int dp10 = SizeUtils.convertDpToPixel(10);
     private LayoutParams itemParams = new LayoutParams(SizeUtils.convertDpToPixel(ITEM_VIEW_SIZE), SizeUtils.convertDpToPixel(ITEM_VIEW_SIZE));
 
     public ItemBlockView(Context context) {

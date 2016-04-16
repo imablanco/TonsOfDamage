@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
 
     private final Context context;
     private final List<ItemDto> items = new ArrayList<>();
+
 
 
     public ItemsGridAdapter(Context context) {
@@ -46,13 +48,27 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
         holder.mTvItemName.setText(item.getName());
         Glide.clear(holder.mImgItem);
         Glide.with(context).load(ImageUris.getItemIcon(String.valueOf(item.getId()))).into(holder.mImgItem);
+
+        if(item.getGold() != null){
+            holder.mTvPrice.setVisibility(View.VISIBLE);
+            holder.mTvPrice.setText(Utils.getItemPrice(item.getGold().getTotal(), item.getGold().getBase()));
+            Glide.with(context).load(ImageUris.SCORE_BOARD_GOLD_URL).into(holder.mIcCoins);
+            holder.mIcCoins.setVisibility(View.VISIBLE);
+        }else {
+            holder.mIcCoins.setVisibility(View.GONE);
+            holder.mTvPrice.setVisibility(View.GONE);
+        }
     }
 
-    public void setItems(List<ItemDto> items){
+    public void setItems(List<ItemDto> items) {
         this.items.clear();
         notifyDataSetChanged();
         this.items.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public ItemDto getItemAtPosition(int position){
+        return items.get(position);
     }
 
     @Override
@@ -65,6 +81,10 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
         ImageView mImgItem;
         @Bind(R.id.tv_item_name)
         TextView mTvItemName;
+        @Bind(R.id.tv_price)
+        TextView mTvPrice;
+        @Bind(R.id.ic_coins)
+        ImageView mIcCoins;
 
         public ItemViewHolder(View itemView) {
             super(itemView);

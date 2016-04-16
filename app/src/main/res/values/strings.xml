@@ -62,5 +62,7 @@
     <string name="title_items">Items</string>
     <string name="cancel">Cancel</string>
     <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="built_from">Built from</string>
+    <string name="built_into">Built into</string>
 
 </resources>

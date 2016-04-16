@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/ic_coins"
+        android:layout_below="@id/tv_item_name"
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
+    <TextView
+        android:ellipsize="end"
+        android:textSize="11sp"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:layout_alignTop="@id/ic_coins"
+        android:layout_alignBottom="@id/ic_coins"
+        android:layout_toRightOf="@id/ic_coins"
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/tv_price"
         android:background="@color/black"
         tools:src = "@drawable/base_diamond"
-        android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:id="@+id/img_item"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 
     <View
+        android:layout_centerHorizontal="true"
         android:layout_alignTop="@id/img_item"
         android:layout_alignBottom="@id/img_item"
         android:layout_alignLeft="@id/img_item"
@@ -22,13 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <View
-        android:layout_alignTop="@id/img_item"
-        android:layout_alignBottom="@id/img_item"
-        android:layout_alignLeft="@id/img_item"
-        android:layout_alignRight="@id/img_item"
-        android:background="?selectableItemBackgroundBorderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
-</merge>
+
+    <View
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

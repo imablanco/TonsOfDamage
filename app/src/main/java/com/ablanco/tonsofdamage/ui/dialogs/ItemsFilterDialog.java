@@ -24,10 +24,13 @@ import butterknife.OnClick;
 public class ItemsFilterDialog extends BaseAnimatedDialog {
 
     private final static String ARG_TAGS = "tags";
+    private final static String ARG_SELECTED_TAGS = "selected_tags";
+
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     private List<String> mTags = new ArrayList<>();
+    private List<String> mSelectedTags = new ArrayList<>();
     private ItemFilterAdapter adapter;
 
     public interface ItemsFilterDialogListener{
@@ -36,11 +39,12 @@ public class ItemsFilterDialog extends BaseAnimatedDialog {
 
     private ItemsFilterDialogListener listener;
 
-    public static ItemsFilterDialog newInstance(ArrayList<String> tags) {
+    public static ItemsFilterDialog newInstance(ArrayList<String> tags, ArrayList<String> selectedTags) {
         ItemsFilterDialog f = new ItemsFilterDialog();
         if (tags != null) {
             Bundle b = new Bundle();
             b.putStringArrayList(ARG_TAGS, tags);
+            b.putStringArrayList(ARG_SELECTED_TAGS, selectedTags);
             f.setArguments(b);
         }
 
@@ -62,6 +66,7 @@ public class ItemsFilterDialog extends BaseAnimatedDialog {
 
         if (getArguments() != null) {
             mTags = getArguments().getStringArrayList(ARG_TAGS);
+            mSelectedTags = getArguments().getStringArrayList(ARG_SELECTED_TAGS);
         }
     }
 
@@ -76,7 +81,7 @@ public class ItemsFilterDialog extends BaseAnimatedDialog {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ItemFilterAdapter(mTags);
+        adapter = new ItemFilterAdapter(mTags, mSelectedTags);
         mRecyclerView.setAdapter(adapter);
 
     }

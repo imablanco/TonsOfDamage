@@ -37,4 +37,20 @@ public class Utils {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+    public static String getItemPrice(Integer total, Integer base){
+        StringBuilder builder = new StringBuilder();
+
+        if(total != null){
+            builder.append(String.valueOf(total));
+        }
+
+        if(base != null){
+            builder.append(" (");
+            builder.append(String.valueOf(base));
+            builder.append(")");
+        }
+
+        return builder.toString();
+    }
 }

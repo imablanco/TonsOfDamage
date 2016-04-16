@@ -37,8 +37,9 @@ public class ItemFilterAdapter extends RecyclerView.Adapter<ItemFilterAdapter.Ch
         }
     };
 
-    public ItemFilterAdapter(List<String> tags){
+    public ItemFilterAdapter(List<String> tags, List<String> mSelectedTags){
         this.tags = tags;
+        this.mSelectedTags = mSelectedTags;
     }
 
     @Override

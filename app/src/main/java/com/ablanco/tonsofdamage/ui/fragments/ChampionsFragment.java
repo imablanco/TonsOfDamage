@@ -23,11 +23,9 @@ import android.widget.ProgressBar;
 
 import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
-import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.champions.Champion;
 import com.ablanco.teemo.model.champions.ChampionList;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
-import com.ablanco.teemo.model.staticdata.ChampionListDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.ChampionListGridAdapter;
@@ -36,10 +34,10 @@ import com.ablanco.tonsofdamage.adapter.ChampionsBaseAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ListPopUpWindowAdapter;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
+import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.ui.views.DividerItemDecoration;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
-import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +45,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -144,14 +141,11 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
             }
         });
 
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampions(Locale.getDefault().toString(), null, null,
-                Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.IMAGE, StaticAPIQueryParams.Champions.INFO, StaticAPIQueryParams.Champions.TAGS, StaticAPIQueryParams.Champions.SKINS),
-                new ServiceResponseListener<ChampionListDto>() {
+        StaticDataHandler.getInstance().getChampions(getActivity(), new StaticDataHandler.ResponseListener<List<ChampionDto>>() {
             @Override
-            public void onResponse(ChampionListDto response) {
-
-                mChampions.addAll(response.getData().values());
-                mFilteredChampions.addAll(response.getData().values());
+            public void onResponse(List<ChampionDto> response) {
+                mChampions.addAll(response);
+                mFilteredChampions.addAll(response);
 
                 sortByName(mChampions);
                 sortByName(mFilteredChampions);

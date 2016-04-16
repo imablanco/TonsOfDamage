@@ -15,22 +15,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
-import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.staticdata.ItemDto;
-import com.ablanco.teemo.model.staticdata.ItemListDto;
-import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemsGridAdapter;
+import com.ablanco.tonsofdamage.handler.StaticDataHandler;
+import com.ablanco.tonsofdamage.ui.dialogs.ItemDetailDialogFragment;
 import com.ablanco.tonsofdamage.ui.dialogs.ItemsFilterDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -53,6 +50,7 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
     private List<ItemDto> mItems = new ArrayList<>();
     private ItemsGridAdapter adapter;
     private ArrayList<String> mTags = new ArrayList<>();
+    private List<String> mSelectedTags = new ArrayList<>();
     private List<ItemDto> mSearchedItems = new ArrayList<>();
     private List<ItemDto> mFilteredItems = new ArrayList<>();
     private ItemsFilterDialog dialog;
@@ -76,26 +74,25 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
         adapter.setOnItemClickListener(new ItemClickAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position) {
-
+                ItemDetailDialogFragment.newInstance(adapter.getItemAtPosition(position).getId()).show(getActivity().getSupportFragmentManager(), "item_detail");
             }
         });
         mRecyclerView.setAdapter(adapter);
 
-
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getItems(Locale.getDefault().toString(), null, StaticAPIQueryParams.Items.tags, new ServiceResponseListener<ItemListDto>() {
+        StaticDataHandler.getInstance().getItems(getActivity(), new StaticDataHandler.ResponseListener<List<ItemDto>>() {
             @Override
-            public void onResponse(final ItemListDto response) {
+            public void onResponse(List<ItemDto> response) {
                 if(loading != null){
                     loading.setVisibility(View.GONE);
                 }
 
-                mItems.addAll(response.getData().values());
-                mFilteredItems.addAll(response.getData().values());
+                mItems.addAll(response);
+                mFilteredItems.addAll(response);
 
                 sortByName(mItems);
                 sortByName(mFilteredItems);
 
-                for (ItemDto item : response.getData().values()){
+                for (ItemDto item : response){
                     if(item.getTags() != null){
                         for (String tag : item.getTags()){
                             if(!mTags.contains(tag)){
@@ -137,7 +134,7 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
         int id = item.getItemId();
 
         if (id == R.id.action_filter) {
-            dialog = ItemsFilterDialog.newInstance(mTags);
+            dialog = ItemsFilterDialog.newInstance(mTags, (ArrayList<String>) mSelectedTags);
             dialog.setListener(ItemsFragment.this);
             dialog.show(getActivity().getSupportFragmentManager(), "filter_items");
         }
@@ -192,8 +189,9 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
     }
 
     @Override
-    public void onTagsSelected(final List<String> tags) {
+    public void onTagsSelected(List<String> tags) {
         mFilteredItems.clear();
+        mSelectedTags = tags;
         if(tags.isEmpty()){
             mFilteredItems.addAll(mItems);
             adapter.setItems(mItems);
@@ -203,7 +201,7 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
                 public Boolean call(ItemDto itemDto) {
                     boolean shouldReturn = false;
                     if(itemDto.getTags() != null){
-                        for (String s : tags){
+                        for (String s : mSelectedTags){
                             if(contains(s, itemDto.getTags())){
                                 shouldReturn = true;
                             }else {
