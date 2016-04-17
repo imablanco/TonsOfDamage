@@ -64,12 +64,13 @@
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="built_from">Built from</string>
     <string name="built_into">Built into</string>
-    <string name="error_text">Ups! Something went wrong, tap to load the data again.</string>
+    <string name="error_text">Ups! Something went wrong</string>
     <string name="summoners">Summoners</string>
     <string name="leagues">Leagues</string>
     <string name="solo_duo">Solo/Duo</string>
     <string name="fvf_team">5v5 Team</string>
     <string name="tvt_team">3v3 Team</string>
     <string name="unranked">Unranked</string>
+    <string name="reload">Load again</string>
 
 </resources>

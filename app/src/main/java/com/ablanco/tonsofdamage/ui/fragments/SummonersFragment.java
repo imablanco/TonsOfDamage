@@ -20,6 +20,7 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.utils.Animationutils;
+import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
 import com.ablanco.tonsofdamage.utils.SummonerSuggestion;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -199,19 +200,15 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
                         }
 
                         @Override
-                        public void onError(TeemoException e) {
-                            //todo hanlder error
-                            mTvSoloQRank.setText(getString(R.string.unranked));
-                            mTvFvfTeamRank.setText(getString(R.string.unranked));
-                            mTvTvtTeamRank.setText(getString(R.string.unranked));
-                        }
+                        public void onError(TeemoException e) {}
                     });
                 }
             }
 
             @Override
             public void onError(TeemoException e) {
-                //handlem error
+                loading.setVisibility(View.GONE);
+                HomeErrorUtils.showShortError(getView());
             }
         });
     }

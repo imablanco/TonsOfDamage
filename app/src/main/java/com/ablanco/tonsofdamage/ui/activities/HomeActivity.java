@@ -5,7 +5,6 @@ import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -16,13 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.handler.HomeContentHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.HomeFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ItemsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.SummonersFragment;
 import com.ablanco.tonsofdamage.ui.views.ProfileHeaderNavigationView;
+import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -41,7 +40,6 @@ public class HomeActivity extends AppCompatActivity
     ViewPager pager;
     private BottomBar mBottomBar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +55,11 @@ public class HomeActivity extends AppCompatActivity
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        HomeErrorUtils.init();
+
         ProfileHeaderNavigationView profileHeaderNavigationView = new ProfileHeaderNavigationView(this);
         mNavigationView.addHeaderView(profileHeaderNavigationView);
         profileHeaderNavigationView.update();
-
-        final HomeContentHandler mHomeContentHandler = new HomeContentHandler(getSupportFragmentManager());
 
         //// TODO: 10/04/2016 in future, save in DB
         ResourcesHandler.init(getApplicationContext());
@@ -71,8 +69,8 @@ public class HomeActivity extends AppCompatActivity
 
         mBottomBar.noTabletGoodness();
         mBottomBar.noNavBarGoodness();
-
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        final HomeContentPagerAdapter adapter = new HomeContentPagerAdapter();
+        pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
         mBottomBar.setItems(
                 new BottomBarTab(R.drawable.ic_home, R.string.title_home),
@@ -85,9 +83,11 @@ public class HomeActivity extends AppCompatActivity
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int i) {
-                toolbar.setTitle(mHomeContentHandler.getTitleForContent(getApplicationContext(), i));
+                //toolbar.setTitle(mHomeContentHandler.getTitleForContent(getApplicationContext(), i));
                 //mHomeContentHandler.showContent(i);
-                pager.setCurrentItem(i);
+                toolbar.setTitle(adapter.getPageTitle(i));
+                pager.setCurrentItem(i,false);
+                HomeErrorUtils.getInstance().setCurrentPage(i);
                 Utils.hideKeyBoard(HomeActivity.this);
             }
 
@@ -136,15 +136,14 @@ public class HomeActivity extends AppCompatActivity
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    class HomeContentPagerAdapter extends FragmentPagerAdapter {
+       private final static int HOME = 0;
+       private final static int CHAMPIONS = 1;
+       private final static int ITEMS = 2;
+       private final static int SUMMONERS = 3;
 
-   static class MyPagerAdapter extends FragmentPagerAdapter {
-        public final static int HOME = 0;
-        public final static int CHAMPIONS = 1;
-        public final static int ITEMS = 2;
-        public final static int SUMMONERS = 3;
-
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public HomeContentPagerAdapter() {
+            super(getSupportFragmentManager());
         }
 
         @Override
@@ -170,7 +169,21 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-        @Override
+       @Override
+       public CharSequence getPageTitle(int position) {
+           switch (position){
+               case HOME:default:
+                   return getString(R.string.title_home);
+               case CHAMPIONS:
+                   return getString(R.string.title_champions);
+               case ITEMS:
+                   return getString(R.string.title_items);
+               case SUMMONERS:
+                   return getString(R.string.summoners);
+           }
+       }
+
+       @Override
         public int getCount() {
             return 4;
         }
