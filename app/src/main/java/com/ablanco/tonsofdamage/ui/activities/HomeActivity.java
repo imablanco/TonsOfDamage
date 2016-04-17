@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +18,10 @@ import android.view.MenuItem;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.HomeContentHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
+import com.ablanco.tonsofdamage.ui.fragments.ChampionsFragment;
+import com.ablanco.tonsofdamage.ui.fragments.HomeFragment;
+import com.ablanco.tonsofdamage.ui.fragments.ItemsFragment;
+import com.ablanco.tonsofdamage.ui.fragments.SummonersFragment;
 import com.ablanco.tonsofdamage.ui.views.ProfileHeaderNavigationView;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.roughike.bottombar.BottomBar;
@@ -29,6 +37,8 @@ public class HomeActivity extends AppCompatActivity
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @Bind(R.id.nav_view) NavigationView mNavigationView;
+    @Bind(R.id.pager)
+    ViewPager pager;
     private BottomBar mBottomBar;
 
 
@@ -62,6 +72,8 @@ public class HomeActivity extends AppCompatActivity
         mBottomBar.noTabletGoodness();
         mBottomBar.noNavBarGoodness();
 
+        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        pager.setOffscreenPageLimit(3);
         mBottomBar.setItems(
                 new BottomBarTab(R.drawable.ic_home, R.string.title_home),
                 new BottomBarTab(R.drawable.ic_champion, R.string.title_champions),
@@ -69,11 +81,13 @@ public class HomeActivity extends AppCompatActivity
                 new BottomBarTab(R.drawable.ic_person, getString(R.string.summoners))
         );
 
+
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int i) {
                 toolbar.setTitle(mHomeContentHandler.getTitleForContent(getApplicationContext(), i));
-                mHomeContentHandler.showContent(i);
+                //mHomeContentHandler.showContent(i);
+                pager.setCurrentItem(i);
                 Utils.hideKeyBoard(HomeActivity.this);
             }
 
@@ -121,6 +135,45 @@ public class HomeActivity extends AppCompatActivity
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+   static class MyPagerAdapter extends FragmentPagerAdapter {
+        public final static int HOME = 0;
+        public final static int CHAMPIONS = 1;
+        public final static int ITEMS = 2;
+        public final static int SUMMONERS = 3;
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment;
+
+            switch (position){
+                case HOME:default:
+                    fragment = HomeFragment.newInstance();
+                    break;
+                case CHAMPIONS:
+                    fragment = ChampionsFragment.newInstance();
+                    break;
+                case ITEMS:
+                    fragment = ItemsFragment.newInstance();
+                    break;
+                case SUMMONERS:
+                    fragment = SummonersFragment.newInstance();
+                    break;
+            }
+
+            return fragment;
+
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
     }
 
     @Override
