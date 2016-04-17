@@ -104,17 +104,15 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
                     }
 
                     if (response.getFrom() != null) {
+                        mLlFrom.setVisibility(View.VISIBLE);
+                        mTvBuiltFrom.setVisibility(View.VISIBLE);
                         buildItemBlock(mLlFrom, response.getFrom());
-                    }else {
-                        mLlFrom.setVisibility(View.GONE);
-                        mTvBuiltFrom.setVisibility(View.GONE);
                     }
 
                     if (response.getInto() != null) {
+                        mLlInto.setVisibility(View.VISIBLE);
+                        mTvBuiltInto.setVisibility(View.VISIBLE);
                         buildItemBlock(mLlInto, response.getInto());
-                    }else {
-                        mLlInto.setVisibility(View.GONE);
-                        mTvBuiltInto.setVisibility(View.GONE);
                     }
                 }
             }

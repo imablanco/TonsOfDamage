@@ -79,6 +79,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:visibility="gone"
                     android:text="@string/built_from"
                     android:id="@+id/tv_built_from"
                     android:layout_marginTop="20dp"
@@ -88,6 +89,7 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"
@@ -98,12 +100,15 @@
                 <TextView
                     android:text="@string/built_into"
                     android:id="@+id/tv_built_into"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     android:textColor="@color/colorFallBackAccent"
                     android:textSize="15sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"

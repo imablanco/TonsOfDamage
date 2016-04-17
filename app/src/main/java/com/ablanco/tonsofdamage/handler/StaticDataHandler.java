@@ -9,12 +9,20 @@ import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.ChampionListDto;
 import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.model.staticdata.ItemListDto;
+import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
+import com.ablanco.tonsofdamage.utils.SummonerSuggestion;
 import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Álvaro Blanco on 16/04/2016.
@@ -32,6 +40,7 @@ public class StaticDataHandler {
 
     private List<ChampionDto> mChampions;
     private List<ItemDto> mItems;
+    private List<SummonerSuggestion> summonersSuggestions;
 
     public static StaticDataHandler getInstance() {
         if (mInstance == null) {
@@ -44,6 +53,7 @@ public class StaticDataHandler {
     private StaticDataHandler() {
         this.mChampions = new ArrayList<>();
         this.mItems = new ArrayList<>();
+        this.summonersSuggestions = new ArrayList<>();
     }
 
     public void getChampions(Context context, final ResponseListener<List<ChampionDto>> listener) {
@@ -97,5 +107,35 @@ public class StaticDataHandler {
                 }
             });
         }
+    }
+
+    public void findSummoners(Context context, String suggestion, final ResponseListener<List<SummonerSuggestion>> listener) {
+        summonersSuggestions.clear();
+        List<Summoner> summoners = Teemo.getInstance(context).getSummonersHandler().findSummonersBySuggestion(suggestion);
+        Observable.from(summoners)
+                .distinct(new Func1<Summoner, Object>() {
+                    @Override
+                    public Object call(Summoner summoner) {
+                        return summoner.getId();
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Summoner>() {
+                    @Override
+                    public void onCompleted() {
+                        listener.onResponse(summonersSuggestions);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError(null);
+                    }
+
+                    @Override
+                    public void onNext(Summoner summoner) {
+                        summonersSuggestions.add(new SummonerSuggestion(summoner));
+                    }
+                });
     }
 }

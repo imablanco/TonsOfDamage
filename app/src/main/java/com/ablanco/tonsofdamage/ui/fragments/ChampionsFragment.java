@@ -37,6 +37,7 @@ import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.ui.views.DividerItemDecoration;
+import com.ablanco.tonsofdamage.ui.views.ErrorView;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
 
 import java.util.ArrayList;
@@ -67,6 +68,9 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
     @Bind(R.id.loading)
     ProgressBar loading;
+
+    @Bind(R.id.cv_error)
+    ErrorView errorView;
 
     private List<ChampionDto> mChampions = new ArrayList<>();
     private List<ChampionDto> mFilteredChampions = new ArrayList<>();
@@ -124,7 +128,19 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(SizeUtils.convertDpToPixel(1)));
 
+        errorView.setListener(new ErrorView.ErrorViewTapListener() {
+            @Override
+            public void loadData() {
+                loading.setVisibility(View.VISIBLE);
+                loadChampionsData();
+            }
+        });
 
+        loadChampionsData();
+
+    }
+
+    private void loadChampionsData(){
         Teemo.getInstance(getActivity()).getChampionsHandler().getChampions(true, new ServiceResponseListener<ChampionList>() {
             @Override
             public void onResponse(ChampionList response) {
@@ -137,7 +153,6 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
             @Override
             public void onError(TeemoException e) {
-
             }
         });
 
@@ -160,6 +175,9 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
             public void onError(TeemoException e) {
                 if(loading != null){
                     loading.setVisibility(View.GONE);
+                }
+                if(errorView != null){
+                    errorView.show();
                 }
             }
         });

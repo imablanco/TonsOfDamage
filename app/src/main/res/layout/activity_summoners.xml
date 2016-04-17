@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_summoner_overview"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:cardCornerRadius="3dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="30dp"
+            app:cardBackgroundColor="@color/colorPrimaryDarkAccent"
+            app:cardUseCompatPadding="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        app:civ_border_color="@color/colorAccent"
+                        app:civ_border_width="1dp"
+                        app:civ_fill_color="@color/black"
+                        android:src="@drawable/default_profile"
+                        android:id="@+id/img_summoner"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"/>
+                    <TextView
+                        android:paddingLeft="15dp"
+                        android:layout_alignBottom="@id/img_summoner"
+                        android:layout_toRightOf="@id/img_summoner"
+                        android:id="@+id/tv_summoner_name"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="25sp"
+                        tools:text = "Sympherion"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                    <com.ablanco.tonsofdamage.ui.views.Separator
+                        android:id="@+id/top_separator"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        app:separatorColor="@color/colorAccent"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/tv_summoner_name"/>
+
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_below="@id/top_separator"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_leagues"
+                            android:text="@string/leagues"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorFallBackAccent"
+                            android:layout_marginTop="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_solo_duo_title"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="@string/solo_duo"
+                            android:textSize="20sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:id="@+id/img_solo_q"
+                            android:src="@drawable/base_provisional"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:id="@+id/tv_solo_q_rank"
+                            android:gravity="center"
+                            android:text="@string/unranked"
+                            android:textSize="15sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_solo_q_name"
+                            android:gravity="center"
+                            tools:text="Phreak Damages"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:textSize="13sp"
+                            android:layout_marginTop="7dp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:gravity="right"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                tools:text = "0LP"
+                                android:textSize="13sp"
+                                android:id="@+id/tv_solo_q_lp"
+                                android:paddingRight="10dp"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:gravity="left"
+                                tools:text = "89 Wins"
+                                android:id="@+id/tv_solo_q_wins"
+                                android:textSize="13sp"
+                                android:paddingLeft="10dp"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <com.ablanco.tonsofdamage.ui.views.Separator
+                            android:id="@+id/separator_solo_q"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="7dp"
+                            app:separatorColor="@color/colorFallBackAccent"
+                            android:layout_height="1dp" />
+
+                        <LinearLayout
+                            android:layout_marginTop="10dp"
+                            android:weightSum="2"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:padding="5dp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:textSize="13sp"
+                                    android:textColor="@color/white"
+                                    android:text="@string/fvf_team"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <ImageView
+                                    android:id="@+id/img_fvf_team"
+                                    android:src="@drawable/base_provisional"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+
+                                <TextView
+                                    android:textSize="13sp"
+                                    android:textColor="@color/white"
+                                    android:text="@string/unranked"
+                                    android:id="@+id/tv_fvf_team_rank"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    tools:visibility = "visible"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/white"
+                                    tools:text="The losers"
+                                    android:id="@+id/tv_fvf_team_name"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+
+                            <View
+                                android:background="@color/colorFallBackAccent"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"/>
+
+                            <LinearLayout
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:textSize="13sp"
+                                    android:textColor="@color/white"
+                                    android:text="@string/tvt_team"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <ImageView
+                                    android:id="@+id/img_tvt_team"
+                                    android:src="@drawable/base_provisional"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+
+                                <TextView
+                                    android:textSize="13sp"
+                                    android:textColor="@color/white"
+                                    android:text="@string/unranked"
+                                    android:id="@+id/tv_tvt_team_rank"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_marginTop="5dp"
+                                    android:visibility="gone"
+                                    tools:visibility="visible"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/white"
+                                    tools:text="The losers"
+                                    android:id="@+id/tv_tvt_team_name"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            <View
+                android:background="?selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
+        app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
+        app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
+        app:floatingSearch_searchHint="@string/summoner"
+        app:floatingSearch_dismissOnOutsideTouch="true"
+        app:floatingSearch_leftActionMode="showSearch"/>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+</RelativeLayout>

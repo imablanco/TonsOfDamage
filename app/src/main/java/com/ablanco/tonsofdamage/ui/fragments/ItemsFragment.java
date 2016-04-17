@@ -23,6 +23,7 @@ import com.ablanco.tonsofdamage.adapter.ItemsGridAdapter;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.ui.dialogs.ItemDetailDialogFragment;
 import com.ablanco.tonsofdamage.ui.dialogs.ItemsFilterDialog;
+import com.ablanco.tonsofdamage.ui.views.ErrorView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +47,8 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
     RecyclerView mRecyclerView;
     @Bind(R.id.loading)
     ProgressBar loading;
+    @Bind(R.id.cv_error)
+    ErrorView errorView;
 
     private List<ItemDto> mItems = new ArrayList<>();
     private ItemsGridAdapter adapter;
@@ -79,6 +82,18 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
         });
         mRecyclerView.setAdapter(adapter);
 
+        errorView.setListener(new ErrorView.ErrorViewTapListener() {
+            @Override
+            public void loadData() {
+                loading.setVisibility(View.VISIBLE);
+                loadItemData();
+            }
+        });
+
+        loadItemData();
+    }
+
+    private void loadItemData() {
         StaticDataHandler.getInstance().getItems(getActivity(), new StaticDataHandler.ResponseListener<List<ItemDto>>() {
             @Override
             public void onResponse(List<ItemDto> response) {
@@ -116,6 +131,10 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
             public void onError(TeemoException e) {
                 if(loading != null){
                     loading.setVisibility(View.GONE);
+                }
+
+                if(errorView != null){
+                    errorView.show();
                 }
             }
         });

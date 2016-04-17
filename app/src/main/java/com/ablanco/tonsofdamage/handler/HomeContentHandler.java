@@ -9,6 +9,7 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionsFragment;
 import com.ablanco.tonsofdamage.ui.fragments.HomeFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ItemsFragment;
+import com.ablanco.tonsofdamage.ui.fragments.SummonersFragment;
 
 /**
  * Created by Álvaro Blanco on 03/04/2016.
@@ -19,6 +20,7 @@ public class HomeContentHandler {
     public final static int HOME = 0;
     public final static int CHAMPIONS = 1;
     public final static int ITEMS = 2;
+    public final static int SUMMONERS = 3;
 
     private FragmentManager mManager;
 
@@ -41,6 +43,9 @@ public class HomeContentHandler {
             case ITEMS:
                 fragment = ItemsFragment.newInstance();
                 break;
+            case SUMMONERS:
+                fragment = SummonersFragment.newInstance();
+                break;
         }
 
         transaction.replace(R.id.content, fragment).commit();
@@ -55,6 +60,8 @@ public class HomeContentHandler {
                 return context.getString(R.string.title_champions);
             case ITEMS:
                 return context.getString(R.string.title_items);
+            case SUMMONERS:
+                return context.getString(R.string.summoners);
         }
     }
 }

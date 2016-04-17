@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity
                 new BottomBarTab(R.drawable.ic_home, R.string.title_home),
                 new BottomBarTab(R.drawable.ic_champion, R.string.title_champions),
                 new BottomBarTab(R.drawable.ic_items, R.string.title_items),
-                new BottomBarTab(R.drawable.ic_champion, "Champions")
+                new BottomBarTab(R.drawable.ic_person, getString(R.string.summoners))
         );
 
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
