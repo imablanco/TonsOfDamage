@@ -53,7 +53,7 @@ public class ProfileHeaderNavigationView extends RelativeLayout {
         Teemo.getInstance(getContext()).getSummonersHandler().getSummonerById(String.valueOf(SettingsHandler.getSummoner(getContext())), new ServiceResponseListener<Summoner>() {
             @Override
             public void onResponse(final Summoner response) {
-                Glide.with(getContext()).load(ImageUris.getProfileIcon(String.valueOf(response.getProfileIconId()))).asBitmap().into(new SimpleTarget<Bitmap>() {
+                Glide.with(getContext()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(response.getProfileIconId()))).asBitmap().into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         tvSummonerRegion.setText(SettingsHandler.getRegion(getContext()).toUpperCase());

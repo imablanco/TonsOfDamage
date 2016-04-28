@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
@@ -47,7 +48,7 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
         ItemDto item = items.get(position);
         holder.mTvItemName.setText(item.getName());
         Glide.clear(holder.mImgItem);
-        Glide.with(context).load(ImageUris.getItemIcon(String.valueOf(item.getId()))).into(holder.mImgItem);
+        Glide.with(context).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(context), String.valueOf(item.getId()))).into(holder.mImgItem);
 
         if(item.getGold() != null){
             holder.mTvPrice.setVisibility(View.VISIBLE);

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
@@ -48,7 +49,7 @@ public class ChampionListGridAdapter extends ChampionsBaseAdapter<ChampionListGr
         }
 
         Glide.clear(holder.img);
-        Glide.with(context).load(ImageUris.getChampionSquareIcon(championDto.getImage().getFull())).into(holder.img);
+        Glide.with(context).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(context), championDto.getImage().getFull())).into(holder.img);
     }
 
 

@@ -12,6 +12,7 @@ import com.ablanco.teemo.model.staticdata.ChampionSpellDto;
 import com.ablanco.teemo.model.staticdata.PassiveDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.ChampionSpellParser;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -82,7 +83,7 @@ public class ChampionSpellsAdapter extends ToroAdapter<ToroVideoViewHolder> {
         @Override
         public void bind(@Nullable Object object) {
             super.bind(object);
-            Glide.with(mContext).load(ImageUris.getPassiveAbilityIcon(passive.getImage().getFull())).into(imgSpell);
+            Glide.with(mContext).load(ImageUris.getPassiveAbilityIcon(SettingsHandler.getCDNVersion(context), passive.getImage().getFull())).into(imgSpell);
 
             tvAbilityName.setText(passive.getName());
             tvAbilityDescription.setText(Html.fromHtml(passive.getDescription()));
@@ -113,7 +114,7 @@ public class ChampionSpellsAdapter extends ToroAdapter<ToroVideoViewHolder> {
             super.bind(object);
             int position = getAdapterPosition();
             ChampionSpellDto spell = spells.get(position-1);
-            Glide.with(mContext).load(ImageUris.getChampionAbilityIcon(spell.getImage().getFull())).into(imgSpell);
+            Glide.with(mContext).load(ImageUris.getChampionAbilityIcon(SettingsHandler.getCDNVersion(context), spell.getImage().getFull())).into(imgSpell);
 
             ChampionSpellParser.buildChampionSpellText(spell);
             tvAbilityName.setText(spell.getName());

@@ -1,4 +1,4 @@
-package com.ablanco.tonsofdamage;
+package com.ablanco.tonsofdamage.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ablanco.teemo.model.staticdata.SkinDto;
 import com.ablanco.teemo.utils.ImageUris;
-import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
+import com.ablanco.tonsofdamage.R;
 import com.bumptech.glide.Glide;
 
 import java.util.List;

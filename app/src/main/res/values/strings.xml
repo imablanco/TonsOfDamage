@@ -30,7 +30,7 @@
     <string name="search_hint">Champion name…</string>
     <string name="action_view_mode">View Mode</string>
     <string name="add_to_favorites">Add to favorites</string>
-    <string name="champion_overview">Overview</string>
+    <string name="overview">Overview</string>
     <string name="champion_abilities">Abilities</string>
     <string name="cooldown">Cooldown:</string>
     <string name="cost">Cost:</string>
@@ -72,5 +72,8 @@
     <string name="tvt_team">3v3 Team</string>
     <string name="unranked">Unranked</string>
     <string name="reload">Load again</string>
+    <string name="most_played">Most played champions</string>
+    <string name="last_match">Latest Match</string>
+    <string name="recent_games">Recent Games</string>
 
 </resources>

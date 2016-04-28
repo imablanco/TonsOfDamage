@@ -29,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -94,7 +96,7 @@ public class PickSummonerFragment extends BaseFragment {
             public void onResponse(final Summoner response) {
                 if(getActivity() != null){
                     mSummoner = response;
-                    Glide.with(getActivity()).load(ImageUris.getProfileIcon(String.valueOf(response.getProfileIconId()))).asBitmap().into(new SimpleTarget<Bitmap>() {
+                    Glide.with(getActivity()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(response.getProfileIconId()))).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                             loading.setVisibility(View.GONE);
@@ -132,8 +134,21 @@ public class PickSummonerFragment extends BaseFragment {
     @OnClick(R.id.fab_continue)
     public void navigateToHome(){
         SettingsHandler.setSummoner(getActivity(), mSummoner.getId());
-        NavigationHandler.navigateTo(getActivity(), NavigationHandler.HOME);
-        getActivity().finish();
+        Teemo.getInstance(getActivity()).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
+            @Override
+            public void onResponse(List<String> response) {
+                SettingsHandler.setCDNVersion(getActivity(), response.get(0));
+                NavigationHandler.navigateTo(getActivity(), NavigationHandler.HOME);
+                getActivity().finish();
+            }
+
+            @Override
+            public void onError(TeemoException e) {
+                NavigationHandler.navigateTo(getActivity(), NavigationHandler.HOME);
+                getActivity().finish();
+            }
+        });
+
     }
 
 }

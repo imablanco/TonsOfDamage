@@ -18,6 +18,7 @@ import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.ui.views.ItemView;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
@@ -95,7 +96,7 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
             @Override
             public void onResponse(ItemDto response) {
                 if (getActivity() != null) {
-                    Glide.with(getActivity()).load(ImageUris.getItemIcon(String.valueOf(mId))).into(mItemImg);
+                    Glide.with(getActivity()).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(mId))).into(mItemImg);
                     Glide.with(getActivity()).load(ImageUris.SCORE_BOARD_GOLD_URL).into(mIcCoins);
                     mTvTitle.setText(response.getName());
                     mTvItemDescription.setText(Html.fromHtml(response.getDescription()));

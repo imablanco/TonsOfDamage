@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.utils.ImageUris;
-import com.ablanco.tonsofdamage.ChampionsSkinsAdapter;
+import com.ablanco.tonsofdamage.adapter.ChampionsSkinsAdapter;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -87,6 +88,7 @@ public class ChampionSkinDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        hideUI();
         registerReceiver(receiver, new IntentFilter(
                 DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
@@ -110,7 +112,7 @@ public class ChampionSkinDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            finish();
+            NavUtils.navigateUpFromSameTask(this);
         }else if(id == R.id.action_download){
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                mDownloadId =  DownloadsHandler.getInstance(getApplicationContext()).requestDownLoad(skinName, getString(R.string.downloading),skinUrl, skinName.concat(".png"));

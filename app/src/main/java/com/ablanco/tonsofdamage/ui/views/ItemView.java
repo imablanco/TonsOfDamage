@@ -14,6 +14,7 @@ import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.ui.dialogs.ItemDetailDialogFragment;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -61,7 +62,7 @@ public class ItemView extends SquareRelativeLayout implements View.OnClickListen
             @Override
             public void onResponse(ItemDto response) {
                 if(response.getGold() != null && mImgItem != null){
-                    Glide.with(getContext()).load(ImageUris.getItemIcon(String.valueOf(mId))).into(mImgItem);
+                    Glide.with(getContext()).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(mId))).into(mImgItem);
                     if(!mCollapsedPrice){
                         mTvPrice.setText(Utils.getItemPrice(response.getGold().getTotal(), response.getGold().getBase()));
                     }else {

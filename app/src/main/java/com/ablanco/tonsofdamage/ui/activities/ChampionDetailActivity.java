@@ -5,6 +5,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,6 @@ import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionOverviewFragment;
 import com.ablanco.tonsofdamage.ui.fragments.ChampionRecommendedItemsFragment;
@@ -131,7 +131,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            NavigationHandler.navigateTo(ChampionDetailActivity.this, NavigationHandler.HOME);
+            NavUtils.navigateUpFromSameTask(this);
         }else if(id == R.id.action_like){
             if(!SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId)){
                 SettingsHandler.addFavoriteChampion(ChampionDetailActivity.this, championId);
@@ -174,7 +174,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
 
             switch (position){
                 case CHAMPION_OVERVIEW:default:
-                    return getString(R.string.champion_overview);
+                    return getString(R.string.overview);
                 case CHAMPION_ABILITIES:
                     return getString(R.string.champion_abilities);
                 case CHAMPION_RECOMMENDED:

@@ -18,9 +18,12 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
+import com.ablanco.tonsofdamage.ui.activities.SummonerDetailActivity;
 import com.ablanco.tonsofdamage.utils.Animationutils;
-import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
+import com.ablanco.tonsofdamage.utils.ErrorUtils;
 import com.ablanco.tonsofdamage.utils.SummonerSuggestion;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -78,6 +81,8 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
 
     private String mQuery;
 
+    private long mSelectedSummoner;
+
     public static Fragment newInstance() {
         return new SummonersFragment();
     }
@@ -122,7 +127,7 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
                 //here you can set some attributes for the suggestion's left icon and text. For example,
                 //you can choose your favorite image-loading library for setting the left icon's image.
                 SummonerSuggestion summonerSuggestion = (SummonerSuggestion) item;
-                Glide.with(getActivity()).load(ImageUris.getProfileIcon(String.valueOf(summonerSuggestion.getIconId()))).into(leftIcon);
+                Glide.with(getActivity()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(summonerSuggestion.getIconId()))).into(leftIcon);
             }
         });
 
@@ -149,51 +154,55 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
                 if(getActivity() != null){
                     loading.setVisibility(View.GONE);
                     Animationutils.revealView(mSummonerLayout);
+                    mSelectedSummoner = response.getId();
                     mSummonerLayout.setOnClickListener(SummonersFragment.this);
 
-                    Glide.with(getActivity()).load(ImageUris.getProfileIcon(String.valueOf(response.getProfileIconId()))).into(mImgSummoner);
+                    Glide.with(getActivity()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(response.getProfileIconId()))).into(mImgSummoner);
                     mTvSummonerName.setText(response.getName());
-                    final String summonerId = String.valueOf(response.getId());
-                    Teemo.getInstance(getContext()).getLeaguesHandler().getLeaguesBySummoners(Collections.singletonList(summonerId), true, new ServiceResponseListener<Map<String, List<League>>>() {
+                    Teemo.getInstance(getContext()).getLeaguesHandler().getLeaguesBySummoners(Collections.singletonList(String.valueOf(mSelectedSummoner)), true, new ServiceResponseListener<Map<String, List<League>>>() {
                         @Override
                         public void onResponse(Map<String, List<League>> response) {
-                            if(getActivity() != null && response.get(summonerId) != null){
+                            if(getActivity() != null && response.get(String.valueOf(mSelectedSummoner)) != null){
                                 LeagueEntry entry;
-                                for (League league : response.get(summonerId)){
-                                    if(league.getQueue().equals(Queue.RANKED_SOLO_5x5)){
-                                        mTvSoloQName.setText(league.getName());
-                                        mTvSoloQName.setVisibility(View.VISIBLE);
-                                        mImgSoloQ.setImageResource(Utils.getResourceForTier(league.getTier()));
-                                        if(league.getEntries() != null && !league.getEntries().isEmpty()){
-                                            entry = league.getEntries().get(0);
-                                            mTvSoloQRank.setText(league.getTier().concat(" ").concat(entry.getDivision()));
-                                            mTvSoloQLp.setText(String.valueOf(entry.getLeaguePoints()).concat(" LP"));
-                                            mTvSoloQWins.setText(String.valueOf(entry.getWins()).concat(" W / ").concat(String.valueOf(entry.getLosses()).concat(" L")));
-                                            mTvSoloQLp.setVisibility(View.VISIBLE);
-                                            mTvSoloQWins.setVisibility(View.VISIBLE);
-                                        }else {
-                                            mTvSoloQRank.setText(getString(R.string.unranked));
-                                        }
-                                    }else if(league.getQueue().equals(Queue.RANKED_TEAM_5x5)){
-                                        mTvFvfTeamName.setText(league.getName());
-                                        mTvFvfTeamName.setVisibility(View.VISIBLE);
-                                        mImgFvfTeam.setImageResource(Utils.getResourceForTier(league.getTier()));
-                                        if(league.getEntries() != null && !league.getEntries().isEmpty()){
-                                            entry = league.getEntries().get(0);
-                                            mTvFvfTeamRank.setText(league.getTier().concat(" ").concat(entry.getDivision()));
-                                        }else {
-                                            mTvFvfTeamRank.setText(getString(R.string.unranked));
-                                        }
-                                    }else if(league.getQueue().equals(Queue.RANKED_TEAM_3x3)){
-                                        mTvTvtTeamName.setText(league.getName());
-                                        mTvTvtTeamName.setVisibility(View.VISIBLE);
-                                        mImgTvtTeam.setImageResource(Utils.getResourceForTier(league.getTier()));
-                                        if(league.getEntries() != null && !league.getEntries().isEmpty()){
-                                            entry = league.getEntries().get(0);
-                                            mTvTvtTeamRank.setText(league.getTier().concat(" ").concat(entry.getDivision()));
-                                        }else {
-                                            mTvTvtTeamRank.setText(getString(R.string.unranked));
-                                        }
+                                for (League league : response.get(String.valueOf(mSelectedSummoner))){
+                                    switch (league.getQueue()) {
+                                        case Queue.RANKED_SOLO_5x5:
+                                            mTvSoloQName.setText(league.getName());
+                                            mTvSoloQName.setVisibility(View.VISIBLE);
+                                            mImgSoloQ.setImageResource(Utils.getResourceForTier(league.getTier()));
+                                            if (league.getEntries() != null && !league.getEntries().isEmpty()) {
+                                                entry = league.getEntries().get(0);
+                                                mTvSoloQRank.setText(league.getTier().concat(" ").concat(entry.getDivision()));
+                                                mTvSoloQLp.setText(String.valueOf(entry.getLeaguePoints()).concat(" LP"));
+                                                mTvSoloQWins.setText(String.valueOf(entry.getWins()).concat(" W / ").concat(String.valueOf(entry.getLosses()).concat(" L")));
+                                                mTvSoloQLp.setVisibility(View.VISIBLE);
+                                                mTvSoloQWins.setVisibility(View.VISIBLE);
+                                            } else {
+                                                mTvSoloQRank.setText(getString(R.string.unranked));
+                                            }
+                                            break;
+                                        case Queue.RANKED_TEAM_5x5:
+                                            mTvFvfTeamName.setText(league.getName());
+                                            mTvFvfTeamName.setVisibility(View.VISIBLE);
+                                            mImgFvfTeam.setImageResource(Utils.getResourceForTier(league.getTier()));
+                                            if (league.getEntries() != null && !league.getEntries().isEmpty()) {
+                                                entry = league.getEntries().get(0);
+                                                mTvFvfTeamRank.setText(league.getTier().concat(" ").concat(entry.getDivision()));
+                                            } else {
+                                                mTvFvfTeamRank.setText(getString(R.string.unranked));
+                                            }
+                                            break;
+                                        case Queue.RANKED_TEAM_3x3:
+                                            mTvTvtTeamName.setText(league.getName());
+                                            mTvTvtTeamName.setVisibility(View.VISIBLE);
+                                            mImgTvtTeam.setImageResource(Utils.getResourceForTier(league.getTier()));
+                                            if (league.getEntries() != null && !league.getEntries().isEmpty()) {
+                                                entry = league.getEntries().get(0);
+                                                mTvTvtTeamRank.setText(league.getTier().concat(" ").concat(entry.getDivision()));
+                                            } else {
+                                                mTvTvtTeamRank.setText(getString(R.string.unranked));
+                                            }
+                                            break;
                                     }
                                 }
                             }
@@ -208,7 +217,7 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
             @Override
             public void onError(TeemoException e) {
                 loading.setVisibility(View.GONE);
-                HomeErrorUtils.showShortError(getView());
+                ErrorUtils.showError(getView());
             }
         });
     }
@@ -230,6 +239,8 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
+        Bundle bundle = new Bundle();
+        bundle.putLong(SummonerDetailActivity.EXTRA_ID, mSelectedSummoner);
+        NavigationHandler.navigateTo(getActivity(), NavigationHandler.SUMMONER_DETAIL, bundle);
     }
 }

@@ -77,10 +77,4 @@ public class HomeErrorUtils {
         }
     }
 
-    public static void showShortError(View v){
-        if(v != null){
-            Snackbar.make(v, R.string.error_text, Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
 }

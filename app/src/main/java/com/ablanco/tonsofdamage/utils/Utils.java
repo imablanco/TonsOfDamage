@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.ablanco.teemo.constants.LeagueTier;
+import com.ablanco.teemo.model.stats.AggregatedStats;
 import com.ablanco.tonsofdamage.R;
+
+import java.util.Locale;
 
 /**
  * Created by Álvaro Blanco on 03/04/2016.
@@ -76,5 +79,20 @@ public class Utils {
         }
 
         return R.drawable.base_provisional;
+    }
+
+    public static double getKDA(AggregatedStats stats){
+        return ((double)stats.getTotalChampionKills() + (double)stats.getTotalAssists()) / (double)stats.getTotalDeathsPerSession();
+    }
+
+    public static String getAverage(AggregatedStats stats){
+        return String.format(Locale.getDefault(), "%.0f/%.0f/%.0f", (double) stats.getTotalChampionKills() / (double) stats.getTotalSessionsPlayed(),
+                (double) stats.getTotalDeathsPerSession() / (double) stats.getTotalSessionsPlayed(),
+                (double) stats.getTotalAssists() / (double) stats.getTotalSessionsPlayed());
+    }
+
+    public static double getWinRatio(AggregatedStats stats){
+        if(stats.getTotalSessionsLost() == 0) return 100;
+        return (double) stats.getTotalSessionsWon() / (double)stats.getTotalSessionsLost() * 100d;
     }
 }

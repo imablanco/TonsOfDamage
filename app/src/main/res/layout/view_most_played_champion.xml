@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:padding="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        tools:src = "@drawable/default_profile"
+        android:id="@+id/img_champion_square"
+        android:background="@color/black"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <View
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/champion_spell_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img_champion_square"
+        android:layout_alignBottom="@id/img_champion_square"
+        android:layout_alignRight="@id/img_champion_square"
+        android:layout_alignLeft="@id/img_champion_square" />
+
+    <ImageView
+        android:id="@+id/ic_sword"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/img_champion_square"
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
+
+    <TextView
+        android:ellipsize="end"
+        android:lines="1"
+        android:layout_toRightOf="@id/ic_sword"
+        android:textSize="12sp"
+        android:gravity="center"
+        tools:text = "16/5/51"
+        android:paddingLeft="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/img_champion_square"
+        android:id="@+id/tv_averages"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="12sp"
+        android:gravity="center"
+        tools:text = "KDA"
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/tv_averages"
+        android:id="@+id/tv_kda"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="12sp"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:lines="1"
+        tools:text = "W: 3%"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/tv_kda"
+        android:id="@+id/tv_wins_loses"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

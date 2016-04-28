@@ -18,7 +18,6 @@ public class TODApplication extends Application {
         Teemo.setArmedAndReady(this);
         if(SettingsHandler.getRegion(this) != null){
             Teemo.getInstance(getApplicationContext()).setRegion(SettingsHandler.getRegion(this));
-
         }
     }
 }
