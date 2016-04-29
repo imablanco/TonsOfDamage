@@ -8,7 +8,6 @@ import com.ablanco.teemo.model.staticdata.LanguageStringsDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -24,7 +23,7 @@ public class ResourcesHandler {
     private ResourcesHandler(Context context) {
         mResources = new HashMap<>();
         if(context != null){
-            Teemo.getInstance(context).getStaticDataHandler().getLanguages(Locale.getDefault().toString(), null, new ServiceResponseListener<LanguageStringsDto>() {
+            Teemo.getInstance(context).getStaticDataHandler().getStringsLanguages(SettingsHandler.getLanguage(context), null, new ServiceResponseListener<LanguageStringsDto>() {
                 @Override
                 public void onResponse(LanguageStringsDto response) {
                     mResources.putAll(response.getData());

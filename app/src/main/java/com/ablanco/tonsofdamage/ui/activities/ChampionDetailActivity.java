@@ -28,8 +28,6 @@ import com.ablanco.tonsofdamage.ui.fragments.ChampionSpellsFragment;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
-import java.util.Locale;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.ene.lab.toro.Toro;
@@ -78,7 +76,7 @@ public class ChampionDetailActivity extends AppCompatActivity {
         championId = getIntent().getIntExtra(EXTRA_CHAMPION_ID, -1);
 
         if(championId >= 0){
-            Teemo.getInstance(this).getStaticDataHandler().getChampionById(championId, Locale.getDefault().toString(), null,
+            Teemo.getInstance(this).getStaticDataHandler().getChampionById(championId, SettingsHandler.getLanguage(this), null,
                     Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.ALL), new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {

@@ -3,6 +3,7 @@ package com.ablanco.tonsofdamage.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
@@ -42,7 +43,6 @@ public class ColorProgressBar extends ProgressBar {
     }
 
     private void setColorInternal(){
-        this.getProgressDrawable().setColorFilter(
-                mColor, android.graphics.PorterDuff.Mode.SRC_IN);
+        DrawableCompat.setTint(this.getProgressDrawable(), mColor);
     }
 }

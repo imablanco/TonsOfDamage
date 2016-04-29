@@ -2,6 +2,7 @@ package com.ablanco.tonsofdamage.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.view.View;
@@ -94,5 +95,19 @@ public class Utils {
     public static double getWinRatio(AggregatedStats stats){
         if(stats.getTotalSessionsLost() == 0) return 100;
         return (double) stats.getTotalSessionsWon() / (double)stats.getTotalSessionsLost() * 100d;
+    }
+
+    public static void updateLanguage(Context ctx, String lang)
+    {
+        Configuration cfg = new Configuration();
+        if (lang != null && !lang.isEmpty())
+            cfg.locale = new Locale(lang);
+        else
+            cfg.locale = Locale.getDefault();
+
+        Locale.setDefault(cfg.locale);
+        ctx.getResources().updateConfiguration(cfg,
+                ctx.getResources().getDisplayMetrics());
+        ctx.getResources().updateConfiguration(cfg, null);
     }
 }

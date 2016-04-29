@@ -19,8 +19,6 @@ import com.ablanco.tonsofdamage.ui.dialogs.ItemDetailDialogFragment;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
-import java.util.Locale;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -58,7 +56,7 @@ public class ItemView extends SquareRelativeLayout implements View.OnClickListen
 
     public void setItemId(int id) {
         this.mId = id;
-        Teemo.getInstance(getContext()).getStaticDataHandler().getItemById(id, Locale.getDefault().toString(), null, StaticAPIQueryParams.Items.gold, new ServiceResponseListener<ItemDto>() {
+        Teemo.getInstance(getContext()).getStaticDataHandler().getItemById(id, SettingsHandler.getLanguage(getContext()), null, StaticAPIQueryParams.Items.gold, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
                 if(response.getGold() != null && mImgItem != null){

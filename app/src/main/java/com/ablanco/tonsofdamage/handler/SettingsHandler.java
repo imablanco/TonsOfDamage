@@ -16,10 +16,11 @@ public class SettingsHandler {
     private static final String KEY_SUMMONER = "summoner";
     private static final String KEY_FAVORITE_CHAMPIONS = "favorite_champions";
     private static final String KEY_CDN_VERSION = "cdn_version";
+    private static final String KEY_LANGUAGE = "language";
 
 
     public static boolean isSetupNeeded(Context context){
-        return getRegion(context) == null || getSummoner(context) == -1;
+        return getRegion(context) == null || getSummoner(context) == -1 || getLanguage(context).isEmpty() ;
     }
 
     public static void setRegion(Context context, String region){
@@ -36,6 +37,14 @@ public class SettingsHandler {
 
     public static long getSummoner(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context).getLong(KEY_SUMMONER,-1);
+    }
+
+    public static void setLanguage(Context context, String lang){
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(KEY_LANGUAGE, lang).apply();
+    }
+
+    public static String getLanguage(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_LANGUAGE, "");
     }
 
     public static void setCDNVersion(Context context, String version){

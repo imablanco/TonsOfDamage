@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ablanco.teemo.Teemo;
+import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.Regions;
+import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.Animationutils;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.Animationutils;
 
 import java.util.List;
 
@@ -30,13 +32,16 @@ import butterknife.OnClick;
  */
 public class ChooseRegionFragment extends BaseFragment {
 
-    @Bind(R.id.recycler_view) RecyclerView mRecycler;
-    @Bind(R.id.fab_choose_region) FloatingActionButton mChooseRegionFab;
-    @Bind(R.id.tv_selected_region) TextView tvSelectedRegion;
+    @Bind(R.id.recycler_view)
+    RecyclerView mRecycler;
+    @Bind(R.id.fab_choose_region)
+    FloatingActionButton mChooseRegionFab;
+    @Bind(R.id.tv_selected_region)
+    TextView tvSelectedRegion;
 
     private String selectedRegion;
 
-    public static Fragment newInstance(){
+    public static Fragment newInstance() {
         return new ChooseRegionFragment();
     }
 
@@ -54,43 +59,64 @@ public class ChooseRegionFragment extends BaseFragment {
         mRecycler.setAdapter(new RegionAdapter(Regions.getAll()));
     }
 
-    public void revealChooseRegionFab(){
+    public void revealChooseRegionFab() {
 
-        if(mChooseRegionFab.getVisibility() != View.VISIBLE){
+        if (mChooseRegionFab.getVisibility() != View.VISIBLE) {
             Animationutils.revealView(mChooseRegionFab);
         }
     }
 
     @OnClick(R.id.fab_choose_region)
-    public void setRegionAndNavigate(){
+    public void setRegionAndNavigate() {
         SettingsHandler.setRegion(getActivity(), selectedRegion);
         Teemo.getInstance(getActivity()).setRegion(selectedRegion);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.content, PickSummonerFragment.newInstance())
-                .commit();
+
+        Teemo.getInstance(getActivity()).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
+            @Override
+            public void onResponse(List<String> response) {
+                if (getActivity() != null) {
+                    SettingsHandler.setCDNVersion(getActivity(), response.get(0));
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.content, ChooseLanguageFragment.newInstance())
+                            .commit();
+                }
+
+            }
+
+            @Override
+            public void onError(TeemoException e) {
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .replace(R.id.content, ChooseLanguageFragment.newInstance())
+                            .commit();
+                }
+            }
+        });
+
     }
 
-    class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder>{
+    class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder> {
 
         private List<String> regions;
 
-        public RegionAdapter(List<String> regions){
+        public RegionAdapter(List<String> regions) {
             this.regions = regions;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dialog_choose_region, parent, false));
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_list_item, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.tv.setText(regions.get(position));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectedRegion = regions.get(position);
+                    selectedRegion = regions.get(holder.getAdapterPosition());
                     revealChooseRegionFab();
                     tvSelectedRegion.setText(selectedRegion);
                 }
@@ -103,10 +129,11 @@ public class ChooseRegionFragment extends BaseFragment {
             return regions.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
 
             @Bind(R.id.tv)
             TextView tv;
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);

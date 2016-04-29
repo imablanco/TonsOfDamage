@@ -75,5 +75,6 @@
     <string name="most_played">Most played champions</string>
     <string name="last_match">Latest Match</string>
     <string name="recent_games">Recent Games</string>
+    <string name="choose_language">Choose Language</string>
 
 </resources>

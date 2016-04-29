@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,7 +91,7 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getItemById(mId, Locale.getDefault().toString(), null, StaticAPIQueryParams.Items.all, new ServiceResponseListener<ItemDto>() {
+        Teemo.getInstance(getActivity()).getStaticDataHandler().getItemById(mId, SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Items.all, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
                 if (getActivity() != null) {

@@ -20,10 +20,10 @@ import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.RecentGamesAdapter;
 import com.ablanco.tonsofdamage.adapter.RecentGamesData;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -74,7 +74,7 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                     Observable<RecentGamesData> s = Observable.zip(Observable.create(new Observable.OnSubscribe<ChampionDto>() {
                         @Override
                         public void call(final Subscriber<? super ChampionDto> subscriber) {
-                            Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(game.getChampionId(), Locale.getDefault().toString(), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                            Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(game.getChampionId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
                                 @Override
                                 public void onResponse(ChampionDto response) {
                                     subscriber.onNext(response);
@@ -91,7 +91,7 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                     }), Observable.create(new Observable.OnSubscribe<SummonerSpellDto>() {
                         @Override
                         public void call(final Subscriber<? super SummonerSpellDto> subscriber) {
-                            Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell1(), Locale.getDefault().toString(), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
+                            Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell1(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
                                 @Override
                                 public void onResponse(SummonerSpellDto response) {
                                     subscriber.onNext(response);
@@ -108,7 +108,7 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                     }),Observable.create(new Observable.OnSubscribe<SummonerSpellDto>() {
                         @Override
                         public void call(final Subscriber<? super SummonerSpellDto> subscriber) {
-                            Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell2(), Locale.getDefault().toString(), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
+                            Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell2(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
                                 @Override
                                 public void onResponse(SummonerSpellDto response) {
                                     subscriber.onNext(response);

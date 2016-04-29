@@ -16,7 +16,6 @@ import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -60,7 +59,7 @@ public class StaticDataHandler {
         if (!mChampions.isEmpty()) {
             listener.onResponse(mChampions);
         } else {
-            Teemo.getInstance(context).getStaticDataHandler().getChampions(Locale.getDefault().toString(), null, null,
+            Teemo.getInstance(context).getStaticDataHandler().getChampions(SettingsHandler.getLanguage(context), null, null,
                     Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.IMAGE, StaticAPIQueryParams.Champions.INFO, StaticAPIQueryParams.Champions.TAGS, StaticAPIQueryParams.Champions.SKINS),
                     new ServiceResponseListener<ChampionListDto>() {
                         @Override
@@ -88,7 +87,7 @@ public class StaticDataHandler {
         if (!mItems.isEmpty()) {
             listener.onResponse(mItems);
         } else {
-            Teemo.getInstance(context).getStaticDataHandler().getItems(Locale.getDefault().toString(), null, Utils.buildStaticQueryParams(StaticAPIQueryParams.Items.tags, StaticAPIQueryParams.Items.gold), new ServiceResponseListener<ItemListDto>() {
+            Teemo.getInstance(context).getStaticDataHandler().getItems(SettingsHandler.getLanguage(context), null, Utils.buildStaticQueryParams(StaticAPIQueryParams.Items.tags, StaticAPIQueryParams.Items.gold), new ServiceResponseListener<ItemListDto>() {
                 @Override
                 public void onResponse(ItemListDto response) {
                     mItems.clear();

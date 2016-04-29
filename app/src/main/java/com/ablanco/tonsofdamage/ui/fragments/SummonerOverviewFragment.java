@@ -34,7 +34,6 @@ import com.bumptech.glide.Glide;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -136,7 +135,7 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
                 }
 
                 for (final ChampionStats stats : mostPlayed){
-                    Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(stats.getId(), Locale.getDefault().toString(), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                    Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(stats.getId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {
                             mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(stats.getStats(), response.getImage().getFull()));
