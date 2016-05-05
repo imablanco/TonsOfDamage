@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.Queue;
+import com.ablanco.teemo.constants.Season;
 import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.leagues.League;
 import com.ablanco.teemo.model.leagues.LeagueEntry;
@@ -76,7 +77,7 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
 
     private SummonerMostPlayedChampionsAdapter mostPlayedChampionsAdapter;
 
-    public static Fragment newInstance(long id){
+    public static Fragment newInstance(long id) {
         BaseSummonerDetailFragment fragment = new SummonerOverviewFragment();
         fragment.setSummonerId(id);
         return fragment;
@@ -98,11 +99,11 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
         loadSummoner();
     }
 
-    private void loadSummoner(){
+    private void loadSummoner() {
         Teemo.getInstance(getActivity()).getSummonersHandler().getSummonerById(String.valueOf(summonerId), new ServiceResponseListener<Summoner>() {
             @Override
             public void onResponse(Summoner response) {
-                if(getActivity() != null){
+                if (getActivity() != null) {
 
                     Glide.with(getActivity()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(response.getProfileIconId()))).into(mImgSummoner);
                     mTvSummonerName.setText(response.getName());
@@ -119,34 +120,37 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
     }
 
     private void loadMostPlayedChampions() {
-        Teemo.getInstance(getActivity()).getStatsHandler().getRankedStatsBySummonerAndSeason(summonerId, null, new ServiceResponseListener<RankedStats>() {
+        Teemo.getInstance(getActivity()).getStatsHandler().getRankedStatsBySummonerAndSeason(summonerId, Season.SEASON2016, new ServiceResponseListener<RankedStats>() {
             @Override
             public void onResponse(RankedStats response) {
                 List<ChampionStats> mostPlayed = response.getChampions();
                 Collections.sort(mostPlayed, new Comparator<ChampionStats>() {
                     @Override
                     public int compare(ChampionStats lhs, ChampionStats rhs) {
-                        return lhs.getStats().getTotalSessionsPlayed().compareTo(rhs.getStats().getTotalSessionsPlayed());
+                        return rhs.getStats().getTotalSessionsPlayed().compareTo(lhs.getStats().getTotalSessionsPlayed());
                     }
                 });
 
-                if(mostPlayed.size() >= 4){
-                    mostPlayed = mostPlayed.subList(0,4);
+                if (mostPlayed.size() >= 5) { //// TODO: 1/5/16 for some reason first object always comes with idChampion 0, could be a summarized stats??? cuase its ordered by totalsessionsplayed desc
+                    mostPlayed = mostPlayed.subList(1, 5);
                 }
 
-                for (final ChampionStats stats : mostPlayed){
-                    Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(stats.getId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                        @Override
-                        public void onResponse(ChampionDto response) {
-                            mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(stats.getStats(), response.getImage().getFull()));
+                for (final ChampionStats mostPlayedChamp : mostPlayed) {
+                    if (getActivity() != null) {
+                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(mostPlayedChamp.getId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                            @Override
+                            public void onResponse(ChampionDto response) {
+                                mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(mostPlayedChamp.getStats(), response.getImage().getFull()));
 
-                        }
+                            }
 
-                        @Override
-                        public void onError(TeemoException e) {
+                            @Override
+                            public void onError(TeemoException e) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
                 }
             }
 
@@ -157,13 +161,13 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
         });
     }
 
-    private void loadRankedInfo(){
+    private void loadRankedInfo() {
         Teemo.getInstance(getContext()).getLeaguesHandler().getLeaguesBySummoners(Collections.singletonList(String.valueOf(summonerId)), true, new ServiceResponseListener<Map<String, List<League>>>() {
             @Override
             public void onResponse(Map<String, List<League>> response) {
-                if(getActivity() != null && response.get(String.valueOf(summonerId)) != null){
+                if (getActivity() != null && response.get(String.valueOf(summonerId)) != null) {
                     LeagueEntry entry;
-                    for (League league : response.get(String.valueOf(summonerId))){
+                    for (League league : response.get(String.valueOf(summonerId))) {
                         switch (league.getQueue()) {
                             case Queue.RANKED_SOLO_5x5:
                                 mTvSoloQName.setText(league.getName());
@@ -208,10 +212,10 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
             }
 
             @Override
-            public void onError(TeemoException e) {}
+            public void onError(TeemoException e) {
+            }
         });
     }
-
 
 
 }

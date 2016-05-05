@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.Animationutils;
+import com.ablanco.tonsofdamage.utils.AnimationUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,7 +74,7 @@ public class AvatarImageView extends RelativeLayout {
     }
 
     public void showLevel(){
-        Animationutils.revealView(tvLevel);
+        AnimationUtils.revealView(tvLevel);
     }
 
     public void hideLevel(){

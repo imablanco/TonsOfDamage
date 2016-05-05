@@ -67,7 +67,7 @@ public class ItemView extends SquareRelativeLayout implements View.OnClickListen
                         mTvPrice.setText(String.valueOf(response.getGold().getBase()));
                     }
 
-                    Glide.with(getContext()).load(ImageUris.SCORE_BOARD_GOLD_URL).into(mIcCoins);
+                    mIcCoins.setImageResource(R.drawable.ic_gold);
                 }
             }
 

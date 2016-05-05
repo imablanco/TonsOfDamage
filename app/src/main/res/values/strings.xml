@@ -76,5 +76,6 @@
     <string name="last_match">Latest Match</string>
     <string name="recent_games">Recent Games</string>
     <string name="choose_language">Choose Language</string>
+    <string name="match_detail_transition">transition%1$d</string>
 
 </resources>

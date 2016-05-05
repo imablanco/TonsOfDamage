@@ -3,11 +3,13 @@ package com.ablanco.tonsofdamage.handler;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 
 import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.ui.activities.ChampionSkinDetailActivity;
 import com.ablanco.tonsofdamage.ui.activities.FirstAccessSetupActivity;
 import com.ablanco.tonsofdamage.ui.activities.HomeActivity;
+import com.ablanco.tonsofdamage.ui.activities.MatchDetailActivity;
 import com.ablanco.tonsofdamage.ui.activities.SummonerDetailActivity;
 
 /**
@@ -21,14 +23,23 @@ public class NavigationHandler {
     public static final String CHAMPION_DETAIL = "CHAMPION_DETAIL";
     public static final String CHAMPION_SKIN_DETAIL = "CHAMPION_SKIN_DETAIL";
     public static final String SUMMONER_DETAIL = "SUMMONER_DETAIL";
+    public static final String MATCH_DETAIL = "MATCG_DETAIL";
 
     private NavigationHandler(){}
 
     public static void navigateTo(Context context, String destination){
-        navigateTo(context, destination, null);
+        navigateTo(context, destination, null, null);
+    }
+
+    public static void navigateTo(Context context, String destination, ActivityOptionsCompat options){
+        navigateTo(context, destination, null, options);
     }
 
     public static void navigateTo(Context context, String destination, Bundle extras){
+        navigateTo(context, destination, extras, null);
+    }
+
+    public static void navigateTo(Context context, String destination, Bundle extras, ActivityOptionsCompat options){
         Class clazz = getDestinationClass(destination);
 
         if(destination != null){
@@ -41,7 +52,11 @@ public class NavigationHandler {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
 
-            context.startActivity(intent);
+            if(options != null){
+                context.startActivity(intent, options.toBundle());
+            }else {
+                context.startActivity(intent);
+            }
         }
     }
 
@@ -58,6 +73,8 @@ public class NavigationHandler {
             classDestination = ChampionSkinDetailActivity.class;
         } else if(destination.equalsIgnoreCase(SUMMONER_DETAIL)){
             classDestination = SummonerDetailActivity.class;
+        } else if(destination.equalsIgnoreCase(MATCH_DETAIL)){
+            classDestination = MatchDetailActivity.class;
         }
 
         return classDestination;

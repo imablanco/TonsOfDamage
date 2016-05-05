@@ -48,8 +48,12 @@
 
 
     <View
-        android:background="?selectableItemBackgroundBorderless"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:background="?selectableItemBackground"
+        android:layout_alignTop="@id/img_item"
+        android:layout_alignBottom="@id/img_item"
+        android:layout_alignLeft="@id/img_item"
+        android:layout_alignRight="@id/img_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

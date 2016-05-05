@@ -17,7 +17,7 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.utils.Animationutils;
+import com.ablanco.tonsofdamage.utils.AnimationUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class ChooseLanguageFragment extends BaseFragment {
     public void revealChooseRegionFab() {
 
         if (mChooseLanguageFab.getVisibility() != View.VISIBLE) {
-            Animationutils.revealView(mChooseLanguageFab);
+            AnimationUtils.revealView(mChooseLanguageFab);
         }
     }
 

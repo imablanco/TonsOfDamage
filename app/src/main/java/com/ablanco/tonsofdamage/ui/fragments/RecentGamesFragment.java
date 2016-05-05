@@ -14,6 +14,7 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.games.Game;
 import com.ablanco.teemo.model.games.RecentGames;
+import com.ablanco.teemo.model.matches.MatchDetail;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.SummonerSpellDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
@@ -22,13 +23,15 @@ import com.ablanco.tonsofdamage.adapter.RecentGamesAdapter;
 import com.ablanco.tonsofdamage.adapter.RecentGamesData;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import butterknife.Bind;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func3;
+import rx.functions.Func4;
 
 /**
  * Created by Álvaro Blanco on 21/04/2016.
@@ -38,6 +41,8 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
+    private List<RecentGamesData> recentGamesDatas = new ArrayList<>();
+    private RecentGamesAdapter adapter;
 
     public static Fragment newInstance(long id) {
         BaseSummonerDetailFragment f = new RecentGamesFragment();
@@ -56,12 +61,13 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        final RecentGamesAdapter adapter = new RecentGamesAdapter(getActivity());
+        adapter = new RecentGamesAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
         Teemo.getInstance(getActivity()).getGamesHandler().getRecentGames(summonerId, new ServiceResponseListener<RecentGames>() {
             @Override
             public void onResponse(RecentGames response) {
+
                 Collections.sort(response.getGames(), new Comparator<Game>() {
                     @Override
                     public int compare(Game lhs, Game rhs) {
@@ -69,83 +75,108 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                     }
                 });
 
+
                 for (final Game game : response.getGames()) {
 
                     Observable<RecentGamesData> s = Observable.zip(Observable.create(new Observable.OnSubscribe<ChampionDto>() {
-                        @Override
-                        public void call(final Subscriber<? super ChampionDto> subscriber) {
-                            Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(game.getChampionId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
                                 @Override
-                                public void onResponse(ChampionDto response) {
-                                    subscriber.onNext(response);
-                                    subscriber.onCompleted();
+                                public void call(final Subscriber<? super ChampionDto> subscriber) {
+                                    if (getActivity() != null) {
+                                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(game.getChampionId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                                            @Override
+                                            public void onResponse(ChampionDto response) {
+                                                subscriber.onNext(response);
+                                                subscriber.onCompleted();
+                                            }
+
+                                            @Override
+                                            public void onError(TeemoException e) {
+                                                subscriber.onError(e);
+                                            }
+                                        });
+                                    }
                                 }
 
+                            }), Observable.create(new Observable.OnSubscribe<SummonerSpellDto>() {
                                 @Override
-                                public void onError(TeemoException e) {
-                                    subscriber.onError(e);
+                                public void call(final Subscriber<? super SummonerSpellDto> subscriber) {
+                                    if (getActivity() != null) {
+                                        Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell1(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
+                                            @Override
+                                            public void onResponse(SummonerSpellDto response) {
+                                                subscriber.onNext(response);
+                                                subscriber.onCompleted();
+                                            }
+
+                                            @Override
+                                            public void onError(TeemoException e) {
+                                                subscriber.onError(e);
+                                            }
+                                        });
+                                    }
+                                }
+
+                            }), Observable.create(new Observable.OnSubscribe<SummonerSpellDto>() {
+                                @Override
+                                public void call(final Subscriber<? super SummonerSpellDto> subscriber) {
+                                    if (getActivity() != null) {
+                                        Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell2(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
+                                            @Override
+                                            public void onResponse(SummonerSpellDto response) {
+                                                subscriber.onNext(response);
+                                                subscriber.onCompleted();
+                                            }
+
+                                            @Override
+                                            public void onError(TeemoException e) {
+                                                subscriber.onError(e);
+                                            }
+                                        });
+                                    }
+                                }
+
+                            }), Observable.create(new Observable.OnSubscribe<MatchDetail>() {
+                                @Override
+                                public void call(final Subscriber<? super MatchDetail> subscriber) {
+                                    if (getActivity() != null) {
+                                        Teemo.getInstance(getActivity()).getMatchesHandler().getMatch(game.getGameId(), false, new ServiceResponseListener<MatchDetail>() {
+                                            @Override
+                                            public void onResponse(MatchDetail response) {
+                                                subscriber.onNext(response);
+                                                subscriber.onCompleted();
+                                            }
+
+                                            @Override
+                                            public void onError(TeemoException e) {
+                                                subscriber.onError(e);
+                                            }
+                                        });
+                                    }
+                                }
+
+                            }), new Func4<ChampionDto, SummonerSpellDto, SummonerSpellDto, MatchDetail, RecentGamesData>() {
+                                @Override
+                                public RecentGamesData call(ChampionDto championDto, SummonerSpellDto summonerSpellDto, SummonerSpellDto summonerSpellDto2, MatchDetail detail) {
+                                    return new RecentGamesData(game, championDto, detail, summonerSpellDto, summonerSpellDto2);
                                 }
                             });
-                        }
 
-                    }), Observable.create(new Observable.OnSubscribe<SummonerSpellDto>() {
-                        @Override
-                        public void call(final Subscriber<? super SummonerSpellDto> subscriber) {
-                            Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell1(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
+                            s.subscribe(new Subscriber<RecentGamesData>() {
                                 @Override
-                                public void onResponse(SummonerSpellDto response) {
-                                    subscriber.onNext(response);
-                                    subscriber.onCompleted();
+                                public void onCompleted() {
                                 }
 
                                 @Override
-                                public void onError(TeemoException e) {
-                                    subscriber.onError(e);
-                                }
-                            });
-                        }
-
-                    }),Observable.create(new Observable.OnSubscribe<SummonerSpellDto>() {
-                        @Override
-                        public void call(final Subscriber<? super SummonerSpellDto> subscriber) {
-                            Teemo.getInstance(getActivity()).getStaticDataHandler().getSummonerSpell(game.getSpell2(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.SummonerSpells.image, new ServiceResponseListener<SummonerSpellDto>() {
-                                @Override
-                                public void onResponse(SummonerSpellDto response) {
-                                    subscriber.onNext(response);
-                                    subscriber.onCompleted();
+                                public void onError(Throwable e) {
+                                    // TODO: 1/5/16 handle error
                                 }
 
                                 @Override
-                                public void onError(TeemoException e) {
-                                    subscriber.onError(e);
+                                public void onNext(RecentGamesData recentGamesData) {
+                                    adapter.addGame(recentGamesData);
+
                                 }
                             });
-                        }
-
-                    }), new Func3<ChampionDto, SummonerSpellDto, SummonerSpellDto, RecentGamesData>(){
-                        @Override
-                        public RecentGamesData call(ChampionDto championDto, SummonerSpellDto summonerSpellDto, SummonerSpellDto summonerSpellDto2) {
-                           return new RecentGamesData(game, championDto, summonerSpellDto, summonerSpellDto2);
-                        }
-
-                    });
-
-                    s.subscribe(new Subscriber<RecentGamesData>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(RecentGamesData recentGamesData) {
-                            adapter.addGame(recentGamesData);
-                        }
-                    });
 
 
                 }
@@ -153,7 +184,7 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
 
             @Override
             public void onError(TeemoException e) {
-
+                // TODO: 1/5/16 handle error
             }
         });
 

@@ -18,7 +18,7 @@ import com.ablanco.teemo.constants.Regions;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.utils.Animationutils;
+import com.ablanco.tonsofdamage.utils.AnimationUtils;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class ChooseRegionFragment extends BaseFragment {
     public void revealChooseRegionFab() {
 
         if (mChooseRegionFab.getVisibility() != View.VISIBLE) {
-            Animationutils.revealView(mChooseRegionFab);
+            AnimationUtils.revealView(mChooseRegionFab);
         }
     }
 

@@ -53,7 +53,7 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
         if(item.getGold() != null){
             holder.mTvPrice.setVisibility(View.VISIBLE);
             holder.mTvPrice.setText(Utils.getItemPrice(item.getGold().getTotal(), item.getGold().getBase()));
-            Glide.with(context).load(ImageUris.SCORE_BOARD_GOLD_URL).into(holder.mIcCoins);
+            holder.mIcCoins.setImageResource(R.drawable.ic_gold);
             holder.mIcCoins.setVisibility(View.VISIBLE);
         }else {
             holder.mIcCoins.setVisibility(View.GONE);

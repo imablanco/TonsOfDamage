@@ -15,7 +15,7 @@
 
     <View
         android:layout_centerHorizontal="true"
-        android:background="@drawable/champion_spell_bg"
+        android:background="@drawable/image_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/img_champion_square"
@@ -24,6 +24,8 @@
         android:layout_alignLeft="@id/img_champion_square" />
 
     <ImageView
+        android:layout_marginRight="2dp"
+        android:scaleType="fitCenter"
         android:id="@+id/ic_sword"
         android:layout_marginTop="5dp"
         android:layout_below="@id/img_champion_square"

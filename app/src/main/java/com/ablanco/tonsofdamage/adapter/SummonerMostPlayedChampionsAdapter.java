@@ -45,7 +45,7 @@ public class SummonerMostPlayedChampionsAdapter extends RecyclerView.Adapter<Sum
 
         ChampionStatsData stats = championStatses.get(position);
         Glide.with(context).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(context), stats.getName())).into(holder.mImgChampionSquare);
-        Glide.with(context).load(ImageUris.SCORE_BOARD_SCORE_URL).into(holder.mIcSword);
+        holder.mIcSword.setImageResource(R.drawable.ic_score);
         holder.mTvKda.setText(String.format(Locale.getDefault(), " %.2f KDA", Utils.getKDA(stats.getStats())));
         holder.mTvAverages.setText(Utils.getAverage(stats.getStats()));
         holder.mTvWinsLoses.setText(String.format(Locale.getDefault(), "W: %.0f%%", Utils.getWinRatio(stats.getStats())));

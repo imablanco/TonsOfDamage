@@ -39,7 +39,7 @@
 
         <ImageView
             android:id="@+id/ic_coins"
-            android:scaleType="fitEnd"
+            android:scaleType="fitCenter"
             android:layout_alignBottom="@id/item_img"
             android:layout_toRightOf="@id/item_img"
             android:layout_width="20dp"

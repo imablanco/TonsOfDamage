@@ -96,7 +96,7 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
             public void onResponse(ItemDto response) {
                 if (getActivity() != null) {
                     Glide.with(getActivity()).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(mId))).into(mItemImg);
-                    Glide.with(getActivity()).load(ImageUris.SCORE_BOARD_GOLD_URL).into(mIcCoins);
+                    mIcCoins.setImageResource(R.drawable.ic_gold);
                     mTvTitle.setText(response.getName());
                     mTvItemDescription.setText(Html.fromHtml(response.getDescription()));
                     if (response.getGold() != null) {

@@ -9,7 +9,7 @@ import android.view.ViewAnimationUtils;
  * Created by Álvaro Blanco on 30/03/2016.
  * TonsOfDamage
  */
-public class Animationutils {
+public class AnimationUtils {
 
     public static void revealView(final View view){
 

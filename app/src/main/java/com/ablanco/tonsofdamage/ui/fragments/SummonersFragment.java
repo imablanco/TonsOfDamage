@@ -22,7 +22,7 @@ import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.ui.activities.SummonerDetailActivity;
-import com.ablanco.tonsofdamage.utils.Animationutils;
+import com.ablanco.tonsofdamage.utils.AnimationUtils;
 import com.ablanco.tonsofdamage.utils.ErrorUtils;
 import com.ablanco.tonsofdamage.utils.SummonerSuggestion;
 import com.ablanco.tonsofdamage.utils.Utils;
@@ -153,7 +153,7 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
             public void onResponse(Summoner response) {
                 if(getActivity() != null){
                     loading.setVisibility(View.GONE);
-                    Animationutils.revealView(mSummonerLayout);
+                    AnimationUtils.revealView(mSummonerLayout);
                     mSelectedSummoner = response.getId();
                     mSummonerLayout.setOnClickListener(SummonersFragment.this);
 
