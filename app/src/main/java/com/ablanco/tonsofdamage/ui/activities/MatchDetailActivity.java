@@ -183,7 +183,7 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
     }
 
-    private void setUpStats(RawStats stats){
+    private void setUpStats(RawStats stats) {
 
         SeriesItem goldSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
                 .setRange(0, stats.getGoldEarned(), stats.getGoldEarned())
@@ -243,7 +243,7 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
         tvTrueDamageTaken.setText(getString(R.string.damage_t_taken, Utils.getFormattedStats(stats.getTrueDamageTaken())));
     }
 
-    private void sortStatsAndSet(DecoView view, List<SeriesItem> items){
+    private void sortStatsAndSet(DecoView view, List<SeriesItem> items) {
         Collections.sort(items, new Comparator<SeriesItem>() {
             @Override
             public int compare(SeriesItem lhs, SeriesItem rhs) {
@@ -251,10 +251,11 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
             }
         });
 
-        for (SeriesItem item : items){
+        for (SeriesItem item : items) {
             view.addSeries(item);
         }
     }
+
     public static void startAlphaAnimation(View v, long duration, int visibility) {
         AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
                 ? new AlphaAnimation(0f, 1f)
@@ -359,15 +360,20 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
             final Pair<Player, Player> item = mParticipants.get(position);
             if (item.first != null) {
+                if (item.first.getSummonerId() != SettingsHandler.getSummoner(mContext)) {
+                    holder.root1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putLong(SummonerDetailActivity.EXTRA_ID, item.first.getSummonerId());
+                            NavigationHandler.navigateTo(mContext, NavigationHandler.SUMMONER_DETAIL, bundle);
+                        }
+                    });
 
-                holder.root1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(SummonerDetailActivity.EXTRA_ID, item.first.getSummonerId());
-                        NavigationHandler.navigateTo(mContext, NavigationHandler.SUMMONER_DETAIL, bundle);
-                    }
-                });
+                } else {
+                    //TODO go to summoner specific page
+                }
+
                 Teemo.getInstance(mContext).getSummonersHandler().getSummonerNameById(String.valueOf(item.first.getSummonerId()), new ServiceResponseListener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -397,14 +403,18 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
             if (item.second != null) {
 
-                holder.root2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(SummonerDetailActivity.EXTRA_ID, item.second.getSummonerId());
-                        NavigationHandler.navigateTo(mContext, NavigationHandler.SUMMONER_DETAIL, bundle);
-                    }
-                });
+                if (item.second.getSummonerId() != SettingsHandler.getSummoner(mContext)) {
+                    holder.root2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putLong(SummonerDetailActivity.EXTRA_ID, item.second.getSummonerId());
+                            NavigationHandler.navigateTo(mContext, NavigationHandler.SUMMONER_DETAIL, bundle);
+                        }
+                    });
+                } else {
+                    //TODO go to summoner specific page
+                }
 
                 Teemo.getInstance(mContext).getSummonersHandler().getSummonerNameById(String.valueOf(item.second.getSummonerId()), new ServiceResponseListener<String>() {
                     @Override
