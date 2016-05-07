@@ -1,32 +1,36 @@
 package com.ablanco.tonsofdamage.adapter;
 
-import android.support.v4.util.Pair;
-
 import com.ablanco.teemo.model.games.Game;
-import com.ablanco.teemo.model.matches.MatchDetail;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.SummonerSpellDto;
+
+import java.io.Serializable;
 
 /**
  * Created by Álvaro Blanco on 21/04/2016.
  * TonsOfDamage
  */
-public class RecentGamesData {
+public class RecentGamesData implements Serializable{
 
     private Game game;
-    private Pair<SummonerSpellDto, SummonerSpellDto> summonerSpells;
+    private SummonerSpellDto summonerSpellDto1;
+    private SummonerSpellDto summonerSpellDto2;
     private ChampionDto championDto;
-    private MatchDetail matchDetail;
 
-    public RecentGamesData(Game game, ChampionDto championDto,MatchDetail detail, SummonerSpellDto summonerSpellDto1, SummonerSpellDto summonerSpellDto2) {
+    public RecentGamesData(Game game, ChampionDto championDto, SummonerSpellDto summonerSpellDto1, SummonerSpellDto summonerSpellDto2) {
         this.game = game;
-        this.summonerSpells = new Pair<>(summonerSpellDto1, summonerSpellDto2);
+        this.summonerSpellDto1 = summonerSpellDto1;
+        this.summonerSpellDto2 = summonerSpellDto2;
         this.championDto = championDto;
-        this.matchDetail = detail;
     }
 
-    public Pair<SummonerSpellDto, SummonerSpellDto> getSummonerSpells() {
-        return summonerSpells;
+
+    public SummonerSpellDto getSummonerSpellDto1() {
+        return summonerSpellDto1;
+    }
+
+    public SummonerSpellDto getSummonerSpellDto2() {
+        return summonerSpellDto2;
     }
 
     public Game getGame() {
@@ -37,7 +41,4 @@ public class RecentGamesData {
         return championDto;
     }
 
-    public MatchDetail getMatchDetail() {
-        return matchDetail;
-    }
 }

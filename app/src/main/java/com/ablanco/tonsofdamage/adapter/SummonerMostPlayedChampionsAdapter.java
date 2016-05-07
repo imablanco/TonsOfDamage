@@ -1,6 +1,7 @@
 package com.ablanco.tonsofdamage.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
@@ -43,12 +46,20 @@ public class SummonerMostPlayedChampionsAdapter extends RecyclerView.Adapter<Sum
     @Override
     public void onBindViewHolder(ChampionViewHolder holder, int position) {
 
-        ChampionStatsData stats = championStatses.get(position);
+        final ChampionStatsData stats = championStatses.get(position);
         Glide.with(context).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(context), stats.getName())).into(holder.mImgChampionSquare);
         holder.mIcSword.setImageResource(R.drawable.ic_score);
         holder.mTvKda.setText(String.format(Locale.getDefault(), " %.2f KDA", Utils.getKDA(stats.getStats())));
         holder.mTvAverages.setText(Utils.getAverage(stats.getStats()));
         holder.mTvWinsLoses.setText(String.format(Locale.getDefault(), "W: %.0f%%", Utils.getWinRatio(stats.getStats())));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(ChampionDetailActivity.EXTRA_CHAMPION_ID, stats.getId());
+                NavigationHandler.navigateTo(context, NavigationHandler.CHAMPION_DETAIL, bundle);
+            }
+        });
 
     }
 

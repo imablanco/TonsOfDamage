@@ -23,6 +23,16 @@
         android:layout_alignRight="@id/img_champion_square"
         android:layout_alignLeft="@id/img_champion_square" />
 
+    <View
+        android:layout_centerHorizontal="true"
+        android:background="?selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img_champion_square"
+        android:layout_alignBottom="@id/img_champion_square"
+        android:layout_alignRight="@id/img_champion_square"
+        android:layout_alignLeft="@id/img_champion_square" />
+
     <ImageView
         android:layout_marginRight="2dp"
         android:scaleType="fitCenter"

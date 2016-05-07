@@ -101,15 +101,6 @@ public class Utils {
                 stats.getNumDeaths(), stats.getAssists());
     }
 
-    public static String getFormattedGold(Integer gold) {
-        String formattedGold = gold.toString();
-        if (gold > 1000) {
-            formattedGold = String.format(Locale.getDefault(), "%.1fk", gold.doubleValue() / 1000);
-        }
-
-        return formattedGold;
-    }
-
     public static double getWinRatio(AggregatedStats stats) {
         if (stats.getTotalSessionsLost() == 0) return 100;
         return (double) stats.getTotalSessionsWon() * 100 / (double) stats.getTotalSessionsPlayed();
@@ -132,5 +123,13 @@ public class Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             view.setTransitionName(transitionName);
         }
+    }
+
+    public static String getFormattedStats(Integer value){
+        if(value > 1000000){
+            return String.format(Locale.getDefault(), "%.1fM", value.doubleValue()/ 1000000);
+        }else if(value > 1000){
+            return String.format(Locale.getDefault(), "%.1fK", value.doubleValue()/ 1000);
+        }else return String.valueOf(value);
     }
 }

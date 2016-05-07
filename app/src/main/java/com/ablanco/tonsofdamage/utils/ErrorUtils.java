@@ -20,7 +20,7 @@ public class ErrorUtils {
 
     public static void showPersistentError(View v, View.OnClickListener listener){
         if(v != null){
-            Snackbar.make(v, R.string.error_text, Snackbar.LENGTH_INDEFINITE).setAction(R.string.error_text, listener).show();
+            Snackbar.make(v, R.string.error_text, Snackbar.LENGTH_INDEFINITE).setAction(R.string.reload, listener).show();
         }
     }
 }

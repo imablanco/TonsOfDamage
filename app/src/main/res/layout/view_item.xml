@@ -48,6 +48,7 @@
 
 
     <View
+        android:layout_centerHorizontal="true"
         android:background="?selectableItemBackground"
         android:layout_alignTop="@id/img_item"
         android:layout_alignBottom="@id/img_item"

@@ -59,19 +59,24 @@ public class SummonerDetailActivity extends AppCompatActivity {
         Teemo.getInstance(this).getSummonersHandler().getSummonerById(String.valueOf(mId), new ServiceResponseListener<Summoner>() {
             @Override
             public void onResponse(Summoner response) {
-                mToolbar.setTitle(response.getName());
-                mPager.setAdapter(new SummonerDetailPagerAdapter());
-                mTabLayout.setupWithViewPager(mPager);
+                if(!isFinishing()){
+                    mToolbar.setTitle(response.getName());
+                    mPager.setAdapter(new SummonerDetailPagerAdapter());
+                    mTabLayout.setupWithViewPager(mPager);
+                }
+
             }
 
             @Override
             public void onError(TeemoException e) {
-                ErrorUtils.showPersistentError(mPager, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setUp();
-                    }
-                });
+                if(!isFinishing()){
+                    ErrorUtils.showPersistentError(mPager, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setUp();
+                        }
+                    });
+                }
             }
         });
     }

@@ -91,11 +91,31 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
                     loading.setVisibility(View.GONE);
                 }
 
-                mItems.addAll(response);
-                mFilteredItems.addAll(response);
+                Observable.from(response).filter(new Func1<ItemDto, Boolean>() {
+                    @Override
+                    public Boolean call(ItemDto itemDto) {
+                        return itemDto.getName() != null && itemDto.getDescription() != null;
+                    }
+                }).subscribe(new Subscriber<ItemDto>() {
+                    @Override
+                    public void onCompleted() {
+                        sortByName(mItems);
+                        sortByName(mFilteredItems);
+                        adapter.setItems(mItems);
+                        adapter.notifyDataSetChanged();
+                    }
 
-                sortByName(mItems);
-                sortByName(mFilteredItems);
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ItemDto itemDto) {
+                        mItems.add(itemDto);
+                        mFilteredItems.add(itemDto);
+                    }
+                });
 
                 for (ItemDto item : response){
                     if(item.getTags() != null){
@@ -113,8 +133,7 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
                 }
 
 
-                adapter.setItems(mItems);
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override

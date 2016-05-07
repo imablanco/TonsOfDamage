@@ -14,7 +14,6 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.games.Game;
 import com.ablanco.teemo.model.games.RecentGames;
-import com.ablanco.teemo.model.matches.MatchDetail;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.SummonerSpellDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
@@ -23,15 +22,13 @@ import com.ablanco.tonsofdamage.adapter.RecentGamesAdapter;
 import com.ablanco.tonsofdamage.adapter.RecentGamesData;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import butterknife.Bind;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func4;
+import rx.functions.Func3;
 
 /**
  * Created by Álvaro Blanco on 21/04/2016.
@@ -41,7 +38,6 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
-    private List<RecentGamesData> recentGamesDatas = new ArrayList<>();
     private RecentGamesAdapter adapter;
 
     public static Fragment newInstance(long id) {
@@ -82,7 +78,8 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                                 @Override
                                 public void call(final Subscriber<? super ChampionDto> subscriber) {
                                     if (getActivity() != null) {
-                                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(game.getChampionId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(game.getChampionId(), SettingsHandler.getLanguage(getActivity()), null,
+                                                new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.SKINS).build(), new ServiceResponseListener<ChampionDto>() {
                                             @Override
                                             public void onResponse(ChampionDto response) {
                                                 subscriber.onNext(response);
@@ -135,29 +132,10 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                                     }
                                 }
 
-                            }), Observable.create(new Observable.OnSubscribe<MatchDetail>() {
+                            }),  new Func3<ChampionDto, SummonerSpellDto, SummonerSpellDto, RecentGamesData>() {
                                 @Override
-                                public void call(final Subscriber<? super MatchDetail> subscriber) {
-                                    if (getActivity() != null) {
-                                        Teemo.getInstance(getActivity()).getMatchesHandler().getMatch(game.getGameId(), false, new ServiceResponseListener<MatchDetail>() {
-                                            @Override
-                                            public void onResponse(MatchDetail response) {
-                                                subscriber.onNext(response);
-                                                subscriber.onCompleted();
-                                            }
-
-                                            @Override
-                                            public void onError(TeemoException e) {
-                                                subscriber.onError(e);
-                                            }
-                                        });
-                                    }
-                                }
-
-                            }), new Func4<ChampionDto, SummonerSpellDto, SummonerSpellDto, MatchDetail, RecentGamesData>() {
-                                @Override
-                                public RecentGamesData call(ChampionDto championDto, SummonerSpellDto summonerSpellDto, SummonerSpellDto summonerSpellDto2, MatchDetail detail) {
-                                    return new RecentGamesData(game, championDto, detail, summonerSpellDto, summonerSpellDto2);
+                                public RecentGamesData call(ChampionDto championDto, SummonerSpellDto summonerSpellDto, SummonerSpellDto summonerSpellDto2) {
+                                    return new RecentGamesData(game, championDto, summonerSpellDto, summonerSpellDto2);
                                 }
                             });
 

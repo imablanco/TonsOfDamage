@@ -140,7 +140,7 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
                         Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(mostPlayedChamp.getId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
                             @Override
                             public void onResponse(ChampionDto response) {
-                                mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(mostPlayedChamp.getStats(), response.getImage().getFull()));
+                                mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(mostPlayedChamp.getStats(), response.getId(), response.getImage().getFull()));
 
                             }
 

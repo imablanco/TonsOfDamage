@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_match_detail">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/overview"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <com.ablanco.tonsofdamage.ui.views.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                app:separatorColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tv_game_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="Normal" />
+
+            <TextView
+                android:id="@+id/tv_map_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/white"
+                tools:text="Summoners Rift" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/ic_score"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_score" />
+
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/ic_score"
+                    android:paddingLeft="7dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="16/6/2" />
+
+                <ImageView
+                    android:id="@+id/ic_gold"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_below="@id/tv_score"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_gold" />
+
+                <TextView
+                    android:id="@+id/tv_gold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_score"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/ic_gold"
+                    android:paddingLeft="7dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="220gold" />
+
+                <ImageView
+                    android:id="@+id/ic_minions"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_below="@id/tv_gold"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_minion" />
+
+                <TextView
+                    android:id="@+id/tv_minion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_gold"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/ic_minions"
+                    android:paddingLeft="7dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="180" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/white"
+                    tools:text="16/6/2013" />
+
+                <TextView
+                    android:id="@+id/tv_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tv_date"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/white"
+                    tools:text="16/6/2013" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/teams"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <com.ablanco.tonsofdamage.ui.views.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                app:separatorColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/ll_participants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="7dp"
+                        android:text="@string/blue_team"
+                        android:textColor="@color/colorFallBackAccent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="7dp"
+                        android:text="@string/purple_team"
+                        android:textColor="@color/colorFallBackAccent" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/stats"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <com.ablanco.tonsofdamage.ui.views.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                app:separatorColor="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/gold"
+                android:textColor="@color/colorFallBackAccent"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/dv_gold"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    app:dv_lineWidth="8dp"
+                    app:dv_totalAngle="180" />
+
+                <TextView
+                    android:id="@+id/tv_gold_eraned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_gold"
+                    android:layout_alignTop="@id/dv_gold"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+                <TextView
+                    android:id="@+id/tv_gold_spent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_gold"
+                    android:layout_alignTop="@id/dv_gold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/damage_dealt"
+                android:textColor="@color/colorFallBackAccent"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/dv_damage_dealt"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    app:dv_lineWidth="8dp"
+                    app:dv_totalAngle="180" />
+
+                <TextView
+                    android:id="@+id/tv_damage_dealt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_dealt"
+                    android:layout_alignTop="@id/dv_damage_dealt"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+                <TextView
+                    android:id="@+id/tv_physical_damage_dealt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_dealt"
+                    android:layout_alignTop="@id/dv_damage_dealt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+                <TextView
+                    android:id="@+id/tv_magical_damage_dealt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_dealt"
+                    android:layout_alignTop="@id/dv_damage_dealt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/damage_taken"
+                android:textColor="@color/colorFallBackAccent"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/dv_damage_taken"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    app:dv_lineWidth="8dp"
+                    app:dv_totalAngle="180" />
+
+                <TextView
+                    android:id="@+id/tv_damage_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_taken"
+                    android:layout_alignTop="@id/dv_damage_taken"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+                <TextView
+                    android:id="@+id/tv_physical_damage_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_taken"
+                    android:layout_alignTop="@id/dv_damage_taken"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+                <TextView
+                    android:id="@+id/tv_magical_damage_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_taken"
+                    android:layout_alignTop="@id/dv_damage_taken"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+
+                <TextView
+                    android:id="@+id/tv_true_damage_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/dv_damage_taken"
+                    android:layout_alignTop="@id/dv_damage_taken"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorFallBackAccent"
+                    tools:text="Spent" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

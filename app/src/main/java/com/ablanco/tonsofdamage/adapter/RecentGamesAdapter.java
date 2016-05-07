@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ablanco.teemo.model.games.RawStats;
-import com.ablanco.teemo.model.matches.MatchTeam;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
@@ -65,16 +64,16 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
     public void onBindViewHolder(final GameViewHolder holder, int position) {
         final RecentGamesData data = mGames.get(position);
         Glide.with(mContext).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(mContext), data.getChampionDto().getImage().getFull())).into(holder.mImgChampionSquare);
-        Glide.with(mContext).load(ImageUris.getSummonerSpellIcon(SettingsHandler.getCDNVersion(mContext), String.valueOf(data.getSummonerSpells().first.getImage().getFull()))).into(holder.mImgSpell1);
-        Glide.with(mContext).load(ImageUris.getSummonerSpellIcon(SettingsHandler.getCDNVersion(mContext), String.valueOf(data.getSummonerSpells().second.getImage().getFull()))).into(holder.mImgSpell2);
+        Glide.with(mContext).load(ImageUris.getSummonerSpellIcon(SettingsHandler.getCDNVersion(mContext), String.valueOf(data.getSummonerSpellDto1().getImage().getFull()))).into(holder.mImgSpell1);
+        Glide.with(mContext).load(ImageUris.getSummonerSpellIcon(SettingsHandler.getCDNVersion(mContext), String.valueOf(data.getSummonerSpellDto2().getImage().getFull()))).into(holder.mImgSpell2);
 
         holder.llGameItems.removeAllViews();
         buildItemList(data.getGame().getStats(), holder.llGameItems);
 
-        holder.mImgChampionSquare.setBorderColor(ContextCompat.getColor(mContext, isWin(data.getGame().getTeamId(), data.getMatchDetail().getTeams()) ? R.color.green : R.color.red));
+        holder.mImgChampionSquare.setBorderColor(ContextCompat.getColor(mContext, data.getGame().getStats().isWin() ? R.color.green : R.color.red));
         holder.tvGameType.setText(data.getGame().getGameMode());
         holder.tvDate.setText(new PrettyTime().format(new Date(data.getGame().getCreateDate())));
-        long millis = data.getMatchDetail().getMatchDuration() * 1000;
+        long millis = data.getGame().getStats().getTimePlayed() * 1000;
         String duration = String.format(Locale.getDefault(), "%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis));
@@ -82,7 +81,7 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
         holder.tvDuration.setText(duration);
 
         holder.tvScore.setText(Utils.getGameScore(data.getGame().getStats()));
-        holder.tvGold.setText(Utils.getFormattedGold(data.getGame().getStats().getGoldEarned()));
+        holder.tvGold.setText(Utils.getFormattedStats(data.getGame().getStats().getGoldEarned()));
         holder.tvMinions.setText(String.valueOf(data.getGame().getStats().getMinionsKilled()));
 
         Utils.setTransitionNameForView(holder.mImgChampionSquare, mContext.getString(R.string.match_detail_transition, position));
@@ -94,8 +93,8 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
                 ActivityOptionsCompat options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation((Activity) mContext, holder.mImgChampionSquare, transitionName);
                 Bundle bundle = new Bundle();
-                bundle.putInt(MatchDetailActivity.EXTRA_MATCH_ID, data.getMatchDetail().getMatchId().intValue());
-                bundle.putString(MatchDetailActivity.EXTRA_TRANISITION_NAME, transitionName);
+                bundle.putString(MatchDetailActivity.EXTRA_TRANSITION_NAME, transitionName);
+                bundle.putSerializable(MatchDetailActivity.EXTRA_DATA, data);
                 NavigationHandler.navigateTo(mContext, NavigationHandler.MATCH_DETAIL, bundle, options);
 
             }
@@ -126,23 +125,6 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
         createItem(stats.getItem4(), layout);
         createItem(stats.getItem5(), layout);
         createItem(stats.getItem6(), layout);
-    }
-
-    private boolean isWin(int teamId, List<MatchTeam> teams) {
-        for (MatchTeam matchTeam : teams) {
-            if (teamId == matchTeam.getTeamId()) {
-                return matchTeam.getWinner();
-            }
-        }
-
-
-        return false;
-
-
-    }
-
-    public RecentGamesData getGame(int position){
-        return mGames.get(position);
     }
 
     private void createItem(final Integer id, LinearLayout layout) {
