@@ -90,6 +90,7 @@
     <string name="total_damage_dealt">Total dealt %1$s</string>
     <string name="damage_p_dealt">Physical %1$s</string>
     <string name="damage_m_dealt">Magical %1$s</string>
+    <string name="damage_t_dealt">True %1$s</string>
     <string name="damage_taken">Damage taken</string>
     <string name="total_damage_taken">Total taken %1$s</string>
     <string name="damage_p_taken">Physical %1$s</string>

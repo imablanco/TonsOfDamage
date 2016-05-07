@@ -40,4 +40,11 @@ public class SizeUtils {
         wm.getDefaultDisplay().getSize(size);
         return size.x;
     }
+
+    public static int getScreenHeight(Context context){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point size = new Point();
+        wm.getDefaultDisplay().getSize(size);
+        return size.y;
+    }
 }

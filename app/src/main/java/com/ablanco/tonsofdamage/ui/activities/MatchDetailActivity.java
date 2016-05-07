@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -34,19 +36,21 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.RecentGamesData;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
+import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -61,6 +65,10 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
     private boolean mIsTheTitleVisible = false;
     private boolean mIsTheTitleContainerVisible = true;
+
+    private final static String CHART_GOLD = "GOLD";
+    private final static String CHART_DAMAGE_DEALT = "DAMAGE_DEALT";
+    private final static String CHART_DAMAGE_TAKEN = "DAMAGE_TAKEN";
 
     public static final String EXTRA_TRANSITION_NAME = "extra_transition_name";
     public static final String EXTRA_DATA = "extra_data";
@@ -109,6 +117,8 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
     TextView tvPhysicalDamageDealt;
     @Bind(R.id.tv_magical_damage_dealt)
     TextView tvMagicalDamageDealt;
+    @Bind(R.id.tv_true_damage_dealt)
+    TextView tvTrueDamageDealt;
     @Bind(R.id.dv_damage_taken)
     DecoView dvDamageTaken;
     @Bind(R.id.tv_damage_taken)
@@ -119,6 +129,22 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
     TextView tvMagicalDamageTaken;
     @Bind(R.id.tv_true_damage_taken)
     TextView tvTrueDamageTaken;
+    @Bind(R.id.nested_scroll)
+    NestedScrollView nestedScrollView;
+
+    @Bind(R.id.cv_stats)
+    View cardViewStats;
+    @Bind(R.id.rl_gold_chart)
+    View rlGoldChart;
+    @Bind(R.id.rl_dmg_dealt_chart)
+    View rlDmgDealtChart;
+    @Bind(R.id.rl_dmg_taken_chart)
+    View rlDmgTakenChart;
+
+    private Map<String, List<DecoEvent.Builder>> mEventsMap = new HashMap<>();
+    boolean goldHandled = false;
+    boolean damageTakenHandled = false;
+    boolean damageDealtHandled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,82 +205,228 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
             setUpStats(data.getGame().getStats());
 
+            final int screenHeight = SizeUtils.getScreenHeight(this);
+
+            nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    if (scrollY + screenHeight - mToolbar.getHeight() >= cardViewStats.getTop() + rlGoldChart.getTop() + dvGold.getHeight() - dvGold.getHeight()/3 && !goldHandled){
+                        if(mEventsMap.get(CHART_GOLD) != null){
+                            goldHandled = true;
+                            for (DecoEvent.Builder builder : mEventsMap.get(CHART_GOLD)){
+                                dvGold.addEvent(builder.build());
+                            }
+                        }
+                    }
+
+                    if (scrollY + screenHeight - mToolbar.getHeight() >= cardViewStats.getTop() + rlDmgDealtChart.getTop() + dvDamageDealt.getHeight() - dvDamageDealt.getHeight()/3 && !damageDealtHandled){
+                        if(mEventsMap.get(CHART_DAMAGE_DEALT) != null){
+                            damageDealtHandled = true;
+                            for (DecoEvent.Builder builder : mEventsMap.get(CHART_DAMAGE_DEALT)){
+                                dvDamageDealt.addEvent(builder.build());
+                            }
+                        }
+                    }
+
+                    if (scrollY + screenHeight - mToolbar.getHeight() >= cardViewStats.getTop() + rlDmgTakenChart.getTop() + dvDamageTaken.getHeight() - dvDamageTaken.getHeight()/3 && !damageTakenHandled){
+                        if(mEventsMap.get(CHART_DAMAGE_TAKEN) != null){
+                            damageTakenHandled = true;
+                            for (DecoEvent.Builder builder : mEventsMap.get(CHART_DAMAGE_TAKEN)){
+                                dvDamageTaken.addEvent(builder.build());
+                            }
+                        }
+                    }
+                }
+            });
         }
 
     }
 
     private void setUpStats(RawStats stats) {
 
-        SeriesItem goldSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
-                .setRange(0, stats.getGoldEarned(), stats.getGoldEarned())
-                .build();
+        int golEarned = 0;
+        int goldSpent = 0;
+        int dmgDealt = 0;
+        int pDmgDealt = 0;
+        int mDmgDealt = 0;
+        int tDmgDealt = 0;
+        int dmgTaken = 0;
+        int pDmgTaken = 0;
+        int mDmgTaken = 0;
+        int tDmgTaken = 0;
 
-        SeriesItem goldSpent = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
-                .setRange(0, stats.getGoldEarned(), stats.getGoldSpent())
-                .build();
-
-        dvGold.addSeries(goldSeries);
-        dvGold.addSeries(goldSpent);
-        tvGoldEarned.setText(getString(R.string.gold_earned, Utils.getFormattedStats(stats.getGoldEarned())));
-        tvGoldSpent.setText(getString(R.string.gold_spent, Utils.getFormattedStats(stats.getGoldSpent())));
-
-
-        List<SeriesItem> items = new ArrayList<>();
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
-                .setRange(0, stats.getTotalDamageDealt(), stats.getTotalDamageDealt())
-                .build());
-
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
-                .setRange(0, stats.getTotalDamageDealt(), stats.getPhysicalDamageDealtPlayer())
-                .build());
-
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.magenta))
-                .setRange(0, stats.getTotalDamageDealt(), stats.getMagicDamageDealtPlayer())
-                .build());
-
-        sortStatsAndSet(dvDamageDealt, items);
-
-        tvDamageDealt.setText(getString(R.string.total_damage_dealt, Utils.getFormattedStats(stats.getTotalDamageDealt())));
-        tvPhysicalDamageDealt.setText(getString(R.string.damage_p_dealt, Utils.getFormattedStats(stats.getPhysicalDamageDealtPlayer())));
-        tvMagicalDamageDealt.setText(getString(R.string.damage_m_dealt, Utils.getFormattedStats(stats.getMagicDamageDealtPlayer())));
-
-        items.clear();
-
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
-                .setRange(0, stats.getTotalDamageTaken(), stats.getTotalDamageTaken())
-                .build());
-
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
-                .setRange(0, stats.getTotalDamageTaken(), stats.getPhysicalDamageTaken())
-                .build());
-
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.magenta))
-                .setRange(0, stats.getTotalDamageTaken(), stats.getMagicDamageTaken())
-                .build());
-        items.add(new SeriesItem.Builder(ContextCompat.getColor(this, R.color.white))
-                .setRange(0, stats.getTotalDamageTaken(), stats.getTrueDamageTaken())
-                .build());
-
-        sortStatsAndSet(dvDamageTaken, items);
-
-        tvDamageTaken.setText(getString(R.string.total_damage_taken, Utils.getFormattedStats(stats.getTotalDamageTaken())));
-        tvPhysicalDamageTaken.setText(getString(R.string.damage_p_taken, Utils.getFormattedStats(stats.getPhysicalDamageTaken())));
-        tvMagicalDamageTaken.setText(getString(R.string.damage_m_taken, Utils.getFormattedStats(stats.getMagicDamageTaken())));
-        tvTrueDamageTaken.setText(getString(R.string.damage_t_taken, Utils.getFormattedStats(stats.getTrueDamageTaken())));
-    }
-
-    private void sortStatsAndSet(DecoView view, List<SeriesItem> items) {
-        Collections.sort(items, new Comparator<SeriesItem>() {
-            @Override
-            public int compare(SeriesItem lhs, SeriesItem rhs) {
-                return Float.compare(rhs.getInitialValue(), lhs.getInitialValue());
-            }
-        });
-
-        for (SeriesItem item : items) {
-            view.addSeries(item);
+        if(stats.getGoldEarned() != null){
+            golEarned = stats.getGoldEarned();
         }
+
+        if(stats.getGoldSpent() != null){
+            goldSpent = stats.getGoldSpent();
+        }
+
+        if(stats.getTotalDamageDealt() != null){
+            dmgDealt = stats.getTotalDamageDealt();
+        }
+
+        if(stats.getPhysicalDamageDealtPlayer() != null){
+            pDmgDealt = stats.getPhysicalDamageDealtPlayer();
+        }
+
+        if(stats.getMagicDamageDealtPlayer() != null){
+            mDmgDealt = stats.getMagicDamageDealtPlayer();
+        }
+
+        if(stats.getTrueDamageDealtPlayer() != null){
+            tDmgDealt = stats.getTrueDamageDealtPlayer();
+        }
+
+        if(stats.getTotalDamageTaken() != null){
+            dmgTaken = stats.getTotalDamageTaken();
+        }
+
+        if(stats.getPhysicalDamageTaken() != null){
+            pDmgTaken = stats.getPhysicalDamageTaken();
+        }
+
+        if(stats.getMagicDamageTaken() != null){
+            mDmgTaken = stats.getMagicDamageTaken();
+        }
+        if(stats.getTrueDamageTaken() != null){
+            tDmgTaken = stats.getTrueDamageTaken();
+        }
+
+
+        SeriesItem goldSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
+                .setRange(0, golEarned,0)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .build();
+
+        SeriesItem goldSpentSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
+                .setRange(0, golEarned, 0)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .build();
+
+        mEventsMap.put(CHART_GOLD, new ArrayList<DecoEvent.Builder>());
+
+        int index = dvGold.addSeries(goldSeries);
+        mEventsMap.get(CHART_GOLD).add(getBuilder(index, golEarned));
+
+        index = dvGold.addSeries(goldSpentSeries);
+        mEventsMap.get(CHART_GOLD).add(getBuilder(index, goldSpent));
+
+        tvGoldEarned.setText(getString(R.string.gold_earned, Utils.getFormattedStats(golEarned)));
+        tvGoldSpent.setText(getString(R.string.gold_spent, Utils.getFormattedStats(goldSpent)));
+
+
+        mEventsMap.put(CHART_DAMAGE_DEALT, new ArrayList<DecoEvent.Builder>());
+
+        SeriesItem totalDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
+                .setRange(0, dmgDealt, 0)
+                .build();
+
+        SeriesItem physicalDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
+                .setRange(0, dmgDealt, 0)
+                .build();
+
+        SeriesItem magicalDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.magenta))
+                .setRange(0, dmgDealt, 0)
+                .build();
+
+        SeriesItem trueDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.white))
+                .setRange(0, dmgDealt, 0)
+                .build();
+
+        index = dvDamageDealt.addSeries(totalDamageDealtSeries);
+        mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, dmgDealt));
+
+
+        if(pDmgDealt > mDmgDealt){
+            index = dvDamageDealt.addSeries(physicalDamageDealtSeries);
+            mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, pDmgDealt));
+
+            if(mDmgDealt > tDmgDealt){
+                index = dvDamageDealt.addSeries(magicalDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, mDmgDealt));
+                index = dvDamageDealt.addSeries(trueDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, tDmgDealt));
+            }else {
+
+                index = dvDamageDealt.addSeries(trueDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, tDmgDealt));
+                index = dvDamageDealt.addSeries(magicalDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, mDmgDealt));
+            }
+
+        }else {
+            index = dvDamageDealt.addSeries(magicalDamageDealtSeries);
+            mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, mDmgDealt));
+
+            if(pDmgDealt > tDmgDealt){
+                index = dvDamageDealt.addSeries(physicalDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index,pDmgDealt));
+                index = dvDamageDealt.addSeries(trueDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, tDmgDealt));
+            }else {
+
+                index = dvDamageDealt.addSeries(trueDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, tDmgDealt));
+                index = dvDamageDealt.addSeries(physicalDamageDealtSeries);
+                mEventsMap.get(CHART_DAMAGE_DEALT).add(getBuilder(index, pDmgDealt));
+            }
+
+        }
+
+
+
+        tvDamageDealt.setText(getString(R.string.total_damage_dealt, Utils.getFormattedStats(dmgDealt)));
+        tvPhysicalDamageDealt.setText(getString(R.string.damage_p_dealt, Utils.getFormattedStats(pDmgDealt)));
+        tvMagicalDamageDealt.setText(getString(R.string.damage_m_dealt, Utils.getFormattedStats(mDmgDealt)));
+        tvTrueDamageDealt.setText(getString(R.string.damage_t_dealt, Utils.getFormattedStats(tDmgDealt)));
+
+        SeriesItem totalDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
+                .setRange(0, dmgTaken, 0)
+                .build();
+
+        SeriesItem physicalDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
+                .setRange(0, dmgTaken, 0)
+                .build();
+
+        SeriesItem magicalDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.magenta))
+                .setRange(0, dmgTaken, 0)
+                .build();
+        SeriesItem trueDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.white))
+                .setRange(0, dmgTaken, 0)
+                .build();
+
+        mEventsMap.put(CHART_DAMAGE_TAKEN, new ArrayList<DecoEvent.Builder>());
+
+        index = dvDamageTaken.addSeries(totalDamageTakenSeries);
+        mEventsMap.get(CHART_DAMAGE_TAKEN).add(getBuilder(index, dmgTaken));
+
+        if(pDmgTaken > mDmgTaken){
+            index = dvDamageTaken.addSeries(physicalDamageTakenSeries);
+            mEventsMap.get(CHART_DAMAGE_TAKEN).add(getBuilder(index, pDmgTaken));
+            index = dvDamageTaken.addSeries(magicalDamageTakenSeries);
+            mEventsMap.get(CHART_DAMAGE_TAKEN).add(getBuilder(index, mDmgTaken));
+        }else {
+            index = dvDamageTaken.addSeries(magicalDamageTakenSeries);
+            mEventsMap.get(CHART_DAMAGE_TAKEN).add(getBuilder(index, mDmgTaken));
+            index = dvDamageTaken.addSeries(physicalDamageTakenSeries);
+            mEventsMap.get(CHART_DAMAGE_TAKEN).add(getBuilder(index, pDmgTaken));
+        }
+
+        index = dvDamageTaken.addSeries(trueDamageTakenSeries);
+        mEventsMap.get(CHART_DAMAGE_TAKEN).add(getBuilder(index, tDmgTaken));
+
+        tvDamageTaken.setText(getString(R.string.total_damage_taken, Utils.getFormattedStats(dmgTaken)));
+        tvPhysicalDamageTaken.setText(getString(R.string.damage_p_taken, Utils.getFormattedStats(pDmgTaken)));
+        tvMagicalDamageTaken.setText(getString(R.string.damage_m_taken, Utils.getFormattedStats(mDmgTaken)));
+        tvTrueDamageTaken.setText(getString(R.string.damage_t_taken, Utils.getFormattedStats(tDmgTaken)));
     }
+
+    private DecoEvent.Builder getBuilder(int index, float value){
+        return new DecoEvent.Builder(value).setDuration(600).setIndex(index);
+    }
+
 
     public static void startAlphaAnimation(View v, long duration, int visibility) {
         AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
