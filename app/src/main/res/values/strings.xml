@@ -96,4 +96,14 @@
     <string name="damage_p_taken">Physical %1$s</string>
     <string name="damage_m_taken">Magical %1$s</string>
     <string name="damage_t_taken">True %1$s</string>
+    <string name="summarized_stats">Summarized Stats</string>
+    <string name="games_lost">Games Lost</string>
+    <string name="games_won">Games Won</string>
+    <string name="games_played">Games Played</string>
+    <string name="total_kills">Total Kills</string>
+    <string name="normal_kills">Normal Kills</string>
+    <string name="double_kills">Double Kills</string>
+    <string name="triple_kills">Triple Kills</string>
+    <string name="quadra_kills">Quadra Kills</string>
+    <string name="penta_kills">Penta Kills</string>
 </resources>

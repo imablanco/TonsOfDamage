@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -131,8 +132,16 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
                     }
                 });
 
-                if (mostPlayed.size() >= 5) { //// TODO: 1/5/16 for some reason first object always comes with idChampion 0, could be a summarized stats??? cuase its ordered by totalsessionsplayed desc
-                    mostPlayed = mostPlayed.subList(1, 5);
+                Iterator<ChampionStats> championStatsIterator = mostPlayed.iterator();
+
+                while (championStatsIterator.hasNext()){
+                    if(championStatsIterator.next().getId() == 0){
+                        championStatsIterator.remove();
+                    }
+                }
+
+                if (mostPlayed.size() >= 4) { ////
+                    mostPlayed = mostPlayed.subList(0, 4);
                 }
 
                 for (final ChampionStats mostPlayedChamp : mostPlayed) {

@@ -254,7 +254,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    app:dv_lineWidth="8dp"
+                    app:dv_lineWidth="5dp"
                     app:dv_totalAngle="180" />
 
                 <TextView
@@ -302,7 +302,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    app:dv_lineWidth="8dp"
+                    app:dv_lineWidth="5dp"
                     app:dv_totalAngle="180" />
 
                 <TextView
@@ -374,7 +374,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    app:dv_lineWidth="8dp"
+                    app:dv_lineWidth="5dp"
                     app:dv_totalAngle="180" />
 
                 <TextView

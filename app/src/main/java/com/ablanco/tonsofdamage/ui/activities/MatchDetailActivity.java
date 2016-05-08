@@ -297,11 +297,13 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
         SeriesItem goldSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
                 .setRange(0, golEarned,0)
+                .setCapRounded(false)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .build();
 
         SeriesItem goldSpentSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
                 .setRange(0, golEarned, 0)
+                .setCapRounded(false)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .build();
 
@@ -320,19 +322,23 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
         mEventsMap.put(CHART_DAMAGE_DEALT, new ArrayList<DecoEvent.Builder>());
 
         SeriesItem totalDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
+                .setCapRounded(false)
                 .setRange(0, dmgDealt, 0)
                 .build();
 
         SeriesItem physicalDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
                 .setRange(0, dmgDealt, 0)
+                .setCapRounded(false)
                 .build();
 
         SeriesItem magicalDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.magenta))
+                .setCapRounded(false)
                 .setRange(0, dmgDealt, 0)
                 .build();
 
         SeriesItem trueDamageDealtSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.white))
                 .setRange(0, dmgDealt, 0)
+                .setCapRounded(false)
                 .build();
 
         index = dvDamageDealt.addSeries(totalDamageDealtSeries);
@@ -384,17 +390,21 @@ public class MatchDetailActivity extends AppCompatActivity implements AppBarLayo
 
         SeriesItem totalDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.colorAccent))
                 .setRange(0, dmgTaken, 0)
+                .setCapRounded(false)
                 .build();
 
         SeriesItem physicalDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.red))
                 .setRange(0, dmgTaken, 0)
+                .setCapRounded(false)
                 .build();
 
         SeriesItem magicalDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.magenta))
                 .setRange(0, dmgTaken, 0)
+                .setCapRounded(false)
                 .build();
         SeriesItem trueDamageTakenSeries = new SeriesItem.Builder(ContextCompat.getColor(this, R.color.white))
                 .setRange(0, dmgTaken, 0)
+                .setCapRounded(false)
                 .build();
 
         mEventsMap.put(CHART_DAMAGE_TAKEN, new ArrayList<DecoEvent.Builder>());

@@ -38,6 +38,8 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
+    @Bind(R.id.loading)
+    View loading;
     private RecentGamesAdapter adapter;
 
     public static Fragment newInstance(long id) {
@@ -152,6 +154,9 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                                 @Override
                                 public void onNext(RecentGamesData recentGamesData) {
                                     adapter.addGame(recentGamesData);
+                                    if(loading.getVisibility() == View.VISIBLE){
+                                        loading.setVisibility(View.GONE);
+                                    }
 
                                 }
                             });
