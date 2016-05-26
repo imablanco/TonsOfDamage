@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="7dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/tv_title"
+        android:id="@+id/tv_game_type"
+        tools:text = "Ranked"
+        android:paddingLeft="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/colorFallBackAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_alignBaseline="@id/tv_game_type"
+        android:id="@+id/tv_start_time"
+        android:textSize="12sp"
+        android:textColor="@color/colorFallBackAccent"
+        tools:text="24 min ago"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tv_game_type"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:id="@+id/team1_layout"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team1_summoner1"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team1_summoner2"
+            android:layout_width="0dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team1_summoner3"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team1_summoner4"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team1_summoner5"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/separator_layout"
+        android:layout_below="@id/team1_layout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ablanco.tonsofdamage.ui.views.Separator
+            android:layout_width="0dp"
+            app:separatorColor="@color/colorFallBackAccent"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="20sp"
+            android:text="VS"
+            android:textColor="@color/colorFallBackAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.ablanco.tonsofdamage.ui.views.Separator
+            android:layout_width="0dp"
+            app:separatorColor="@color/colorFallBackAccent"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_below="@id/separator_layout"
+        android:orientation="horizontal"
+        android:id="@+id/team2_layout"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team2_summoner1"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team2_summoner2"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team2_summoner3"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team2_summoner4"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team2_summoner5"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

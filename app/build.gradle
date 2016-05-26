@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.ablanco.tonsofdamage"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -47,6 +47,7 @@ dependencies {
     compile 'com.github.eneim:Toro:1.1.0'
     compile 'fr.tvbarthel.blurdialogfragment:lib:2.1.5'
     compile 'com.github.bmarrdev:android-DecoView-charting:v1.0.1'
+    compile 'com.pacioianu.david:ink-page-indicator:1.1.1'
 
     compile 'io.reactivex:rxandroid:1.1.0'
 // Because RxAndroid releases are few and far between, it is recommended you also

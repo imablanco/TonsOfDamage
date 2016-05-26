@@ -3,7 +3,7 @@ package com.ablanco.tonsofdamage.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +75,8 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
     TextView mTvTvtTeamName;
     @Bind(R.id.recycler_view)
     RecyclerView mostPlayedChampionsRecyclerView;
+    @Bind(R.id.tv_summoner_level)
+    TextView mTvSummonerLevel;
 
     private SummonerMostPlayedChampionsAdapter mostPlayedChampionsAdapter;
 
@@ -94,7 +96,7 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mostPlayedChampionsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mostPlayedChampionsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mostPlayedChampionsAdapter = new SummonerMostPlayedChampionsAdapter(getActivity());
         mostPlayedChampionsRecyclerView.setAdapter(mostPlayedChampionsAdapter);
         loadSummoner();
@@ -108,6 +110,7 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
 
                     Glide.with(getActivity()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(response.getProfileIconId()))).into(mImgSummoner);
                     mTvSummonerName.setText(response.getName());
+                    mTvSummonerLevel.setText(String.valueOf(response.getSummonerLevel()));
                     loadRankedInfo();
                     loadMostPlayedChampions();
                 }

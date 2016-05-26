@@ -106,4 +106,16 @@
     <string name="triple_kills">Triple Kills</string>
     <string name="quadra_kills">Quadra Kills</string>
     <string name="penta_kills">Penta Kills</string>
+    <string name="games">Games</string>
+    <string name="damage">Damage</string>
+    <string name="kills">Kills</string>
+    <string name="total_damage">Damage dealt</string>
+    <string name="physical_dealt">Physical dealt</string>
+    <string name="magical_dealt">Magical dealt</string>
+    <string name="physical_taken">Physical taken</string>
+    <string name="magical_taken">Magical taken</string>
+    <string name="healing">Total healing</string>
+    <string name="largest_crit_strike">Largest critical strike</string>
+    <string name="view_more">View more</string>
+    <string name="featured_games">Featured Games</string>
 </resources>

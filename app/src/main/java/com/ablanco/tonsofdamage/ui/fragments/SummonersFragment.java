@@ -74,6 +74,8 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
     TextView mTvTvtTeamRank;
     @Bind(R.id.tv_tvt_team_name)
     TextView mTvTvtTeamName;
+    @Bind(R.id.tv_summoner_level)
+    TextView mTvSummonerLevel;
     @Bind(R.id.card_summoner_overview)
     View mSummonerLayout;
     @Bind(R.id.loading)
@@ -159,6 +161,7 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
 
                     Glide.with(getActivity()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(response.getProfileIconId()))).into(mImgSummoner);
                     mTvSummonerName.setText(response.getName());
+                    mTvSummonerLevel.setText(String.valueOf(response.getSummonerLevel()));
                     Teemo.getInstance(getContext()).getLeaguesHandler().getLeaguesBySummoners(Collections.singletonList(String.valueOf(mSelectedSummoner)), true, new ServiceResponseListener<Map<String, List<League>>>() {
                         @Override
                         public void onResponse(Map<String, List<League>> response) {

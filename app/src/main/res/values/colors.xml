@@ -5,6 +5,7 @@
     <color name="colorPrimaryDarkAccent">#010A13</color>
     <color name="colorAccent">#C89C3C</color>
     <color name="colorFallBackAccent">#C9AB6E</color>
+    <color name="colorFallBackAccentAlpha50">#77C9AB6E</color>
     <color name="colorPrimarySemiLight">#bb02101F</color>
 
 
@@ -18,5 +19,6 @@
     <color name="blue">#0040FF</color>
     <color name="magenta">#8000FF</color>
     <color name="card_bg">#ff303030</color>
+    <color name="green_bright">#64FE2E</color>
 
 </resources>

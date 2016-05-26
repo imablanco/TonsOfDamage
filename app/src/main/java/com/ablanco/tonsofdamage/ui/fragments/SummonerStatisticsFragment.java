@@ -49,6 +49,13 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
     int tripleKills = 0;
     int quadraKills = 0;
     int pentaKills = 0;
+    int totalDamageDealt = 0;
+    int phDamageDealt = 0;
+    int mgDamageDealt = 0;
+    int totalDamageTaken = 0;
+    int healingDone = 0;
+    int largestCriticalStrike = 0;
+
 
     @Bind(R.id.tv_games_played)
     TextView mTvGamesPlayed;
@@ -75,6 +82,23 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
 
     @Bind(R.id.cv_stats)
     View cardViewStats;
+    @Bind(R.id.tv_season)
+    TextView mTvSeason;
+    @Bind(R.id.tv_total_damage)
+    TextView mTvTotalDamage;
+    @Bind(R.id.tv_physical_damage_dealt)
+    TextView mTvPhysicalDamageDealt;
+    @Bind(R.id.tv_magical_damage_dealt)
+    TextView mTvMagicalDamageDealt;
+    @Bind(R.id.tv_damage_taken)
+    TextView mTvDamageTaken;
+    @Bind(R.id.tv_total_healing)
+    TextView mTvTotalHealing;
+    @Bind(R.id.tv_larges_critical_strike)
+    TextView mTvLargesCriticalStrike;
+    @Bind(R.id.dv_dmg)
+    DecoView mDvDamage;
+
     private boolean alreadyAnimated = false;
 
 
@@ -102,19 +126,21 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
             @Override
             public void onResponse(RankedStats response) {
                 cardViewStats.setVisibility(View.VISIBLE);
+                mTvSeason.setText(response.getSeason());
                 for (ChampionStats stats : response.getChampions()) {
                     if (stats.getId() == 0) {
                         fillGamesPlayedSection(stats.getStats());
                         fillKillsSection(stats.getStats());
+                        fillDamageSection(stats.getStats());
                     }
                 }
             }
 
             @Override
             public void onError(TeemoException e) {
-                if(e.getCode() == TeemoException.CODE_NOT_FOUND){
+                if (e.getCode() == TeemoException.CODE_NOT_FOUND) {
                     ErrorUtils.showError(getView()); // TODO: 08/05/2016 more specific error
-                }else {
+                } else {
                     ErrorUtils.showPersistentError(getView(), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -124,6 +150,39 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
                 }
             }
         });
+    }
+
+    private void fillDamageSection(AggregatedStats stats) {
+        if (stats.getTotalDamageDealt() != null) {
+            totalDamageDealt = stats.getTotalDamageDealt();
+        }
+
+        if (stats.getTotalPhysicalDamageDealt() != null) {
+            phDamageDealt = stats.getTotalPhysicalDamageDealt();
+        }
+
+        if (stats.getTotalMagicDamageDealt() != null) {
+            mgDamageDealt = stats.getTotalMagicDamageDealt();
+        }
+
+        if (stats.getTotalDamageTaken() != null) {
+            totalDamageTaken = stats.getTotalDamageTaken();
+        }
+
+        if (stats.getTotalHeal() != null) {
+            healingDone = stats.getTotalHeal();
+        }
+
+        if (stats.getMaxLargestCriticalStrike() != null) {
+            largestCriticalStrike = stats.getMaxLargestCriticalStrike();
+        }
+
+        mTvTotalDamage.setText(String.valueOf(totalDamageDealt));
+        mTvPhysicalDamageDealt.setText(String.valueOf(phDamageDealt));
+        mTvMagicalDamageDealt.setText(String.valueOf(mgDamageDealt));
+        mTvDamageTaken.setText(String.valueOf(totalDamageTaken));
+        mTvTotalHealing.setText(String.valueOf(healingDone));
+        mTvLargesCriticalStrike.setText(String.valueOf(largestCriticalStrike));
     }
 
     private void fillGamesPlayedSection(AggregatedStats stats) {
@@ -145,7 +204,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
         mTvGamesLost.setText(String.valueOf(gamesLost));
     }
 
-    private void fillKillsSection(AggregatedStats stats){
+    private void fillKillsSection(AggregatedStats stats) {
         if (stats.getTotalChampionKills() != null) {
             totalKills = stats.getTotalChampionKills();
         }
@@ -179,11 +238,11 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
 
     public void animateViews() {
 
-        if(!alreadyAnimated){
+        if (!alreadyAnimated) {
             alreadyAnimated = true;
             int index;
 
-            if(totalGamesPlayed > 0){
+            if (totalGamesPlayed > 0) {
                 //animate games
                 SeriesItem totalGamesItem = createSeries(totalGamesPlayed, ContextCompat.getColor(getContext(), R.color.colorAccent));
                 SeriesItem wonGamesItem = createSeries(totalGamesPlayed, ContextCompat.getColor(getContext(), R.color.green), "%.0f%% Won");
@@ -205,23 +264,23 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
                 }
             }
 
-            if(totalKills > 0){
+            if (totalKills > 0) {
                 //kills
                 SeriesItem totalKillsItem = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.colorAccent));
-                SeriesItem normalKillsItem  = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.red),"%.0f%% Normal");
-                SeriesItem doubleKillsItem  = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.green),"%.0f%% Double");
-                SeriesItem tripleKillsItem  = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.blue),"%.0f%% Triple");
-                SeriesItem quadraKillsItem  = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.magenta),"%.0f%% Quadra");
-                SeriesItem pentaKillsItem  = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.white),"%.0f%% Penta");
+                SeriesItem normalKillsItem = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.red), "%.0f%% Normal");
+                SeriesItem doubleKillsItem = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.green), "%.0f%% Double");
+                SeriesItem tripleKillsItem = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.blue), "%.0f%% Triple");
+                SeriesItem quadraKillsItem = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.magenta), "%.0f%% Quadra");
+                SeriesItem pentaKillsItem = createSeries(totalKills, ContextCompat.getColor(getActivity(), R.color.white), "%.0f%% Penta");
 
                 index = mDvKills.addSeries(totalKillsItem);
                 startAnimation(mDvKills, index, 600, 1500, 800, totalKills);
 
-                List<AnimationHelper> mOrderedKills = Arrays.asList(new AnimationHelper(normalKills, normalKillsItem, AnimationHelper.TYPE_NORMAL_KILLS),
-                                                                    new AnimationHelper(doubleKills, doubleKillsItem, AnimationHelper.TYPE_DOUBLE_KILLS),
-                                                                    new AnimationHelper(tripleKills, tripleKillsItem, AnimationHelper.TYPE_TRIPLE_KILLS),
-                                                                    new AnimationHelper(quadraKills, quadraKillsItem, AnimationHelper.TYPE_QUADRA_KILLS),
-                                                                    new AnimationHelper(pentaKills, pentaKillsItem, AnimationHelper.TYPE_PENTA_KILLS));
+                List<AnimationHelper> mOrderedKills = Arrays.asList(new AnimationHelper(normalKills, normalKillsItem),
+                        new AnimationHelper(doubleKills, doubleKillsItem),
+                        new AnimationHelper(tripleKills, tripleKillsItem),
+                        new AnimationHelper(quadraKills, quadraKillsItem),
+                        new AnimationHelper(pentaKills, pentaKillsItem));
 
 
                 Collections.sort(mOrderedKills, new Comparator<AnimationHelper>() {
@@ -232,11 +291,44 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
                 });
 
                 for (int i = 0; i < mOrderedKills.size(); i++) {
-                    long delay = 900 + 300*i;
+                    long delay = 900 + 300 * i;
                     index = mDvKills.addSeries(mOrderedKills.get(i).getItem());
-                    startAnimation(mDvKills, index, delay,1500, 800, mOrderedKills.get(i).getValue());
+                    startAnimation(mDvKills, index, delay, 1500, 800, mOrderedKills.get(i).getValue());
                 }
 
+            }
+
+            if(totalDamageDealt > 0){
+                //damage
+
+                int greaterValue = totalDamageDealt > totalDamageTaken ? totalDamageDealt : totalDamageTaken;
+                SeriesItem totalDamageDealtItem = createSeries(greaterValue, ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                SeriesItem phDamageDealtItem = createSeries(greaterValue, ContextCompat.getColor(getActivity(), R.color.red));
+                SeriesItem mgDamageDealtItem = createSeries(greaterValue, ContextCompat.getColor(getActivity(), R.color.green));
+                SeriesItem totalDamageTakenItem = createSeries(greaterValue, ContextCompat.getColor(getActivity(), R.color.blue));
+                SeriesItem healingDoneItem = createSeries(greaterValue, ContextCompat.getColor(getActivity(), R.color.white));
+                SeriesItem largesCriticalStrikeItem = createSeries(greaterValue, ContextCompat.getColor(getActivity(), R.color.green_bright));
+
+                List<AnimationHelper> mOrderedDamages = Arrays.asList(new AnimationHelper(totalDamageDealt, totalDamageDealtItem),
+                        new AnimationHelper(phDamageDealt, phDamageDealtItem),
+                        new AnimationHelper(mgDamageDealt, mgDamageDealtItem),
+                        new AnimationHelper(totalDamageTaken, totalDamageTakenItem),
+                        new AnimationHelper(healingDone, healingDoneItem),
+                        new AnimationHelper(largestCriticalStrike, largesCriticalStrikeItem));
+
+
+                Collections.sort(mOrderedDamages, new Comparator<AnimationHelper>() {
+                    @Override
+                    public int compare(AnimationHelper lhs, AnimationHelper rhs) {
+                        return rhs.getValue().compareTo(lhs.getValue());
+                    }
+                });
+
+                for (int i = 0; i < mOrderedDamages.size(); i++) {
+                    long delay = 900 + 300 * i;
+                    index = mDvDamage.addSeries(mOrderedDamages.get(i).getItem());
+                    startAnimation(mDvDamage, index, delay, 1500, 800, mOrderedDamages.get(i).getValue());
+                }
             }
 
         }
@@ -278,20 +370,15 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
                 .build());
     }
 
-    protected static class AnimationHelper{
-        public static int TYPE_NORMAL_KILLS = 0;
-        public static int TYPE_DOUBLE_KILLS = 0;
-        public static int TYPE_TRIPLE_KILLS = 0;
-        public static int TYPE_QUADRA_KILLS = 0;
-        public static int TYPE_PENTA_KILLS = 0;
+    protected static class AnimationHelper {
+
+
         Integer value;
-        int type;
         SeriesItem item;
 
-        public AnimationHelper(Integer value, SeriesItem item, int type) {
+        public AnimationHelper(Integer value, SeriesItem item) {
             this.value = value;
             this.item = item;
-            this.type = type;
         }
 
         public SeriesItem getItem() {
@@ -302,9 +389,6 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
             return value;
         }
 
-        public int getType() {
-            return type;
-        }
     }
 
 }
