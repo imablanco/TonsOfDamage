@@ -130,7 +130,7 @@
             android:layout_gravity="center_horizontal"
             app:civ_border_color="@android:color/white"
             app:civ_border_width="2dp"
-            app:layout_behavior="com.ablanco.tonsofdamage.ui.activities.AvatarImageBehavior"
+            app:layout_behavior="com.ablanco.tonsofdamage.summoner.AvatarImageBehavior"
             app:finalYPosition="2dp"
             app:finalHeight="@dimen/image_final_width"
             app:startToolbarPosition="2dp"

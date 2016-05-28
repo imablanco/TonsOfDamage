@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 
-import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
-import com.ablanco.tonsofdamage.ui.activities.ChampionSkinDetailActivity;
-import com.ablanco.tonsofdamage.ui.activities.FirstAccessSetupActivity;
-import com.ablanco.tonsofdamage.ui.activities.HomeActivity;
-import com.ablanco.tonsofdamage.ui.activities.MatchDetailActivity;
-import com.ablanco.tonsofdamage.ui.activities.SummonerDetailActivity;
+import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
+import com.ablanco.tonsofdamage.champions.ChampionSkinDetailActivity;
+import com.ablanco.tonsofdamage.splash.FirstAccessSetupActivity;
+import com.ablanco.tonsofdamage.home.HomeActivity;
+import com.ablanco.tonsofdamage.summoner.MasteriesActivity;
+import com.ablanco.tonsofdamage.summoner.MasteryDetailActivityDialog;
+import com.ablanco.tonsofdamage.summoner.MatchDetailActivity;
+import com.ablanco.tonsofdamage.summoner.SummonerDetailActivity;
 
 /**
  * Created by Álvaro Blanco Cabrero on 27/3/16
@@ -23,7 +25,9 @@ public class NavigationHandler {
     public static final String CHAMPION_DETAIL = "CHAMPION_DETAIL";
     public static final String CHAMPION_SKIN_DETAIL = "CHAMPION_SKIN_DETAIL";
     public static final String SUMMONER_DETAIL = "SUMMONER_DETAIL";
-    public static final String MATCH_DETAIL = "MATCG_DETAIL";
+    public static final String MATCH_DETAIL = "MATCH_DETAIL";
+    public static final String MASTERIES_DETAIL = "MASTERIES_DETAIL";
+    public static final String MASTERY_DETAIL = "MASTERY_DETAIL";
 
     private NavigationHandler(){}
 
@@ -75,6 +79,10 @@ public class NavigationHandler {
             classDestination = SummonerDetailActivity.class;
         } else if(destination.equalsIgnoreCase(MATCH_DETAIL)){
             classDestination = MatchDetailActivity.class;
+        } else if(destination.equalsIgnoreCase(MASTERIES_DETAIL)){
+            classDestination = MasteriesActivity.class;
+        } else if(destination.equalsIgnoreCase(MASTERY_DETAIL)){
+            classDestination = MasteryDetailActivityDialog.class;
         }
 
         return classDestination;

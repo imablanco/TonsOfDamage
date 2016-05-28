@@ -3,11 +3,15 @@ package com.ablanco.tonsofdamage.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Build;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.support.annotation.DrawableRes;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import com.ablanco.teemo.constants.LeagueTier;
 import com.ablanco.teemo.model.games.RawStats;
@@ -21,6 +25,8 @@ import java.util.Locale;
  * TonsOfDamage
  */
 public class Utils {
+
+    private static ColorFilter grayScaleFilter;
 
     public static String buildStaticQueryParams(String... params) {
         StringBuilder queryParamsBuilder = new StringBuilder();
@@ -120,9 +126,8 @@ public class Utils {
     }
 
     public static void setTransitionNameForView(View view, String transitionName){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.setTransitionName(transitionName);
-        }
+        ViewCompat.setTransitionName(view, transitionName);
+
     }
 
     public static String getFormattedStats(Integer value){
@@ -131,5 +136,18 @@ public class Utils {
         }else if(value > 1000){
             return String.format(Locale.getDefault(), "%.1fK", value.doubleValue()/ 1000);
         }else return String.valueOf(value);
+    }
+
+    public static void applyGrayScaleFilter(ImageView imageView){
+        if(grayScaleFilter == null){
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0);
+            grayScaleFilter = new ColorMatrixColorFilter(matrix);
+        }
+        imageView.setColorFilter(grayScaleFilter);
+    }
+
+    public static void resetColorFilter(ImageView imageView){
+        imageView.setColorFilter(null);
     }
 }

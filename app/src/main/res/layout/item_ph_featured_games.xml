@@ -102,7 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.ablanco.tonsofdamage.ui.views.Separator
+        <com.ablanco.tonsofdamage.views.Separator
             android:layout_width="0dp"
             app:separatorColor="@color/colorFallBackAccent"
             android:layout_height="1dp"
@@ -116,7 +116,7 @@
             android:textColor="@color/colorFallBackAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <com.ablanco.tonsofdamage.ui.views.Separator
+        <com.ablanco.tonsofdamage.views.Separator
             android:layout_width="0dp"
             app:separatorColor="@color/colorFallBackAccent"
             android:layout_height="1dp"

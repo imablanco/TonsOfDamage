@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.ablanco.tonsofdamage.ui.views.Separator
+    <com.ablanco.tonsofdamage.views.Separator
         android:id="@+id/top_separator"
         android:layout_below="@id/tv_title"
         android:layout_width="match_parent"

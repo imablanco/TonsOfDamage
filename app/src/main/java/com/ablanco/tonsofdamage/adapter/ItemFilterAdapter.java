@@ -1,5 +1,6 @@
 package com.ablanco.tonsofdamage.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 public class ItemFilterAdapter extends RecyclerView.Adapter<ItemFilterAdapter.CheckBoxViewHolder> {
 
 
+    private final Context mContext;
     private List<String> tags;
     private List<String> mSelectedTags = new ArrayList<>();
 
@@ -37,9 +39,10 @@ public class ItemFilterAdapter extends RecyclerView.Adapter<ItemFilterAdapter.Ch
         }
     };
 
-    public ItemFilterAdapter(List<String> tags, List<String> mSelectedTags){
+    public ItemFilterAdapter(Context context,  List<String> tags, List<String> mSelectedTags){
         this.tags = tags;
         this.mSelectedTags = mSelectedTags;
+        this.mContext = context;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class ItemFilterAdapter extends RecyclerView.Adapter<ItemFilterAdapter.Ch
     @Override
     public void onBindViewHolder(CheckBoxViewHolder holder, int position) {
 
-        holder.checkBox.setText(ResourcesHandler.getInstance().getResourceForKey(tags.get(position))); // TODO: 10/04/2016 change for sanitized description
+        holder.checkBox.setText(ResourcesHandler.getInstance(mContext).getResourceForKey(tags.get(position))); // TODO: 10/04/2016 change for sanitized description
         holder.checkBox.setTag(tags.get(position));
         holder.checkBox.setChecked(mSelectedTags.contains(tags.get(position)));
         holder.checkBox.setOnCheckedChangeListener(checkedChangeListener);

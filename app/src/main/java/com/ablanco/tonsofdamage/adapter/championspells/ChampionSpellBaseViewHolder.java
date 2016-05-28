@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.ui.activities.VideoPlayerActivity;
+import com.ablanco.tonsofdamage.video.VideoPlayerActivity;
 
 import im.ene.lab.toro.ToroVideoViewHolder;
 import im.ene.lab.toro.widget.ToroVideoView;

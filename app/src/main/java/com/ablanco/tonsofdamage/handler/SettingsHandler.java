@@ -15,6 +15,7 @@ public class SettingsHandler {
     private static final String KEY_REGION = "region";
     private static final String KEY_SUMMONER = "summoner";
     private static final String KEY_FAVORITE_CHAMPIONS = "favorite_champions";
+    private static final String KEY_FAVORITE_SUMMONERS = "favorite_summoners";
     private static final String KEY_CDN_VERSION = "cdn_version";
     private static final String KEY_LANGUAGE = "language";
 
@@ -78,5 +79,30 @@ public class SettingsHandler {
         Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, null);
 
         return champs != null && champs.contains(String.valueOf(champId));
+    }
+
+    public static void addFavoriteSummoner(Context context, long summonerId){
+        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
+        if(summoners == null){
+            summoners = new HashSet<>();
+        }
+
+        if(summoners.add(String.valueOf(summonerId))){
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, summoners).apply();
+        }
+    }
+
+    public static void removeFavoriteSummoner(Context context, long summonerId){
+        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
+
+        if(summoners != null && summoners.remove(String.valueOf(summonerId))){
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, summoners).apply();
+        }
+    }
+
+    public static boolean isSummonerMarkedAsFavorite(Context context, long summonerId){
+        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
+
+        return summoners != null && summoners.contains(String.valueOf(summonerId));
     }
 }

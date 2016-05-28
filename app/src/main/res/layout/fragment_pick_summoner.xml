@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.ablanco.tonsofdamage.ui.views.AvatarImageView
+    <com.ablanco.tonsofdamage.views.AvatarImageView
         android:layout_below="@id/tv_hint"
         android:id="@+id/profile_image"
         android:layout_marginTop="30dp"

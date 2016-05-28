@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.ablanco.tonsofdamage.ui.views.NonSwipeableViewPager
+    <com.ablanco.tonsofdamage.views.NonSwipeableViewPager
         android:id="@+id/pager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"

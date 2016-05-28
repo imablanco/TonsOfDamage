@@ -18,7 +18,7 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.ui.activities.MatchDetailActivity;
+import com.ablanco.tonsofdamage.summoner.MatchDetailActivity;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -84,12 +84,12 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
         holder.tvGold.setText(Utils.getFormattedStats(data.getGame().getStats().getGoldEarned()));
         holder.tvMinions.setText(String.valueOf(data.getGame().getStats().getMinionsKilled()));
 
-        Utils.setTransitionNameForView(holder.mImgChampionSquare, mContext.getString(R.string.match_detail_transition, position));
+        Utils.setTransitionNameForView(holder.mImgChampionSquare, mContext.getString(R.string.shared_transition, position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String transitionName = mContext.getString(R.string.match_detail_transition, holder.getAdapterPosition());
+                String transitionName = mContext.getString(R.string.shared_transition, holder.getAdapterPosition());
                 ActivityOptionsCompat options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation((Activity) mContext, holder.mImgChampionSquare, transitionName);
                 Bundle bundle = new Bundle();

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ablanco.tonsofdamage.views.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_centerInParent="true"
+        tools:src = "@drawable/default_profile"
+        android:padding="1dp"
+        android:background="@drawable/image_bg"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_rank"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
+        tools:text = "1/5"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@id/img"
+        android:layout_alignRight="@id/img"
+        android:layout_alignBottom="@id/img"
+        android:background="@color/black_alpha"
+        android:textSize="11sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="?selectableItemBackground"
+        android:layout_alignBottom="@id/img"
+        android:layout_alignTop="@id/img"
+        android:layout_alignRight="@id/img"
+        android:layout_alignLeft="@id/img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</com.ablanco.tonsofdamage.views.SquareRelativeLayout>

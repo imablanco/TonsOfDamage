@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.ablanco.tonsofdamage.ui.home.FeaturedGamesPlaceholder
+            <com.ablanco.tonsofdamage.home.FeaturedGamesPlaceholder
                 android:id="@+id/ph_featured_games"
                 android:layout_width="match_parent"
                 android:layout_height="320dp" />

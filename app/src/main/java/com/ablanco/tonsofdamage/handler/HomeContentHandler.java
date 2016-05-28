@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.ui.fragments.ChampionsFragment;
-import com.ablanco.tonsofdamage.ui.fragments.HomeFragment;
-import com.ablanco.tonsofdamage.ui.fragments.ItemsFragment;
-import com.ablanco.tonsofdamage.ui.fragments.SummonersFragment;
+import com.ablanco.tonsofdamage.home.ChampionsFragment;
+import com.ablanco.tonsofdamage.home.HomeFragment;
+import com.ablanco.tonsofdamage.home.ItemsFragment;
+import com.ablanco.tonsofdamage.home.SummonersFragment;
 
 /**
  * Created by Álvaro Blanco on 03/04/2016.

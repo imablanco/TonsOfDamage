@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.ablanco.tonsofdamage.ui.views.Separator
+    <com.ablanco.tonsofdamage.views.Separator
         app:separatorColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="1dp" />

@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content" />
 
 
-                    <com.ablanco.tonsofdamage.ui.views.Separator
+                    <com.ablanco.tonsofdamage.views.Separator
                         android:id="@+id/top_separator"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -153,7 +153,7 @@
 
                         </LinearLayout>
 
-                        <com.ablanco.tonsofdamage.ui.views.Separator
+                        <com.ablanco.tonsofdamage.views.Separator
                             android:id="@+id/separator_solo_q"
                             android:layout_width="match_parent"
                             android:layout_marginTop="7dp"

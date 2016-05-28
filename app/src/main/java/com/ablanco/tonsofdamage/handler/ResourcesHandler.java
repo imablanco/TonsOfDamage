@@ -42,7 +42,10 @@ public class ResourcesHandler {
         mInstance = new ResourcesHandler(context);
     }
 
-    public static ResourcesHandler getInstance(){
+    public static ResourcesHandler getInstance(Context context){
+        if(mInstance == null){
+            mInstance = new ResourcesHandler(context);
+        }
         return mInstance;
     }
 

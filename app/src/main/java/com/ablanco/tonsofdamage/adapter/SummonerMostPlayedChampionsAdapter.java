@@ -13,7 +13,7 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.ui.activities.ChampionDetailActivity;
+import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
