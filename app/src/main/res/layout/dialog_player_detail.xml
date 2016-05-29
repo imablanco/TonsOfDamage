@@ -33,6 +33,7 @@
                 android:id="@+id/bt_view_summoner"
                 android:visibility="invisible"
                 android:text="@string/view_summoner"
+                android:textColor="@color/colorFallBackAccent"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/tv_summoner_name"

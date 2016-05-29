@@ -36,16 +36,17 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp" />
 
-                    <ProgressBar
+                    <com.daasuu.ahp.AnimateHorizontalProgressBar
                         android:id="@+id/pg_attack"
-                        android:max="10"
+                        android:max="1000"
                         android:layout_marginLeft="10dp"
-                        style="?android:attr/progressBarStyleHorizontal"
+                        app:ahp_progressColor="@color/red"
+                        app:ahp_backgroundColor="@color/red_aplha"
+                        app:ahp_cornerRadius="1dp"
                         android:layout_toRightOf="@id/ic_attack"
                         android:layout_alignBottom="@id/ic_attack"
-                        android:layout_alignTop="@id/ic_attack"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="7dp" />
 
                     <ImageView
                         android:layout_marginTop="8dp"
@@ -55,16 +56,17 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp" />
 
-                    <ProgressBar
+                    <com.daasuu.ahp.AnimateHorizontalProgressBar
                         android:id="@+id/pg_tank"
-                        android:max="10"
+                        android:max="1000"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/ic_tank"
-                        style="?android:attr/progressBarStyleHorizontal"
+                        app:ahp_progressColor="@color/green"
+                        app:ahp_backgroundColor="@color/green_alpha"
+                        app:ahp_cornerRadius="1dp"
                         android:layout_alignBottom="@id/ic_tank"
-                        android:layout_alignTop="@id/ic_tank"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="7dp" />
 
                     <ImageView
                         android:layout_marginTop="8dp"
@@ -74,16 +76,17 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp" />
 
-                    <ProgressBar
+                    <com.daasuu.ahp.AnimateHorizontalProgressBar
                         android:id="@+id/pg_magic"
-                        android:max="10"
+                        android:max="1000"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/ic_magic"
-                        style="?android:attr/progressBarStyleHorizontal"
+                        app:ahp_progressColor="@color/blue"
+                        app:ahp_backgroundColor="@color/blue_alpha"
+                        app:ahp_cornerRadius="1dp"
                         android:layout_alignBottom="@id/ic_magic"
-                        android:layout_alignTop="@id/ic_magic"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="7dp" />
 
                     <ImageView
                         android:layout_marginTop="8dp"
@@ -93,16 +96,17 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp" />
 
-                    <ProgressBar
+                    <com.daasuu.ahp.AnimateHorizontalProgressBar
                         android:id="@+id/pg_difficult"
-                        android:max="10"
-                        style="?android:attr/progressBarStyleHorizontal"
+                        android:max="1000"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/ic_difficult"
+                        app:ahp_progressColor="@color/magenta"
+                        app:ahp_backgroundColor="@color/magenta_alpha"
+                        app:ahp_cornerRadius="1dp"
                         android:layout_alignBottom="@id/ic_difficult"
-                        android:layout_alignTop="@id/ic_difficult"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="7dp" />
 
                 </RelativeLayout>
 

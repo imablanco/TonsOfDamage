@@ -15,9 +15,13 @@
     <color name="black">#000</color>
     <color name="black_alpha">#bb000000</color>
     <color name="red">#DF0101</color>
+    <color name="red_aplha">#50DF0101</color>
     <color name="green">#088A08</color>
+    <color name="green_alpha">#50088A08</color>
     <color name="blue">#0040FF</color>
+    <color name="blue_alpha">#500040FF</color>
     <color name="magenta">#8000FF</color>
+    <color name="magenta_alpha">#508000FF</color>
     <color name="card_bg">#ff303030</color>
     <color name="green_bright">#64FE2E</color>
 

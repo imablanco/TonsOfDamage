@@ -28,9 +28,7 @@ import com.ablanco.teemo.model.champions.ChampionList;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.adapter.ChampionListGridAdapter;
-import com.ablanco.tonsofdamage.adapter.ChampionListListAdapter;
-import com.ablanco.tonsofdamage.adapter.ChampionsBaseAdapter;
+import com.ablanco.tonsofdamage.adapter.ChampionsAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ListPopUpWindowAdapter;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
@@ -76,7 +74,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
     private ListAdapter filterAdapter;
     private Map<Integer, Boolean> mFreeToPlayChampions = new HashMap<>();
-    private ChampionsBaseAdapter adapter;
+    private ChampionsAdapter adapter;
 
     private int mMode = MODE_GRID;
 
@@ -119,8 +117,8 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
         setHasOptionsMenu(true);
 
-        adapter = new ChampionListGridAdapter(getActivity());
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        adapter = new ChampionsAdapter(getActivity());
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         adapter.setOnItemClickListener(itemClickListener);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(SizeUtils.convertDpToPixel(1)));
@@ -234,18 +232,13 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
 
     private void toggleMode(){
         if(mMode == MODE_GRID){
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-            adapter = new ChampionListGridAdapter(getActivity());
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            adapter.toggleMode(true);
 
         }else{
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new ChampionListListAdapter(getActivity());
+            adapter.toggleMode(false);
         }
-
-        adapter.setChampions(mFilteredChampions);
-        adapter.setFreeToPlayChampions(mFreeToPlayChampions);
-        adapter.setOnItemClickListener(itemClickListener);
-        mRecyclerView.setAdapter(adapter);
     }
 
     private void sortByName(List<ChampionDto> championDtos){

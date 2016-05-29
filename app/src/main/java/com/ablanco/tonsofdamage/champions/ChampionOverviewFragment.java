@@ -1,6 +1,5 @@
 package com.ablanco.tonsofdamage.champions;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.StatsDto;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
+import com.daasuu.ahp.AnimateHorizontalProgressBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,16 +27,16 @@ import butterknife.ButterKnife;
 public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
 
     @Bind(R.id.pg_attack)
-    ProgressBar pgAttack;
+    AnimateHorizontalProgressBar pgAttack;
 
     @Bind(R.id.pg_tank)
-    ProgressBar pgTank;
+    AnimateHorizontalProgressBar pgTank;
 
     @Bind(R.id.pg_magic)
-    ProgressBar pgMagic;
+    AnimateHorizontalProgressBar pgMagic;
 
     @Bind(R.id.pg_difficult)
-    ProgressBar pgDifficult;
+    AnimateHorizontalProgressBar pgDifficult;
 
     @Bind(R.id.tv_health)
     TextView tvHealth;
@@ -101,23 +100,12 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
     }
 
     private void fillAttributes() {
-        pgDifficult.getProgressDrawable().setColorFilter(
-                ContextCompat.getColor(getActivity(), R.color.magenta), PorterDuff.Mode.SRC_IN);
-
-        pgAttack.getProgressDrawable().setColorFilter(
-                ContextCompat.getColor(getActivity(), R.color.red), PorterDuff.Mode.SRC_IN);
-
-        pgTank.getProgressDrawable().setColorFilter(
-                ContextCompat.getColor(getActivity(), R.color.green), PorterDuff.Mode.SRC_IN);
-
-        pgMagic.getProgressDrawable().setColorFilter(
-                ContextCompat.getColor(getActivity(), R.color.blue), PorterDuff.Mode.SRC_IN);
 
         if (mChampion.getInfo() != null) {
-            pgAttack.setProgress(mChampion.getInfo().getAttack());
-            pgTank.setProgress(mChampion.getInfo().getDefense());
-            pgMagic.setProgress(mChampion.getInfo().getMagic());
-            pgDifficult.setProgress(mChampion.getInfo().getDifficulty());
+            pgAttack.setProgressWithAnim(mChampion.getInfo().getAttack() * 100);
+            pgTank.setProgressWithAnim(mChampion.getInfo().getDefense() * 100);
+            pgMagic.setProgressWithAnim(mChampion.getInfo().getMagic() * 100);
+            pgDifficult.setProgressWithAnim(mChampion.getInfo().getDifficulty() * 100);
         }
     }
 
