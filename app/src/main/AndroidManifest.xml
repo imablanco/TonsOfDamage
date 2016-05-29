@@ -79,6 +79,13 @@
         <activity android:name=".summoner.MasteryDetailActivityDialog"
             android:theme="@style/AppTheme.Transparent"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".summoner.RunesActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".home.PlayerViewDialogActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

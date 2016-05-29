@@ -38,7 +38,6 @@ public class MasteryDetailActivityDialog extends AppCompatActivity {
     TextView mTvMasteryDescription;
     @Bind(R.id.root)
     RelativeLayout mRoot;
-    private MasteryDto mMastery;
     private ColorMatrix matrix;
     private boolean isGray;
     private ValueAnimator animation;
@@ -48,7 +47,7 @@ public class MasteryDetailActivityDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_mastery_detail);
         ButterKnife.bind(this);
-        mMastery = (MasteryDto) getIntent().getSerializableExtra(EXTRA_MASTERY);
+        MasteryDto mMastery = (MasteryDto) getIntent().getSerializableExtra(EXTRA_MASTERY);
         if (mMastery != null) {
 
             Utils.setTransitionNameForView(mImgMastery, getString(R.string.shared_transition, mMastery.getId()));
@@ -90,7 +89,7 @@ public class MasteryDetailActivityDialog extends AppCompatActivity {
 
     private void animateImageSaturationToIdentity() {
         animation = ValueAnimator.ofFloat(0f, 1f);
-        animation.setDuration(1000);
+        animation.setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime));
         animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

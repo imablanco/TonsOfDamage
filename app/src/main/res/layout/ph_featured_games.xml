@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,10 +23,9 @@
 
     <android.support.v4.view.ViewPager
         android:layout_below="@id/tv_title"
-        android:layout_marginTop="15dp"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        android:layout_height="310dp"/>
 
     <com.pixelcan.inkpageindicator.InkPageIndicator
         android:id="@+id/circleIndicator"
@@ -47,4 +46,4 @@
         android:layout_width="50dp"
         android:layout_height="50dp" />
 
-</merge>
+</RelativeLayout>

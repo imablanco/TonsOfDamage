@@ -25,6 +25,7 @@ import com.ablanco.teemo.model.summoners.MasteryPage;
 import com.ablanco.teemo.model.summoners.MasteryPages;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.adapter.MasteryListNameAdapter;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
@@ -75,8 +76,7 @@ public class MasteriesActivity extends AppCompatActivity implements MasteryTreeD
         mTab.setupWithViewPager(mPager);
 
         summonerId = getIntent().getLongExtra(EXTRA_SUMMONER_ID, 0);
-        spinnerAdapter = new ArrayAdapter<>(this, R.layout.simple_spinner_item, mMasteryPages);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter = new MasteryListNameAdapter(this, mMasteryPages);
         mSpinnerPageName.setAdapter(spinnerAdapter);
         mSpinnerPageName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -150,6 +150,12 @@ public class MasteriesActivity extends AppCompatActivity implements MasteryTreeD
                                             mMasteryPages.add(new MasteryPageProxyModel(masteryPage));
                                         }
                                         spinnerAdapter.notifyDataSetChanged();
+
+                                        for (int i = 0; i < mMasteryPages.size(); i++) {
+                                            if(mMasteryPages.get(i) != null && mMasteryPages.get(i).isCurrent() != null && mMasteryPages.get(i).isCurrent()){
+                                                mSpinnerPageName.setSelection(i, false);
+                                            }
+                                        }
 
                                     }
 
@@ -252,19 +258,21 @@ public class MasteriesActivity extends AppCompatActivity implements MasteryTreeD
             int count = 0;
             for (MasteryTreeListDto masteryTreeListDto : tree) {
                 for (MasteryTreeItemDto masteryTreeItemDto : masteryTreeListDto.getMasteryTreeItems()) {
-                    if(masteryTreeItemDto != null && contains(masteryTreeItemDto.getMasteryId())) count++;
+                    if(masteryTreeItemDto != null){
+                        count += contains(masteryTreeItemDto.getMasteryId());
+                    }
                 }
             }
 
             return count;
         }
 
-        private boolean contains(int id){
+        private int contains(int id){
             for (Mastery mastery : page.getMasteries()) {
-                if(mastery != null && mastery.getId() == id) return true;
+                if(mastery != null && mastery.getId() == id) return mastery.getRank();
             }
 
-            return false;
+            return 0;
         }
     }
 

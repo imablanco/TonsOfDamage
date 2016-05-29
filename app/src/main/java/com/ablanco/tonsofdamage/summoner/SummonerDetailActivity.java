@@ -96,7 +96,11 @@ public class SummonerDetailActivity extends AppCompatActivity {
             b.putLong(MasteriesActivity.EXTRA_SUMMONER_ID, mId);
             NavigationHandler.navigateTo(this, NavigationHandler.MASTERIES_DETAIL, b);
 
-        } else if(id == R.id.action_runes){}
+        } else if(id == R.id.action_runes){
+            Bundle b = new Bundle();
+            b.putLong(RunesActivity.EXTRA_SUMMONER_ID, mId);
+            NavigationHandler.navigateTo(this, NavigationHandler.RUNES_DETAIL, b);
+        }
 
 
 

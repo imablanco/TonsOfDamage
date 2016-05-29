@@ -16,7 +16,7 @@
             <com.ablanco.tonsofdamage.home.FeaturedGamesPlaceholder
                 android:id="@+id/ph_featured_games"
                 android:layout_width="match_parent"
-                android:layout_height="320dp" />
+                android:layout_height="360dp" />
 
         </LinearLayout>
 

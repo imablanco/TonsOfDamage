@@ -125,15 +125,18 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
         Teemo.getInstance(getActivity()).getStatsHandler().getRankedStatsBySummonerAndSeason(summonerId, Season.SEASON2016, new ServiceResponseListener<RankedStats>() {
             @Override
             public void onResponse(RankedStats response) {
-                cardViewStats.setVisibility(View.VISIBLE);
-                mTvSeason.setText(response.getSeason());
-                for (ChampionStats stats : response.getChampions()) {
-                    if (stats.getId() == 0) {
-                        fillGamesPlayedSection(stats.getStats());
-                        fillKillsSection(stats.getStats());
-                        fillDamageSection(stats.getStats());
+                if(cardViewStats != null && mTvSeason != null){
+                    cardViewStats.setVisibility(View.VISIBLE);
+                    mTvSeason.setText(response.getSeason());
+                    for (ChampionStats stats : response.getChampions()) {
+                        if (stats.getId() == 0) {
+                            fillGamesPlayedSection(stats.getStats());
+                            fillKillsSection(stats.getStats());
+                            fillDamageSection(stats.getStats());
+                        }
                     }
                 }
+
             }
 
             @Override

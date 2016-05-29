@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="8dp"
+    app:cardBackgroundColor="@color/colorPrimary"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            tools:src="@drawable/default_profile"
+            android:id="@+id/img_rune"
+            android:layout_width="65dp"
+            android:layout_height="65dp" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_rune_count"
+            android:layout_centerHorizontal="true"
+            tools:text = "9x"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_tv_bg"
+            android:layout_marginBottom="-15dp"
+            android:layout_alignBottom="@id/img_rune"
+            android:textColor="@color/colorFallBackAccent"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/img_rune"
+            android:id="@+id/tv_rune_name"
+            android:textSize="12sp"
+            tools:text = "Descripcion"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

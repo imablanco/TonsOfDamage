@@ -67,6 +67,7 @@ public class MasteryView extends SquareRelativeLayout implements View.OnClickLis
     public void reset(){
         Utils.applyGrayScaleFilter(mImg);
         mTvRank.setText("");
+        rank = 0;
         mTvRank.setVisibility(GONE);
     }
 

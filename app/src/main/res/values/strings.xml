@@ -79,6 +79,7 @@
     <string name="shared_transition">transition%1$d</string>
     <string name="win_at">Win at %1$s</string>
     <string name="lose_at">Lose at %1$s</string>
+    <string name="mastery_current">%1$s (current)</string>
     <string name="teams">Teams</string>
     <string name="purple_team">Purple Team</string>
     <string name="blue_team">Blue Team</string>
@@ -121,5 +122,6 @@
     <string name="masteries">Masteries</string>
     <string name="runes">Runes</string>
     <string name="mastery_rank">%1$s/%2$s</string>
+    <string name="view_summoner">View Summoner</string>
 
 </resources>
