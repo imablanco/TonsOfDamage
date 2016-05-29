@@ -1,12 +1,9 @@
 package com.ablanco.tonsofdamage.items;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,10 +15,11 @@ import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.views.ItemView;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
+import com.ablanco.tonsofdamage.views.ItemView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -29,16 +27,15 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 
 /**
  * Created by Álvaro Blanco on 14/04/2016.
  * TonsOfDamage
  */
-public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
+public class ItemDetailDialogActivity extends AppCompatActivity {
     private final static int ITEM_VIEW_SIZE = 70;//dp
     private static final int ROW_SIZE = 3;
-    private static final String ARG_ID_ITEM = "item_id";
+    public static final String EXTRA_ID_ITEM = "item_id";
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.item_img)
@@ -61,41 +58,20 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
     private int dp5 = SizeUtils.convertDpToPixel(5);
     private LinearLayout.LayoutParams itemParams = new LinearLayout.LayoutParams(SizeUtils.convertDpToPixel(ITEM_VIEW_SIZE), SizeUtils.convertDpToPixel(ITEM_VIEW_SIZE));
 
-    private int mId;
-
-    public static DialogFragment newInstance(int itemId) {
-        DialogFragment fragment = new ItemDetailDialogFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_ID_ITEM, itemId);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setStyle(STYLE_NORMAL, R.style.DialogTheme);
+        setContentView(R.layout.dialog_item_detail);
+        ButterKnife.bind(this);
+        int mId = getIntent().getIntExtra(EXTRA_ID_ITEM, 0);
 
-        if (getArguments() != null) {
-            mId = getArguments().getInt(ARG_ID_ITEM);
-        }
-    }
+        Utils.setTransitionNameForView(mItemImg, String.valueOf(mId));
+        Glide.with(ItemDetailDialogActivity.this).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(ItemDetailDialogActivity.this), String.valueOf(mId))).into(mItemImg);
 
-    // implement either onCreateView or onCreateDialog
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_item_detail, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getItemById(mId, SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Items.all, new ServiceResponseListener<ItemDto>() {
+        Teemo.getInstance(this).getStaticDataHandler().getItemById(mId, SettingsHandler.getLanguage(this), null, StaticAPIQueryParams.Items.all, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
-                if (getActivity() != null) {
-                    Glide.with(getActivity()).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(getActivity()), String.valueOf(mId))).into(mItemImg);
+                if (!isDestroyed()) {
                     mIcCoins.setImageResource(R.drawable.ic_gold);
                     mTvTitle.setText(response.getName());
                     mTvItemDescription.setText(Html.fromHtml(response.getDescription()));
@@ -119,9 +95,16 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
 
             @Override
             public void onError(TeemoException e) {
-                dismiss();
+                onBackPressed();
             }
         });
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
     }
 
     private void buildItemBlock(LinearLayout linearLayout, List<String> items) {
@@ -140,12 +123,12 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
     }
 
     private void addRow(LinearLayout linearLayout, List<String> subList) {
-        LinearLayout row = new LinearLayout(getContext());
+        LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setPadding(dp5, dp5, dp5, dp5);
         ItemView itemView;
         for (String item : subList) {
-            itemView = new ItemView(getContext());
+            itemView = new ItemView(this);
             itemView.setItemClickListener(new ItemClickListener(item));
             itemParams.leftMargin = dp5;
             itemParams.rightMargin = dp5;
@@ -158,39 +141,6 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
         linearLayout.addView(row);
     }
 
-    @Override
-    protected float getDownScaleFactor() {
-        // Allow to customize the down scale factor.
-        return 8.0f;
-    }
-
-    @Override
-    protected boolean isActionBarBlurred() {
-        // Enable or disable the blur effect on the action bar.
-        // Disabled by default.
-        return true;
-    }
-
-    @Override
-    protected boolean isDimmingEnable() {
-        // Enable or disable the dimming effect.
-        // Disabled by default.
-        return true;
-    }
-
-    @Override
-    protected boolean isRenderScriptEnable() {
-        // Enable or disable the use of RenderScript for blurring effect
-        // Disabled by default.
-        return true;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
     public class ItemClickListener implements View.OnClickListener {
 
         private String id;
@@ -201,8 +151,10 @@ public class ItemDetailDialogFragment extends SupportBlurDialogFragment {
 
         @Override
         public void onClick(View v) {
-            ItemDetailDialogFragment.newInstance(Integer.valueOf(id)).show(getActivity().getSupportFragmentManager(), "item_detail");
-            dismiss();
+            Bundle bundle = new Bundle();
+            bundle.putInt(ItemDetailDialogActivity.EXTRA_ID_ITEM, Integer.parseInt(id));
+            NavigationHandler.navigateTo(ItemDetailDialogActivity.this, NavigationHandler.ITEM_DETAIL, bundle);
+            ItemDetailDialogActivity.this.finish();
         }
     }
 }

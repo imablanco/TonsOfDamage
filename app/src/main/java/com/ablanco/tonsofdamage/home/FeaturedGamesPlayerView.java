@@ -41,6 +41,8 @@ public class FeaturedGamesPlayerView extends RelativeLayout {
         inflate(context, R.layout.ph_featured_games_player_view, this);
         ButterKnife.bind(this);
 
+        Utils.setTransitionNameForView(mImgChampion, participant.getSummonerName());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // If we're running on Honeycomb or newer, then we can use the Theme's
             // selectableItemBackground to ensure that the View has a pressed state
@@ -54,7 +56,6 @@ public class FeaturedGamesPlayerView extends RelativeLayout {
             this.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.setTransitionNameForView(mImgChampion, participant.getSummonerName());
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation((Activity) getContext(), mImgChampion, participant.getSummonerName());

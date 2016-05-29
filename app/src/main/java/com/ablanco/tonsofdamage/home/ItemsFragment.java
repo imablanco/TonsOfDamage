@@ -18,10 +18,8 @@ import android.widget.ProgressBar;
 import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemsGridAdapter;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
-import com.ablanco.tonsofdamage.items.ItemDetailDialogFragment;
 import com.ablanco.tonsofdamage.items.ItemsFilterDialog;
 import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
 
@@ -72,12 +70,6 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         adapter = new ItemsGridAdapter(getActivity());
-        adapter.setOnItemClickListener(new ItemClickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int position) {
-                ItemDetailDialogFragment.newInstance(adapter.getItemAtPosition(position).getId()).show(getActivity().getSupportFragmentManager(), "item_detail");
-            }
-        });
         mRecyclerView.setAdapter(adapter);
 
         loadItemData();

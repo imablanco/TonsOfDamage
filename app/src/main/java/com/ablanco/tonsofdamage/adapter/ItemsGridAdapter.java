@@ -1,6 +1,9 @@
 package com.ablanco.tonsofdamage.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,9 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.items.ItemDetailDialogActivity;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
@@ -25,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco on 10/04/2016.
  * TonsOfDamage
  */
-public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemViewHolder> {
+public class ItemsGridAdapter extends RecyclerView.Adapter<ItemsGridAdapter.ItemViewHolder> {
 
     private final Context context;
     private final List<ItemDto> items = new ArrayList<>();
@@ -42,10 +47,8 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-
-        ItemDto item = items.get(position);
+    public void onBindViewHolder(final ItemViewHolder holder, int position) {
+        final ItemDto item = items.get(position);
         holder.mTvItemName.setText(item.getName());
         Glide.clear(holder.mImgItem);
         Glide.with(context).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(context), String.valueOf(item.getId()))).into(holder.mImgItem);
@@ -59,6 +62,19 @@ public class ItemsGridAdapter extends ItemClickAdapter<ItemsGridAdapter.ItemView
             holder.mIcCoins.setVisibility(View.GONE);
             holder.mTvPrice.setVisibility(View.GONE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.setTransitionNameForView(holder.mImgItem, String.valueOf(item.getId()));
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) context, holder.mImgItem, String.valueOf(item.getId()));
+                Bundle bundle = new Bundle();
+                bundle.putInt(ItemDetailDialogActivity.EXTRA_ID_ITEM, item.getId());
+                NavigationHandler.navigateTo(context, NavigationHandler.ITEM_DETAIL, bundle, options);
+            }
+        });
     }
 
     public void setItems(List<ItemDto> items) {

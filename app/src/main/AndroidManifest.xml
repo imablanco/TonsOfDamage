@@ -86,6 +86,10 @@
         <activity android:name=".home.PlayerViewDialogActivity"
             android:theme="@style/AppTheme.Transparent"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".items.ItemDetailDialogActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.champions.ChampionSkinDetailActivity;
 import com.ablanco.tonsofdamage.home.PlayerViewDialogActivity;
+import com.ablanco.tonsofdamage.items.ItemDetailDialogActivity;
 import com.ablanco.tonsofdamage.splash.FirstAccessSetupActivity;
 import com.ablanco.tonsofdamage.home.HomeActivity;
 import com.ablanco.tonsofdamage.summoner.MasteriesActivity;
@@ -32,6 +33,7 @@ public class NavigationHandler {
     public static final String MASTERY_DETAIL = "MASTERY_DETAIL";
     public static final String RUNES_DETAIL = "RUNES_DETAIL";
     public static final String PLAYER_DETAIL = "PLAYER_DETAIL";
+    public static final String ITEM_DETAIL = "ITEM_DETAIL";
 
     private NavigationHandler(){}
 
@@ -91,6 +93,8 @@ public class NavigationHandler {
             classDestination = RunesActivity.class;
         } else if(destination.equalsIgnoreCase(PLAYER_DETAIL)){
             classDestination = PlayerViewDialogActivity.class;
+        } else if(destination.equalsIgnoreCase(ITEM_DETAIL)){
+            classDestination = ItemDetailDialogActivity.class;
         }
 
 

@@ -1,7 +1,9 @@
 package com.ablanco.tonsofdamage.views;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,8 +16,9 @@ import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.items.ItemDetailDialogFragment;
+import com.ablanco.tonsofdamage.items.ItemDetailDialogActivity;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
@@ -26,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco on 09/04/2016.
  * TonsOfDamage
  */
-public class ItemView extends SquareRelativeLayout implements View.OnClickListener{
+public class ItemView extends SquareRelativeLayout implements View.OnClickListener {
 
     @Bind(R.id.img_item)
     ImageView mImgItem;
@@ -56,14 +59,17 @@ public class ItemView extends SquareRelativeLayout implements View.OnClickListen
 
     public void setItemId(int id) {
         this.mId = id;
+
+        Utils.setTransitionNameForView(mImgItem, String.valueOf(mId));
+
         Teemo.getInstance(getContext()).getStaticDataHandler().getItemById(id, SettingsHandler.getLanguage(getContext()), null, StaticAPIQueryParams.Items.gold, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
-                if(response.getGold() != null && mImgItem != null){
+                if (response.getGold() != null && mImgItem != null) {
                     Glide.with(getContext()).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(mId))).into(mImgItem);
-                    if(!mCollapsedPrice){
+                    if (!mCollapsedPrice) {
                         mTvPrice.setText(Utils.getItemPrice(response.getGold().getTotal(), response.getGold().getBase()));
-                    }else {
+                    } else {
                         mTvPrice.setText(String.valueOf(response.getGold().getBase()));
                     }
 
@@ -84,18 +90,22 @@ public class ItemView extends SquareRelativeLayout implements View.OnClickListen
         ButterKnife.unbind(this);
     }
 
-    public void setItemClickListener(OnClickListener clickListener){
+    public void setItemClickListener(OnClickListener clickListener) {
         this.setOnClickListener(clickListener);
     }
 
-    public void setCollapsedPrice(boolean collapsedPrice){
+    public void setCollapsedPrice(boolean collapsedPrice) {
         this.mCollapsedPrice = collapsedPrice;
     }
 
     @Override
     public void onClick(View v) {
-        if(getContext() instanceof FragmentActivity){
-            ItemDetailDialogFragment.newInstance(mId).show(((FragmentActivity) getContext()).getSupportFragmentManager(), "item_detail");
-        }
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation((Activity) getContext(), mImgItem, String.valueOf(mId));
+        Bundle bundle = new Bundle();
+        bundle.putInt(ItemDetailDialogActivity.EXTRA_ID_ITEM, mId);
+        NavigationHandler.navigateTo(getContext(), NavigationHandler.ITEM_DETAIL, bundle, options);
+
     }
 }
