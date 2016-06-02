@@ -123,5 +123,6 @@
     <string name="runes">Runes</string>
     <string name="mastery_rank">%1$s/%2$s</string>
     <string name="view_summoner">View Summoner</string>
+    <string name="combined_stats">Combined stats</string>
 
 </resources>

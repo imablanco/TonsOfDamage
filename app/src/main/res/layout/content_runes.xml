@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_summoner_runes">
+
+    <Spinner
+        android:scrollbars="none"
+        android:id="@+id/spinner_page_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+
+    <com.ablanco.tonsofdamage.views.Separator
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:separatorColor="@color/colorAccent"
+        android:layout_below="@id/spinner_page_name"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/recycler_view"
+        android:layout_below="@id/spinner_page_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/fab_show_bs"
+        android:src="@drawable/ic_up_arrow"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
