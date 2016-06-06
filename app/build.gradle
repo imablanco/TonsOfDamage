@@ -48,6 +48,7 @@ dependencies {
     compile 'com.github.bmarrdev:android-DecoView-charting:v1.0.1'
     compile 'com.pacioianu.david:ink-page-indicator:1.1.1'
     compile 'com.daasuu:animateHorizontalProgressBar:0.2.4'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 
     compile 'io.reactivex:rxandroid:1.1.0'
 // Because RxAndroid releases are few and far between, it is recommended you also

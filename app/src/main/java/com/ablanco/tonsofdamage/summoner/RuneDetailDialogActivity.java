@@ -2,7 +2,6 @@ package com.ablanco.tonsofdamage.summoner;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.RuneDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco Cabrero on 5/6/16
  * TonsOfDamage
  */
-public class RuneDetailDialogActivity extends AppCompatActivity {
+public class RuneDetailDialogActivity extends BaseActivity {
 
     public static final String EXTRA_RUNE = "rune_obj";
 

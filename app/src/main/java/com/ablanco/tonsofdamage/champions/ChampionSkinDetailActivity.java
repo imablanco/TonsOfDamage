@@ -21,13 +21,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.DownloadsHandler;
 import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ChampionSkinDetailActivity extends AppCompatActivity {
+public class ChampionSkinDetailActivity extends BaseActivity {
 
     public final static int RC_WRITE_PERMISSON = 201;
 

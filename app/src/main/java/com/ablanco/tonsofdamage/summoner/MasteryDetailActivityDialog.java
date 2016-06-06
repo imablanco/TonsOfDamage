@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.ablanco.teemo.model.staticdata.MasteryDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -27,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Álvaro Blanco on 28/05/2016.
  * TonsOfDamage
  */
-public class MasteryDetailActivityDialog extends AppCompatActivity {
+public class MasteryDetailActivityDialog extends BaseActivity {
 
     public static final String EXTRA_MASTERY = "mastery_obj";
     public static final String EXTRA_RANK = "extra_rank";

@@ -1,12 +1,11 @@
 package com.ablanco.tonsofdamage.splash;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.splash.FirstAccessSetupFragment;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 
-public class FirstAccessSetupActivity extends AppCompatActivity {
+public class FirstAccessSetupActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

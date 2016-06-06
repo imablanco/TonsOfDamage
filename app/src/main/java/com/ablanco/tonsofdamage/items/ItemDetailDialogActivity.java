@@ -1,7 +1,6 @@
 package com.ablanco.tonsofdamage.items;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco on 14/04/2016.
  * TonsOfDamage
  */
-public class ItemDetailDialogActivity extends AppCompatActivity {
+public class ItemDetailDialogActivity extends BaseActivity {
     private final static int ITEM_VIEW_SIZE = 70;//dp
     private static final int ROW_SIZE = 3;
     public static final String EXTRA_ID_ITEM = "item_id";

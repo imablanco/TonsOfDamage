@@ -2,7 +2,6 @@ package com.ablanco.tonsofdamage.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -16,6 +15,7 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Álvaro Blanco on 29/05/2016.
  * TonsOfDamage
  */
-public class PlayerViewDialogActivity extends AppCompatActivity {
+public class PlayerViewDialogActivity extends BaseActivity {
 
     public final static String EXTRA_PARTICIPANT = "extra_participant";
     public final static String EXTRA_CHAMPION = "extra_champion";

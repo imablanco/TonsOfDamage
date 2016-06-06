@@ -17,6 +17,7 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.ErrorUtils;
@@ -27,7 +28,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SummonerDetailActivity extends AppCompatActivity {
+public class SummonerDetailActivity extends BaseActivity {
 
     private final static int PAGE_OVERVIEW = 0;
     private final static int PAGE_MATCH_LIST = 1;

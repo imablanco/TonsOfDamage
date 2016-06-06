@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
@@ -30,6 +31,8 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
     ViewPager pager;
     @Bind(R.id.circleIndicator)
     InkPageIndicator circleIndicator;
+    @Bind(R.id.tv_no_favorite_yet)
+    TextView tvNoFavoriteYet;
 
     private List<List<String>> mPagedChampionIds = new ArrayList<>();
 
@@ -72,8 +75,9 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
         if (!mPagedChampionIds.isEmpty()) {
             pager.setAdapter(new FavoriteChampionAdapter());
             circleIndicator.setViewPager(pager);
-        }else {
-            // TODO: 6/6/16
+            tvNoFavoriteYet.setVisibility(GONE);
+        } else {
+            tvNoFavoriteYet.setVisibility(VISIBLE);
         }
     }
 

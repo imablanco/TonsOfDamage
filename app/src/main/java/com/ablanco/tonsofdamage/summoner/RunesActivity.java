@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +32,7 @@ import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.RuneListNameAdapter;
 import com.ablanco.tonsofdamage.adapter.RunesAdapter;
+import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
@@ -52,7 +52,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco on 28/05/2016.
  * TonsOfDamage
  */
-public class RunesActivity extends AppCompatActivity {
+public class RunesActivity extends BaseActivity {
 
     public static final String EXTRA_SUMMONER_ID = "extra_summoner_id";
     public final static float STATS_LAYOUT_HEIGHT = SizeUtils.convertDpToPixel(200);
