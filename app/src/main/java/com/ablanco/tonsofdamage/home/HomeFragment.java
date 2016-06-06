@@ -21,10 +21,16 @@ import butterknife.ButterKnife;
  */
 public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private final static long UPDATE_TIME = 300000;
+
+    private Long mLastUpdate;
+
     @Bind(R.id.ph_featured_games)
-    FeaturedGamesPlaceholder mPhFeaturedGames;
+    HomePlaceholder mPhFeaturedGames;
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
+    @Bind(R.id.ph_favorite_champ)
+    HomePlaceholder phFavoriteChamp;
 
     public static Fragment newInstance() {
         return new HomeFragment();
@@ -48,7 +54,11 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
     @Override
     public void onResume() {
         super.onResume();
-        mPhFeaturedGames.update();
+        if(hasToUpdate()){
+            mLastUpdate = System.currentTimeMillis();
+            mPhFeaturedGames.update();
+        }
+        phFavoriteChamp.update();
     }
 
     @Override
@@ -57,12 +67,18 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
         ButterKnife.unbind(this);
     }
 
+    private boolean hasToUpdate(){
+        return mLastUpdate == null || System.currentTimeMillis() - mLastUpdate > UPDATE_TIME;
+    }
+
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                mLastUpdate = System.currentTimeMillis();
                 mPhFeaturedGames.update();
+                phFavoriteChamp.update();
                 mSwipeRefresh.setRefreshing(false);
             }
         }, 500);

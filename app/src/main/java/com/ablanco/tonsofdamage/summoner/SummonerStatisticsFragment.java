@@ -100,6 +100,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
     DecoView mDvDamage;
 
     private boolean alreadyAnimated = false;
+    private boolean mDataLoaded = false;
 
 
     public static BaseSummonerDetailFragment newInstance(long summonerId) {
@@ -126,6 +127,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
             @Override
             public void onResponse(RankedStats response) {
                 if(cardViewStats != null && mTvSeason != null){
+                    mDataLoaded = true;
                     cardViewStats.setVisibility(View.VISIBLE);
                     mTvSeason.setText(response.getSeason());
                     for (ChampionStats stats : response.getChampions()) {
@@ -241,7 +243,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
 
     public void animateViews() {
 
-        if (!alreadyAnimated) {
+        if (!alreadyAnimated && mDataLoaded) {
             alreadyAnimated = true;
             int index;
 

@@ -73,6 +73,7 @@ public class PlayerViewDialogActivity extends AppCompatActivity {
                     Bundle b = new Bundle();
                     b.putSerializable(ChampionDetailActivity.EXTRA_CHAMPION_ID, championDto.getId());
                     NavigationHandler.navigateTo(PlayerViewDialogActivity.this, NavigationHandler.CHAMPION_DETAIL, b);
+                    onBackPressed();
                 }
             });
 
@@ -84,15 +85,19 @@ public class PlayerViewDialogActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Summoner response) {
                         final Long summonerId = response.getId();
-                        AnimationUtils.revealView(mBtViewSummoner);
-                        mBtViewSummoner.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Bundle b = new Bundle();
-                                b.putSerializable(SummonerDetailActivity.EXTRA_ID, summonerId);
-                                NavigationHandler.navigateTo(PlayerViewDialogActivity.this, NavigationHandler.SUMMONER_DETAIL, b);
-                            }
-                        });
+                        if(!isDestroyed()){
+                            AnimationUtils.revealView(mBtViewSummoner);
+                            mBtViewSummoner.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Bundle b = new Bundle();
+                                    b.putSerializable(SummonerDetailActivity.EXTRA_ID, summonerId);
+                                    NavigationHandler.navigateTo(PlayerViewDialogActivity.this, NavigationHandler.SUMMONER_DETAIL, b);
+                                    onBackPressed();
+                                }
+                            });
+                        }
+
                     }
 
                     @Override

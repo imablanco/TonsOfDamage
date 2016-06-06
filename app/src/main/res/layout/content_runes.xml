@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     xmlns:tools="http://schemas.android.com/tools"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_summoner_runes">
@@ -38,6 +37,7 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_marginRight="16dp"
         android:layout_marginBottom="25dp"
+        android:visibility="invisible"
         android:id="@+id/fab_show_bs"
         android:src="@drawable/ic_up_arrow"
         android:layout_alignParentBottom="true"

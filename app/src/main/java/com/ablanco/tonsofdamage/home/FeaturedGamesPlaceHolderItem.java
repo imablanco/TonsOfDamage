@@ -51,10 +51,6 @@ public class FeaturedGamesPlaceHolderItem extends RelativeLayout {
 
         setPadding(dp7, dp7, dp7, dp7);
 
-        update(gameInfo);
-    }
-
-    public void update(FeaturedGameInfo gameInfo){
         mTvGameType.setText(gameInfo.getGameMode());
 
         tvStartTime.setText(new PrettyTime().format(new Date(gameInfo.getGameStartTime())));
@@ -85,7 +81,11 @@ public class FeaturedGamesPlaceHolderItem extends RelativeLayout {
 
                 }
             });
+
+
         }
+
+
     }
 
 }

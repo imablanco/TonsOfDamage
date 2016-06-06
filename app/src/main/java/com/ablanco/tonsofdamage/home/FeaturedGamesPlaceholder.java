@@ -46,7 +46,6 @@ public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholde
 
         this.setUseCompatPadding(true);
         this.setRadius(SizeUtils.convertDpToPixel(2));
-        mPager.setAdapter(new FeaturedGamesPagerAdapter());
         setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
     }
 
@@ -60,17 +59,7 @@ public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholde
                 mLoading.setVisibility(GONE);
                 mFeaturedGameInfos.clear();
                 mFeaturedGameInfos.addAll(response.getGameList());
-
-                if(mPager.getChildCount() == mFeaturedGameInfos.size()){
-                    for (int i = 0; i < mFeaturedGameInfos.size(); i++) {
-                        if(mPager.getChildAt(i).getTag() != null && mPager.getChildAt(i).getTag() != mFeaturedGameInfos.get(i).getGameId() && mPager.getChildAt(i) instanceof FeaturedGamesPlaceHolderItem){
-                            ((FeaturedGamesPlaceHolderItem) mPager.getChildAt(i)).update(mFeaturedGameInfos.get(i));
-                        }
-                    }
-                }
-
-
-                mPager.getAdapter().notifyDataSetChanged();
+                mPager.setAdapter(new FeaturedGamesPagerAdapter());
                 mCircleIndicator.setViewPager(mPager);
                 mPager.setOffscreenPageLimit(response.getGameList().size() - 1);
             }

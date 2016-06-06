@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,39 +9,55 @@
     <include layout="@layout/content_runes"/>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/bottom_sheet"
+        android:id="@+id/cv_combined_stats"
         android:layout_alignParentBottom="true"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="1dp"
         app:contentPadding="10dp"
+        android:translationY="200dp"
         app:layout_behavior="@string/bottom_sheet_behavior"
         app:cardBackgroundColor="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="200dp">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="mini"
+                android:visibility="invisible"
+                app:elevation="4dp"
+                android:src="@drawable/ic_down_arrow"
+                app:rippleColor="@color/white"
+                android:id="@+id/fab_collapse"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"/>
+
             <TextView
+                android:id="@+id/tv_title"
                 android:textSize="18sp"
                 android:text = "@string/combined_stats"
                 android:textColor="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <com.ablanco.tonsofdamage.views.Separator
+                android:id="@+id/top_separator"
+                android:layout_below="@id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="15dp"
                 app:separatorColor="@color/colorAccent"/>
 
-            <LinearLayout
-                android:id="@+id/ll_stats"
-                android:orientation="vertical"
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@id/top_separator"
+                android:clipToPadding="false"
+                android:paddingTop="15dp"
+                android:id="@+id/recycler_view_stats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        </LinearLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

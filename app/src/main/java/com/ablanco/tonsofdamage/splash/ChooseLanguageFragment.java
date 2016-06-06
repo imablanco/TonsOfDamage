@@ -122,6 +122,7 @@ public class ChooseLanguageFragment extends BaseFragment {
     @OnClick(R.id.fab_choose_language)
     public void setRegionAndNavigate() {
         SettingsHandler.setLanguage(getActivity(), selectedLocale.toString());
+        Utils.updateLanguage(getActivity(), SettingsHandler.getLanguage(getActivity()));
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.content, PickSummonerFragment.newInstance())
@@ -145,7 +146,6 @@ public class ChooseLanguageFragment extends BaseFragment {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.tv.setAllCaps(false);
             holder.tv.setText(locales.get(position).getDisplayName(Locale.getDefault()));
-            Utils.updateLanguage(getActivity(), SettingsHandler.getLanguage(getActivity()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

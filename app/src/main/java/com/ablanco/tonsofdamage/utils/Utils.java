@@ -114,32 +114,33 @@ public class Utils {
 
     public static void updateLanguage(Context ctx, String lang) {
         Configuration cfg = new Configuration();
-        if (lang != null && !lang.isEmpty())
-            cfg.locale = new Locale(lang);
-        else
-            cfg.locale = Locale.getDefault();
+        String[] splittedLang = lang.split("_");
+        if (splittedLang.length == 2) {
+            cfg.locale = new Locale(splittedLang[0], splittedLang[1]);
 
-        Locale.setDefault(cfg.locale);
-        ctx.getResources().updateConfiguration(cfg,
-                ctx.getResources().getDisplayMetrics());
-        ctx.getResources().updateConfiguration(cfg, null);
+            Locale.setDefault(cfg.locale);
+            ctx.getResources().updateConfiguration(cfg,
+                    ctx.getResources().getDisplayMetrics());
+            ctx.getResources().updateConfiguration(cfg, null);
+        }
+
     }
 
-    public static void setTransitionNameForView(View view, String transitionName){
+    public static void setTransitionNameForView(View view, String transitionName) {
         ViewCompat.setTransitionName(view, transitionName);
 
     }
 
-    public static String getFormattedStats(Integer value){
-        if(value > 1000000){
-            return String.format(Locale.getDefault(), "%.1fM", value.doubleValue()/ 1000000);
-        }else if(value > 1000){
-            return String.format(Locale.getDefault(), "%.1fK", value.doubleValue()/ 1000);
-        }else return String.valueOf(value);
+    public static String getFormattedStats(Integer value) {
+        if (value > 1000000) {
+            return String.format(Locale.getDefault(), "%.1fM", value.doubleValue() / 1000000);
+        } else if (value > 1000) {
+            return String.format(Locale.getDefault(), "%.1fK", value.doubleValue() / 1000);
+        } else return String.valueOf(value);
     }
 
-    public static void applyGrayScaleFilter(ImageView imageView){
-        if(grayScaleFilter == null){
+    public static void applyGrayScaleFilter(ImageView imageView) {
+        if (grayScaleFilter == null) {
             ColorMatrix matrix = new ColorMatrix();
             matrix.setSaturation(0);
             grayScaleFilter = new ColorMatrixColorFilter(matrix);
@@ -147,7 +148,7 @@ public class Utils {
         imageView.setColorFilter(grayScaleFilter);
     }
 
-    public static void resetColorFilter(ImageView imageView){
+    public static void resetColorFilter(ImageView imageView) {
         imageView.setColorFilter(null);
     }
 }

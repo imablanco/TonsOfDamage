@@ -3,7 +3,9 @@ package com.ablanco.tonsofdamage.handler;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -81,6 +83,10 @@ public class SettingsHandler {
         return champs != null && champs.contains(String.valueOf(champId));
     }
 
+    public static List<String> getFavoriteChampions(Context context){
+        return new ArrayList<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, new HashSet<String>()));
+    }
+
     public static void addFavoriteSummoner(Context context, long summonerId){
         Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
         if(summoners == null){
@@ -104,5 +110,9 @@ public class SettingsHandler {
         Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
 
         return summoners != null && summoners.contains(String.valueOf(summonerId));
+    }
+
+    public static List<String> getFavoriteSummoners(Context context){
+        return new ArrayList<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>()));
     }
 }

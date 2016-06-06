@@ -5,9 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingTop="15dp"
-    android:paddingRight="15dp"
-    android:paddingLeft="15dp">
+    android:paddingTop="15dp">
 
     <TextView
         android:textStyle="bold"
@@ -33,6 +31,8 @@
 
     <com.ablanco.tonsofdamage.views.Separator
         android:id="@+id/top_separator"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_below="@id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="1dp" />

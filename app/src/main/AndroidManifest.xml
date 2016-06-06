@@ -90,6 +90,10 @@
         <activity android:name=".items.ItemDetailDialogActivity"
             android:theme="@style/AppTheme.Transparent"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".summoner.RuneDetailDialogActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

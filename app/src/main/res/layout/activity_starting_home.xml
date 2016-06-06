@@ -16,7 +16,12 @@
             <com.ablanco.tonsofdamage.home.FeaturedGamesPlaceholder
                 android:id="@+id/ph_featured_games"
                 android:layout_width="match_parent"
-                android:layout_height="360dp" />
+                android:layout_height="wrap_content"/>
+
+            <com.ablanco.tonsofdamage.home.FavoriteChampionsPlaceholder
+                android:id="@+id/ph_favorite_champ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

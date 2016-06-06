@@ -1,17 +1,21 @@
 package com.ablanco.tonsofdamage.summoner;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,29 +55,35 @@ import butterknife.ButterKnife;
 public class RunesActivity extends AppCompatActivity {
 
     public static final String EXTRA_SUMMONER_ID = "extra_summoner_id";
+    public final static float STATS_LAYOUT_HEIGHT = SizeUtils.convertDpToPixel(200);
+
     @Bind(R.id.spinner_page_name)
     Spinner mSpinnerPageName;
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.loading)
     ProgressBar mLoading;
-    @Bind(R.id.bottom_sheet)
-    View bottomSheet;
+    @Bind(R.id.cv_combined_stats)
+    View cvCombinedStats;
     @Bind(R.id.fab_show_bs)
-    FloatingActionButton fabShowBs;
-    @Bind(R.id.ll_stats)
-    LinearLayout llStats;
+    FloatingActionButton fabExpand;
+    @Bind(R.id.fab_collapse)
+    FloatingActionButton fabCollapse;
+    @Bind(R.id.recycler_view_stats)
+    RecyclerView mRecyclerViewStats;
 
+    private StatsAdapter mStatsAdapter;
     private Map<Long, List<RuneProxyModel>> mProxyRunes = new HashMap<>();
     private Map<String, RuneDto> mRunes = new HashMap<>();
     private RuneListNameAdapter spinnerAdapter;
     private List<RunePageProxyModel> mRunePages = new ArrayList<>();
 
     private Map<Long, Map<String, Double>> mCombinedStatsByRunePageMap = new HashMap<>();
-    private int dp3 = SizeUtils.convertDpToPixel(3);
-    private BottomSheetBehavior viewBottomSheetBehavior;
 
-    //private Map<Long, Map<Integer, Integer>> mRunesPerPage = new HashMap<>();
+    private ValueAnimator expandAnimator = ValueAnimator.ofFloat(STATS_LAYOUT_HEIGHT, 0);
+    private ValueAnimator collapseAnimator = ValueAnimator.ofFloat(0, STATS_LAYOUT_HEIGHT);
+    private boolean mExpanded = false;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,35 +97,100 @@ public class RunesActivity extends AppCompatActivity {
 
             mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
             final RunesAdapter adapter = new RunesAdapter(this);
+            mRecyclerViewStats.setLayoutManager(new LinearLayoutManager(this));
 
-            viewBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+            mStatsAdapter = new StatsAdapter();
+            mRecyclerViewStats.setAdapter(mStatsAdapter);
 
-            fabShowBs.setOnClickListener(new View.OnClickListener() {
+            fabExpand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    viewBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    if (collapseAnimator.isRunning()) {
+                        collapseAnimator.cancel();
+                    }
+                    expandAnimator.start();
                 }
             });
 
-            viewBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            fabCollapse.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                        switch (newState){
-                            case BottomSheetBehavior.STATE_EXPANDED:
-                                fabShowBs.setVisibility(View.INVISIBLE);
-                                break;
-                            case BottomSheetBehavior.STATE_COLLAPSED:
-                                AnimationUtils.revealView(fabShowBs);
-                                break;
-                        }
+                public void onClick(View v) {
+                    if (expandAnimator.isRunning()) {
+                        expandAnimator.cancel();
+                    }
+                    collapseAnimator.start();
+                }
+            });
+
+            expandAnimator.setInterpolator(new DecelerateInterpolator());
+            expandAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    cvCombinedStats.setTranslationY((Float) animation.getAnimatedValue());
+                }
+            });
+
+            expandAnimator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
                 }
 
                 @Override
-                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                public void onAnimationEnd(Animator animation) {
+                    if (!isDestroyed()) {
+                        fabExpand.setVisibility(View.INVISIBLE);
+                        AnimationUtils.revealView(fabCollapse);
+                        mExpanded = true;
+                    }
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
 
                 }
             });
+
+            collapseAnimator.setInterpolator(new AccelerateInterpolator());
+            collapseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    cvCombinedStats.setTranslationY((Float) animation.getAnimatedValue());
+                }
+            });
+
+            collapseAnimator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    if (!isDestroyed()) {
+                        fabCollapse.setVisibility(View.INVISIBLE);
+                        AnimationUtils.revealView(fabExpand);
+                        mExpanded = false;
+                    }
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+
 
             mRecyclerView.setAdapter(adapter);
             spinnerAdapter = new RuneListNameAdapter(this, mRunePages);
@@ -179,7 +254,7 @@ public class RunesActivity extends AppCompatActivity {
                             spinnerAdapter.notifyDataSetChanged();
 
                             for (int i = 0; i < response.getPages().size(); i++) {
-                                if(response.getPages().get(i) != null && response.getPages().get(i).isCurrent() != null && response.getPages().get(i).isCurrent()){
+                                if (response.getPages().get(i) != null && response.getPages().get(i).isCurrent() != null && response.getPages().get(i).isCurrent()) {
                                     mSpinnerPageName.setSelection(i, false);
                                 }
                             }
@@ -234,7 +309,7 @@ public class RunesActivity extends AppCompatActivity {
 
                             if (summarizedStats.get(f.getName()) == null) {
                                 summarizedStats.put(f.getName(), field);
-                            }else {
+                            } else {
                                 summarizedStats.put(f.getName(), summarizedStats.get(f.getName()) != null ? summarizedStats.get(f.getName()) + field : field);
                             }
                         }
@@ -249,29 +324,65 @@ public class RunesActivity extends AppCompatActivity {
 
     private void buildStats(Map<String, Double> stats) {
 
-        llStats.removeAllViews();
-        TextView textView;
-        for (String key : stats.keySet()) {
-            textView = new TextView(this);
-            textView.setPadding(dp3, dp3, dp3, dp3);
-            textView.setText(ResourcesHandler.getInstance(this).getResourceForKey(key) + " " + String.format(Locale.getDefault(), "%.2f", stats.get(key)));
-            llStats.addView(textView);
+        List<RuneStat> runeStats = new ArrayList<>();
+        for (String s : stats.keySet()) {
+            runeStats.add(new RuneStat(s, stats.get(s)));
         }
 
-        viewBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        mStatsAdapter.addStats(runeStats);
 
-        if(viewBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
-            viewBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        if (!mExpanded) {
+            if (collapseAnimator.isRunning()) {
+                collapseAnimator.cancel();
+            }
+            expandAnimator.start();
         }
 
     }
 
     @Override
     public void onBackPressed() {
-        if (viewBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            viewBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        if (mExpanded) {
+            if (expandAnimator.isRunning()) {
+                expandAnimator.cancel();
+            }
+            collapseAnimator.start();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.StatViewHolder> {
+
+        private List<RuneStat> mStats = new ArrayList<>();
+
+        @Override
+        public StatsAdapter.StatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new StatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rune_stat, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(StatsAdapter.StatViewHolder holder, int position) {
+            RuneStat stat = mStats.get(position);
+
+            ((TextView) holder.itemView).setText(String.format("%s %s", ResourcesHandler.getInstance(RunesActivity.this).getResourceForKey(stat.getStatName()), String.format(Locale.getDefault(), "%.2f", stat.getStatValue())));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mStats.size();
+        }
+
+        public void addStats(List<RuneStat> stats) {
+            this.mStats = stats;
+            notifyDataSetChanged();
+        }
+
+        public class StatViewHolder extends RecyclerView.ViewHolder {
+
+            public StatViewHolder(View itemView) {
+                super(itemView);
+            }
         }
     }
 }

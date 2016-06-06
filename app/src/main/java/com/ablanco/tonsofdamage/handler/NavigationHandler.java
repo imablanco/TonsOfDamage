@@ -14,6 +14,7 @@ import com.ablanco.tonsofdamage.home.HomeActivity;
 import com.ablanco.tonsofdamage.summoner.MasteriesActivity;
 import com.ablanco.tonsofdamage.summoner.MasteryDetailActivityDialog;
 import com.ablanco.tonsofdamage.summoner.MatchDetailActivity;
+import com.ablanco.tonsofdamage.summoner.RuneDetailDialogActivity;
 import com.ablanco.tonsofdamage.summoner.RunesActivity;
 import com.ablanco.tonsofdamage.summoner.SummonerDetailActivity;
 
@@ -34,6 +35,7 @@ public class NavigationHandler {
     public static final String RUNES_DETAIL = "RUNES_DETAIL";
     public static final String PLAYER_DETAIL = "PLAYER_DETAIL";
     public static final String ITEM_DETAIL = "ITEM_DETAIL";
+    public static final String RUNE_DETAIL = "RUNE_DETAIL";
 
     private NavigationHandler(){}
 
@@ -95,6 +97,8 @@ public class NavigationHandler {
             classDestination = PlayerViewDialogActivity.class;
         } else if(destination.equalsIgnoreCase(ITEM_DETAIL)){
             classDestination = ItemDetailDialogActivity.class;
+        } else if(destination.equalsIgnoreCase(RUNE_DETAIL)){
+            classDestination = RuneDetailDialogActivity.class;
         }
 
 
