@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/img_spell1"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="14sp"
                 tools:text="Classic" />
 
@@ -76,7 +76,7 @@
                 android:layout_below="@id/tv_game_type"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/ic_score"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="14sp"
                 tools:text="16/6/2" />
 
@@ -98,7 +98,7 @@
                 android:layout_below="@id/tv_score"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/ic_gold"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="14sp"
                 tools:text="220gold" />
 
@@ -120,7 +120,7 @@
                 android:layout_below="@id/tv_gold"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/ic_minions"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="14sp"
                 tools:text="180" />
 
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:paddingLeft="5dp"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 tools:text="16/6/2013" />
 
             <TextView
@@ -141,7 +141,7 @@
                 android:layout_below="@id/tv_date"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="5dp"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 tools:text="16/6/2013" />
 
         </RelativeLayout>

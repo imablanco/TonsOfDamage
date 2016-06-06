@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="18sp"
                 tools:text="Normal" />
 
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 tools:text="Summoners Rift" />
 
             <RelativeLayout
@@ -72,7 +72,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/ic_score"
                     android:paddingLeft="7dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     android:textSize="14sp"
                     tools:text="16/6/2" />
 
@@ -94,7 +94,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/ic_gold"
                     android:paddingLeft="7dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     android:textSize="14sp"
                     tools:text="220gold" />
 
@@ -116,7 +116,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/ic_minions"
                     android:paddingLeft="7dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     android:textSize="14sp"
                     tools:text="180" />
 
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:paddingLeft="5dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     tools:text="16/6/2013" />
 
                 <TextView
@@ -137,7 +137,7 @@
                     android:layout_below="@id/tv_date"
                     android:layout_marginTop="5dp"
                     android:paddingLeft="5dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     tools:text="16/6/2013" />
 
             </RelativeLayout>

@@ -17,7 +17,7 @@
         android:ellipsize="end"
         android:textSize="11sp"
         android:lines="1"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:layout_alignTop="@id/ic_coins"
         android:layout_alignBottom="@id/ic_coins"
         android:layout_toRightOf="@id/ic_coins"

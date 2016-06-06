@@ -77,6 +77,8 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
     RecyclerView mostPlayedChampionsRecyclerView;
     @Bind(R.id.tv_summoner_level)
     TextView mTvSummonerLevel;
+    @Bind(R.id.cv_most_played_champions)
+    View cvMostPlayedChampions;
 
     private SummonerMostPlayedChampionsAdapter mostPlayedChampionsAdapter;
 
@@ -127,48 +129,51 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
         Teemo.getInstance(getActivity()).getStatsHandler().getRankedStatsBySummonerAndSeason(summonerId, Season.SEASON2016, new ServiceResponseListener<RankedStats>() {
             @Override
             public void onResponse(RankedStats response) {
-                List<ChampionStats> mostPlayed = response.getChampions();
-                Collections.sort(mostPlayed, new Comparator<ChampionStats>() {
-                    @Override
-                    public int compare(ChampionStats lhs, ChampionStats rhs) {
-                        return rhs.getStats().getTotalSessionsPlayed().compareTo(lhs.getStats().getTotalSessionsPlayed());
+                if(getActivity() != null){
+                    cvMostPlayedChampions.setVisibility(View.VISIBLE);
+                    List<ChampionStats> mostPlayed = response.getChampions();
+                    Collections.sort(mostPlayed, new Comparator<ChampionStats>() {
+                        @Override
+                        public int compare(ChampionStats lhs, ChampionStats rhs) {
+                            return rhs.getStats().getTotalSessionsPlayed().compareTo(lhs.getStats().getTotalSessionsPlayed());
+                        }
+                    });
+
+                    Iterator<ChampionStats> championStatsIterator = mostPlayed.iterator();
+
+                    while (championStatsIterator.hasNext()){
+                        if(championStatsIterator.next().getId() == 0){
+                            championStatsIterator.remove();
+                        }
                     }
-                });
 
-                Iterator<ChampionStats> championStatsIterator = mostPlayed.iterator();
+                    if (mostPlayed.size() >= 4) { ////
+                        mostPlayed = mostPlayed.subList(0, 4);
+                    }
 
-                while (championStatsIterator.hasNext()){
-                    if(championStatsIterator.next().getId() == 0){
-                        championStatsIterator.remove();
+                    for (final ChampionStats mostPlayedChamp : mostPlayed) {
+                        if (getActivity() != null) {
+                            Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(mostPlayedChamp.getId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                                @Override
+                                public void onResponse(ChampionDto response) {
+                                    mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(mostPlayedChamp.getStats(), response.getId(), response.getImage().getFull()));
+
+                                }
+
+                                @Override
+                                public void onError(TeemoException e) {
+
+                                }
+                            });
+                        }
+
                     }
                 }
 
-                if (mostPlayed.size() >= 4) { ////
-                    mostPlayed = mostPlayed.subList(0, 4);
-                }
-
-                for (final ChampionStats mostPlayedChamp : mostPlayed) {
-                    if (getActivity() != null) {
-                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(mostPlayedChamp.getId(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                            @Override
-                            public void onResponse(ChampionDto response) {
-                                mostPlayedChampionsAdapter.addChampion(new ChampionStatsData(mostPlayedChamp.getStats(), response.getId(), response.getImage().getFull()));
-
-                            }
-
-                            @Override
-                            public void onError(TeemoException e) {
-
-                            }
-                        });
-                    }
-
-                }
             }
 
             @Override
             public void onError(TeemoException e) {
-
             }
         });
     }

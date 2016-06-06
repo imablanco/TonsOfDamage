@@ -36,7 +36,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/img_champion_square"
         android:id="@+id/tv_averages"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -52,7 +52,7 @@
         android:layout_alignBaseline="@id/tv_averages"
         android:layout_toRightOf="@id/tv_averages"
         android:id="@+id/tv_kda"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -65,7 +65,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/tv_kda"
         android:id="@+id/tv_wins_loses"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

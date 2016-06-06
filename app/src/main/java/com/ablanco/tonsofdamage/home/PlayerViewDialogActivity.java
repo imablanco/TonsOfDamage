@@ -73,7 +73,6 @@ public class PlayerViewDialogActivity extends BaseActivity {
                     Bundle b = new Bundle();
                     b.putSerializable(ChampionDetailActivity.EXTRA_CHAMPION_ID, championDto.getId());
                     NavigationHandler.navigateTo(PlayerViewDialogActivity.this, NavigationHandler.CHAMPION_DETAIL, b);
-                    onBackPressed();
                 }
             });
 
@@ -93,7 +92,6 @@ public class PlayerViewDialogActivity extends BaseActivity {
                                     Bundle b = new Bundle();
                                     b.putSerializable(SummonerDetailActivity.EXTRA_ID, summonerId);
                                     NavigationHandler.navigateTo(PlayerViewDialogActivity.this, NavigationHandler.SUMMONER_DETAIL, b);
-                                    onBackPressed();
                                 }
                             });
                         }

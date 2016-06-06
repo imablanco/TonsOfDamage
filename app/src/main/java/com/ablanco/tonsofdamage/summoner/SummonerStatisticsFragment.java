@@ -17,7 +17,6 @@ import com.ablanco.teemo.model.stats.ChampionStats;
 import com.ablanco.teemo.model.stats.RankedStats;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.ErrorUtils;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
@@ -98,6 +97,8 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
     TextView mTvLargesCriticalStrike;
     @Bind(R.id.dv_dmg)
     DecoView mDvDamage;
+    @Bind(R.id.tv_no_stats)
+    TextView tvNoStats;
 
     private boolean alreadyAnimated = false;
     private boolean mDataLoaded = false;
@@ -143,16 +144,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
 
             @Override
             public void onError(TeemoException e) {
-                if (e.getCode() == TeemoException.CODE_NOT_FOUND) {
-                    ErrorUtils.showError(getView()); // TODO: 08/05/2016 more specific error
-                } else {
-                    ErrorUtils.showPersistentError(getView(), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            loadData();
-                        }
-                    });
-                }
+                tvNoStats.setVisibility(View.VISIBLE);
             }
         });
     }

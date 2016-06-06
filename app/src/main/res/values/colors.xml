@@ -7,7 +7,7 @@
     <color name="colorFallBackAccent">#C9AB6E</color>
     <color name="colorFallBackAccentAlpha50">#77C9AB6E</color>
     <color name="colorPrimarySemiLight">#bb02101F</color>
-
+    <color name="text_color">#EDE8DA</color>
 
     <!--Base colors-->
     <color name="white">#FFF</color>

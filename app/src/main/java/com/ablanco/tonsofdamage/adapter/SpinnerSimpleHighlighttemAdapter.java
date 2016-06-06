@@ -33,7 +33,7 @@ public abstract class SpinnerSimpleHighlighttemAdapter<T> extends ArrayAdapter<T
         if(shouldHighLightItem(position)){
             ((TextView)convertView).setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         }else {
-            ((TextView)convertView).setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            ((TextView)convertView).setTextColor(ContextCompat.getColor(getContext(), R.color.text_color));
         }
 
         ((TextView)convertView).setText(getItem(position).toString());

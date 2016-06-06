@@ -22,97 +22,97 @@ public class SettingsHandler {
     private static final String KEY_LANGUAGE = "language";
 
 
-    public static boolean isSetupNeeded(Context context){
-        return getRegion(context) == null || getSummoner(context) == -1 || getLanguage(context).isEmpty() ;
+    public static boolean isSetupNeeded(Context context) {
+        return getRegion(context) == null || getSummoner(context) == -1 || getLanguage(context).isEmpty();
     }
 
-    public static void setRegion(Context context, String region){
+    public static void setRegion(Context context, String region) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(KEY_REGION, region).apply();
     }
 
-    public static String getRegion(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_REGION,null);
+    public static String getRegion(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_REGION, null);
     }
 
-    public static void setSummoner(Context context, long id){
+    public static void setSummoner(Context context, long id) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(KEY_SUMMONER, id).apply();
     }
 
-    public static long getSummoner(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getLong(KEY_SUMMONER,-1);
+    public static long getSummoner(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong(KEY_SUMMONER, -1);
     }
 
-    public static void setLanguage(Context context, String lang){
+    public static void setLanguage(Context context, String lang) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(KEY_LANGUAGE, lang).apply();
     }
 
-    public static String getLanguage(Context context){
+    public static String getLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_LANGUAGE, "");
     }
 
-    public static void setCDNVersion(Context context, String version){
+    public static void setCDNVersion(Context context, String version) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(KEY_CDN_VERSION, version).apply();
     }
 
-    public static String getCDNVersion(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_CDN_VERSION,"");
+    public static String getCDNVersion(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_CDN_VERSION, "");
     }
 
-    public static void addFavoriteChampion(Context context, int champId){
-        Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, null);
-        if(champs == null){
-            champs = new HashSet<>();
-        }
+    public static void addFavoriteChampion(Context context, int champId) {
+        Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, new HashSet<String>());
+        Set<String> tempChamps = new HashSet<>(champs);
 
-        if(champs.add(String.valueOf(champId))){
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_CHAMPIONS, champs).apply();
-        }
-    }
 
-    public static void removeFavoriteChampion(Context context, int champId){
-        Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, null);
-
-        if(champs != null && champs.remove(String.valueOf(champId))){
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_CHAMPIONS, champs).apply();
+        if (tempChamps.add(String.valueOf(champId))) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_CHAMPIONS, tempChamps).apply();
         }
     }
 
-    public static boolean isChampionMarkedAsFavorite(Context context, int champId){
-        Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, null);
+    public static void removeFavoriteChampion(Context context, int champId) {
+        Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, new HashSet<String>());
+        Set<String> tempChamps = new HashSet<>(champs);
 
-        return champs != null && champs.contains(String.valueOf(champId));
+        if (tempChamps.remove(String.valueOf(champId))) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_CHAMPIONS, tempChamps).apply();
+        }
+
     }
 
-    public static List<String> getFavoriteChampions(Context context){
+    public static boolean isChampionMarkedAsFavorite(Context context, int champId) {
+        Set<String> champs = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, new HashSet<String>());
+
+        return champs.contains(String.valueOf(champId));
+    }
+
+    public static List<String> getFavoriteChampions(Context context) {
         return new ArrayList<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_CHAMPIONS, new HashSet<String>()));
     }
 
-    public static void addFavoriteSummoner(Context context, long summonerId){
-        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
-        if(summoners == null){
-            summoners = new HashSet<>();
-        }
+    public static void addFavoriteSummoner(Context context, long summonerId) {
+        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>());
+        Set<String> tempSummoners = new HashSet<>(summoners);
 
-        if(summoners.add(String.valueOf(summonerId))){
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, summoners).apply();
+        if (tempSummoners.add(String.valueOf(summonerId))) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, tempSummoners).apply();
         }
     }
 
-    public static void removeFavoriteSummoner(Context context, long summonerId){
-        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
+    public static void removeFavoriteSummoner(Context context, long summonerId) {
+        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>());
+        Set<String> tempSummoners = new HashSet<>(summoners);
 
-        if(summoners != null && summoners.remove(String.valueOf(summonerId))){
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, summoners).apply();
+        if (tempSummoners.remove(String.valueOf(summonerId))) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, tempSummoners).apply();
         }
     }
 
-    public static boolean isSummonerMarkedAsFavorite(Context context, long summonerId){
-        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, null);
+    public static boolean isSummonerMarkedAsFavorite(Context context, long summonerId) {
+        Set<String> summoners = PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>());
 
-        return summoners != null && summoners.contains(String.valueOf(summonerId));
+        return summoners.contains(String.valueOf(summonerId));
     }
 
-    public static List<String> getFavoriteSummoners(Context context){
+    public static List<String> getFavoriteSummoners(Context context) {
         return new ArrayList<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>()));
     }
 }

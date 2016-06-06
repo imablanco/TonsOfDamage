@@ -31,6 +31,8 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
     SwipeRefreshLayout mSwipeRefresh;
     @Bind(R.id.ph_favorite_champ)
     HomePlaceholder phFavoriteChamp;
+    @Bind(R.id.ph_favorite_summoner)
+    HomePlaceholder phFavoriteSummoners;
 
     public static Fragment newInstance() {
         return new HomeFragment();
@@ -59,6 +61,7 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
             mPhFeaturedGames.update();
         }
         phFavoriteChamp.update();
+        phFavoriteSummoners.update();
     }
 
     @Override
@@ -79,6 +82,7 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
                 mLastUpdate = System.currentTimeMillis();
                 mPhFeaturedGames.update();
                 phFavoriteChamp.update();
+                phFavoriteSummoners.update();
                 mSwipeRefresh.setRefreshing(false);
             }
         }, 500);

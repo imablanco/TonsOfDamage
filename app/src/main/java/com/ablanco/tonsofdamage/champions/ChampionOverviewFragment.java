@@ -1,5 +1,6 @@
 package com.ablanco.tonsofdamage.champions;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.daasuu.ahp.AnimateHorizontalProgressBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
 /**
  * Created by Álvaro Blanco on 04/04/2016.
@@ -117,7 +119,8 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
         for (String tip : mChampion.getAllytips()){
             tv = new TextView(getActivity());
             tv.setLayoutParams(params);
-            tv.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            tv.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color));
+            CalligraphyUtils.applyFontToTextView(tv, Typeface.createFromAsset(getContext().getAssets(), "friz_quad.ttf"));
             tv.setText("- ".concat(tip));
             mLayoutAllytips.addView(tv);
         }
@@ -125,8 +128,9 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
         for (String tip : mChampion.getEnemytips()){
             tv = new TextView(getActivity());
             tv.setLayoutParams(params);
-            tv.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            tv.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color));
             tv.setText("- ".concat(tip));
+            CalligraphyUtils.applyFontToTextView(tv, Typeface.createFromAsset(getContext().getAssets(), "friz_quad.ttf"));
             mLayoutEnemytipstips.addView(tv);
         }
     }

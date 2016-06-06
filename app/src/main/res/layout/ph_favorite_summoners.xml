@@ -7,7 +7,7 @@
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/tv_title"
-        android:text = "@string/favorite_champions"
+        android:text = "@string/favorite_summoners"
         android:paddingLeft="10dp"
         android:textSize="17sp"
         android:textColor="@color/colorAccent"
@@ -24,7 +24,7 @@
     <TextView
         android:visibility="gone"
         android:padding="20dp"
-        android:text="@string/no_favorite_champions"
+        android:text="@string/no_favorite_summoners"
         android:textColor="@color/colorFallBackAccent"
         android:layout_centerInParent="true"
         android:gravity="center"
@@ -38,7 +38,7 @@
         android:layout_below="@id/tv_title"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="210dp"/>
 
     <com.pixelcan.inkpageindicator.InkPageIndicator
         android:layout_marginTop="10dp"

@@ -16,6 +16,8 @@ import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.pixelcan.inkpageindicator.InkPageIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -57,6 +59,14 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
 
         List<String> row = new ArrayList<>();
 
+        Collections.sort(mChampionIds, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });
+
+
         for (String mChampionId : mChampionIds) {
 
             row.add(mChampionId);
@@ -71,9 +81,10 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
             mPagedChampionIds.add(row);
         }
 
+        pager.setAdapter(new FavoriteChampionAdapter());
 
         if (!mPagedChampionIds.isEmpty()) {
-            pager.setAdapter(new FavoriteChampionAdapter());
+            pager.setOffscreenPageLimit(mPagedChampionIds.size() - 1);
             circleIndicator.setViewPager(pager);
             tvNoFavoriteYet.setVisibility(GONE);
         } else {

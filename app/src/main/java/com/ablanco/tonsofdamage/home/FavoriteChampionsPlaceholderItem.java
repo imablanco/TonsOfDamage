@@ -1,11 +1,14 @@
 package com.ablanco.tonsofdamage.home;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
@@ -30,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * TonsOfDamage
  */
 @SuppressLint("ViewConstructor")
-public class FavoriteChampionsPlaceholderItem extends LinearLayout implements View.OnClickListener{
+public class FavoriteChampionsPlaceholderItem extends LinearLayout implements View.OnClickListener {
 
 
     @Bind(R.id.img_champion_left)
@@ -46,6 +49,19 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
     @Bind(R.id.cv_right)
     CardView cvRight;
 
+    @Bind(R.id.tv_champion_left_name)
+    TextView tvChampionLeftName;
+    @Bind(R.id.tv_champion_left_tags)
+    TextView tvChampionLeftTags;
+    @Bind(R.id.tv_champion_middle_name)
+    TextView tvChampionMiddleName;
+    @Bind(R.id.tv_champion_middle_tags)
+    TextView tvChampionMiddleTags;
+    @Bind(R.id.tv_champion_right_name)
+    TextView tvChampionRightName;
+    @Bind(R.id.tv_champion_right_tags)
+    TextView tvChampionRightTags;
+
     private final List<String> champIds;
 
 
@@ -60,70 +76,100 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
         this.champIds = champIds;
 
         if (champIds.size() >= 1 && champIds.get(0) != null) {
-            Teemo.getInstance(context).getStaticDataHandler().getChampionById(Integer.parseInt(champIds.get(0)), SettingsHandler.getLanguage(context), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                @Override
-                public void onResponse(ChampionDto response) {
-                    cvLeft.setVisibility(VISIBLE);
-                    cvLeft.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
-                    Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionLeft);
-                }
+            Teemo.getInstance(context).getStaticDataHandler().getChampionById(Integer.parseInt(champIds.get(0)), SettingsHandler.getLanguage(context), null,
+                    new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.TAGS).build(), new ServiceResponseListener<ChampionDto>() {
+                        @Override
+                        public void onResponse(ChampionDto response) {
+                            if (!((Activity) getContext()).isDestroyed()) {
+                                cvLeft.setVisibility(VISIBLE);
+                                cvLeft.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
+                                Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionLeft);
+                                tvChampionLeftName.setText(response.getName());
+                                buildTags(tvChampionLeftTags, response.getTags());
+                            }
 
-                @Override
-                public void onError(TeemoException e) {
+                        }
 
-                }
-            });
+                        @Override
+                        public void onError(TeemoException e) {
+
+                        }
+                    });
         }
 
 
         if (champIds.size() >= 2 && champIds.get(1) != null) {
-            Teemo.getInstance(context).getStaticDataHandler().getChampionById(Integer.parseInt(champIds.get(1)), SettingsHandler.getLanguage(context), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                @Override
-                public void onResponse(ChampionDto response) {
-                    cvMiddle.setVisibility(VISIBLE);
-                    cvMiddle.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
-                    Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionMiddle);
-                }
+            Teemo.getInstance(context).getStaticDataHandler().getChampionById(Integer.parseInt(champIds.get(1)), SettingsHandler.getLanguage(context), null,
+                    new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.TAGS).build(), new ServiceResponseListener<ChampionDto>() {
+                        @Override
+                        public void onResponse(ChampionDto response) {
+                            if (!((Activity) getContext()).isDestroyed()) {
+                                cvMiddle.setVisibility(VISIBLE);
+                                cvMiddle.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
+                                Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionMiddle);
+                                tvChampionMiddleName.setText(response.getName());
+                                buildTags(tvChampionMiddleTags, response.getTags());
+                            }
+                        }
 
-                @Override
-                public void onError(TeemoException e) {
+                        @Override
+                        public void onError(TeemoException e) {
 
-                }
-            });
+                        }
+                    });
         }
 
         if (champIds.size() >= 3 && champIds.get(2) != null) {
-            Teemo.getInstance(context).getStaticDataHandler().getChampionById(Integer.parseInt(champIds.get(2)), SettingsHandler.getLanguage(context), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                @Override
-                public void onResponse(ChampionDto response) {
-                    cvRight.setVisibility(VISIBLE);
-                    cvRight.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
-                    Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionRight);
-                }
+            Teemo.getInstance(context).getStaticDataHandler().getChampionById(Integer.parseInt(champIds.get(2)), SettingsHandler.getLanguage(context), null,
+                    new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.TAGS).build(), new ServiceResponseListener<ChampionDto>() {
+                        @Override
+                        public void onResponse(ChampionDto response) {
+                            if (!((Activity) getContext()).isDestroyed()) {
+                                cvRight.setVisibility(VISIBLE);
+                                cvRight.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
+                                Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionRight);
+                                tvChampionRightName.setText(response.getName());
+                                buildTags(tvChampionRightTags, response.getTags());
+                            }
+                        }
 
-                @Override
-                public void onError(TeemoException e) {
+                        @Override
+                        public void onError(TeemoException e) {
 
-                }
-            });
+                        }
+                    });
         }
 
+    }
+
+    private void buildTags(TextView tv, List<String> tags) {
+        StringBuilder b = new StringBuilder();
+
+        for (String tag : tags) {
+            if (!TextUtils.isEmpty(b)) {
+                b.append(", ");
+            }
+
+            b.append(tag);
+        }
+
+        tv.setText(b.toString());
     }
 
     @Override
     public void onClick(View v) {
 
         int id = 0;
-        if(v == cvLeft){
+        if (v == cvLeft) {
             id = Integer.parseInt(champIds.get(0));
-        }else if(v == cvMiddle){
+        } else if (v == cvMiddle) {
             id = Integer.parseInt(champIds.get(1));
-        }else if(v == cvRight){
+        } else if (v == cvRight) {
             id = Integer.parseInt(champIds.get(2));
 
         }
 
-        if(id > 0){
+        if (id > 0) {
             Bundle bundle = new Bundle();
             bundle.putInt(ChampionDetailActivity.EXTRA_CHAMPION_ID, id);
             NavigationHandler.navigateTo(getContext(), NavigationHandler.CHAMPION_DETAIL, bundle);

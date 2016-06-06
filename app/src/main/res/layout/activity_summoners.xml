@@ -84,7 +84,7 @@
 
                         <TextView
                             android:id="@+id/tv_solo_duo_title"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_color"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
                             android:text="@string/solo_duo"
@@ -105,7 +105,7 @@
                             android:gravity="center"
                             android:text="@string/unranked"
                             android:textSize="15sp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_color"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -117,7 +117,7 @@
                             tools:visibility="visible"
                             android:textSize="13sp"
                             android:layout_marginTop="7dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_color"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -177,7 +177,7 @@
 
                                 <TextView
                                     android:textSize="13sp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color"
                                     android:text="@string/fvf_team"
                                     android:gravity="center"
                                     android:layout_width="wrap_content"
@@ -191,7 +191,7 @@
 
                                 <TextView
                                     android:textSize="13sp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color"
                                     android:text="@string/unranked"
                                     android:id="@+id/tv_fvf_team_rank"
                                     android:gravity="center"
@@ -203,7 +203,7 @@
                                     android:visibility="gone"
                                     android:layout_marginTop="5dp"
                                     android:textSize="13sp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color"
                                     tools:text="The losers"
                                     android:id="@+id/tv_fvf_team_name"
                                     android:gravity="center"
@@ -221,7 +221,7 @@
 
                                 <TextView
                                     android:textSize="13sp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color"
                                     android:text="@string/tvt_team"
                                     android:gravity="center"
                                     android:layout_width="wrap_content"
@@ -235,7 +235,7 @@
 
                                 <TextView
                                     android:textSize="13sp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color"
                                     android:text="@string/unranked"
                                     android:id="@+id/tv_tvt_team_rank"
                                     android:gravity="center"
@@ -247,7 +247,7 @@
                                     android:visibility="gone"
                                     tools:visibility="visible"
                                     android:textSize="13sp"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color"
                                     tools:text="The losers"
                                     android:id="@+id/tv_tvt_team_name"
                                     android:gravity="center"
