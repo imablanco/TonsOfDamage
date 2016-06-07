@@ -1,9 +1,9 @@
 package com.ablanco.tonsofdamage.views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,13 +13,14 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.summoner.SummonerDetailActivity;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Álvaro Blanco on 02/04/2016.
@@ -27,7 +28,8 @@ import butterknife.ButterKnife;
  */
 public class ProfileHeaderNavigationView extends RelativeLayout {
 
-    @Bind(R.id.profile_image) AvatarImageView avatarImageView;
+    @Bind(R.id.profile_image)
+    CircleImageView avatarImageView;
     @Bind(R.id.tv_summoner_name) TextView tvSummonerName;
     @Bind(R.id.tv_summoner_region) TextView tvSummonerRegion;
 
@@ -46,6 +48,15 @@ public class ProfileHeaderNavigationView extends RelativeLayout {
         ButterKnife.bind(this, this);
 
         update();
+
+        avatarImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putLong(SummonerDetailActivity.EXTRA_ID, SettingsHandler.getSummoner(getContext()));
+                NavigationHandler.navigateTo(getContext(), NavigationHandler.SUMMONER_DETAIL, bundle);
+            }
+        });
     }
 
     public void update() {
@@ -53,20 +64,9 @@ public class ProfileHeaderNavigationView extends RelativeLayout {
         Teemo.getInstance(getContext()).getSummonersHandler().getSummonerById(String.valueOf(SettingsHandler.getSummoner(getContext())), new ServiceResponseListener<Summoner>() {
             @Override
             public void onResponse(final Summoner response) {
-                Glide.with(getContext()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(response.getProfileIconId()))).asBitmap().into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        tvSummonerRegion.setText(SettingsHandler.getRegion(getContext()).toUpperCase());
-                        tvSummonerName.setText(response.getName());
-                        avatarImageView.setImage(resource);
-
-                    }
-
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        avatarImageView.setPlaceholder();
-                    }
-                });
+                tvSummonerRegion.setText(SettingsHandler.getRegion(getContext()).toUpperCase());
+                tvSummonerName.setText(response.getName());
+                Glide.with(getContext()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(response.getProfileIconId()))).into(avatarImageView);
             }
 
             @Override

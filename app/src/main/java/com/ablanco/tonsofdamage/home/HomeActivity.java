@@ -10,16 +10,20 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.base.BaseDialog;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
-import com.ablanco.tonsofdamage.views.ProfileHeaderNavigationView;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.summoner.MasteriesActivity;
+import com.ablanco.tonsofdamage.summoner.RunesActivity;
 import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
+import com.ablanco.tonsofdamage.views.ProfileHeaderNavigationView;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabClickListener;
@@ -116,18 +120,17 @@ public class HomeActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_masteries) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(MasteriesActivity.EXTRA_SUMMONER_ID, SettingsHandler.getSummoner(this));
+            NavigationHandler.navigateTo(this, NavigationHandler.MASTERIES_DETAIL, bundle);
+        } else if (id == R.id.nav_runes) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(RunesActivity.EXTRA_SUMMONER_ID, SettingsHandler.getSummoner(this));
+            NavigationHandler.navigateTo(this, NavigationHandler.RUNES_DETAIL, bundle);
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if(id == R.id.nav_disclaimer){
+            BaseDialog.newInstance(getString(R.string.action_disclaimer), getString(R.string.disclaimer_text)).show(getSupportFragmentManager().beginTransaction(),"disclaimer");
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

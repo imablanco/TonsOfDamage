@@ -20,6 +20,7 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.AnimationUtils;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -81,7 +82,7 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
                         @Override
                         public void onResponse(ChampionDto response) {
                             if (!((Activity) getContext()).isDestroyed()) {
-                                cvLeft.setVisibility(VISIBLE);
+                                AnimationUtils.revealView(cvLeft);
                                 cvLeft.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
                                 Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionLeft);
                                 tvChampionLeftName.setText(response.getName());
@@ -104,7 +105,7 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
                         @Override
                         public void onResponse(ChampionDto response) {
                             if (!((Activity) getContext()).isDestroyed()) {
-                                cvMiddle.setVisibility(VISIBLE);
+                                AnimationUtils.revealView(cvMiddle);
                                 cvMiddle.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
                                 Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionMiddle);
                                 tvChampionMiddleName.setText(response.getName());
@@ -125,7 +126,7 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
                         @Override
                         public void onResponse(ChampionDto response) {
                             if (!((Activity) getContext()).isDestroyed()) {
-                                cvRight.setVisibility(VISIBLE);
+                                AnimationUtils.revealView(cvRight);
                                 cvRight.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
                                 Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionRight);
                                 tvChampionRightName.setText(response.getName());
