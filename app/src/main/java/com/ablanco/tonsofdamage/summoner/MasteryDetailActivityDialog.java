@@ -5,7 +5,6 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.transition.Transition;
 import android.view.View;
@@ -16,6 +15,7 @@ import com.ablanco.teemo.model.staticdata.MasteryDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -85,6 +85,11 @@ public class MasteryDetailActivityDialog extends BaseActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_MASTERY_DETAIL;
     }
 
 

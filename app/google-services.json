@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "371639311724",
+    "project_id": "tonsofdamage-15ac8"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371639311724:android:1d9d26e413747f75",
+        "android_client_info": {
+          "package_name": "com.ablanco.tonsofdamage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsvNJKDNND1b6IAv7Y7-RkkDqYmW0-C0Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78937690-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +17,7 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.ErrorUtils;
@@ -62,6 +62,11 @@ public class SummonerDetailActivity extends BaseActivity {
         }else {
             finish();
         }
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_SUMMONER_DETAIL;
     }
 
     @Override

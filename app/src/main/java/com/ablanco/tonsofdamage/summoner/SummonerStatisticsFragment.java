@@ -144,7 +144,9 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
 
             @Override
             public void onError(TeemoException e) {
-                tvNoStats.setVisibility(View.VISIBLE);
+                if(tvNoStats != null){
+                    tvNoStats.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

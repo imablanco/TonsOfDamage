@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.base.BaseDialog;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
@@ -30,6 +31,8 @@ import com.roughike.bottombar.OnTabClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.psdev.licensesdialog.LicensesDialog;
+import hotchemi.android.rate.AppRate;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +60,8 @@ public class HomeActivity extends BaseActivity
         mNavigationView.setNavigationItemSelectedListener(this);
 
         HomeErrorUtils.init();
+
+        monitorRateApp();
 
         ProfileHeaderNavigationView profileHeaderNavigationView = new ProfileHeaderNavigationView(this);
         mNavigationView.addHeaderView(profileHeaderNavigationView);
@@ -101,6 +106,20 @@ public class HomeActivity extends BaseActivity
     }
 
     @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_HOMEACTIVIY;
+    }
+
+    private void monitorRateApp(){
+        AppRate.with(this)
+                .setInstallDays(2)
+                .monitor();
+
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
+
+    }
+    @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -129,13 +148,22 @@ public class HomeActivity extends BaseActivity
             bundle.putLong(RunesActivity.EXTRA_SUMMONER_ID, SettingsHandler.getSummoner(this));
             NavigationHandler.navigateTo(this, NavigationHandler.RUNES_DETAIL, bundle);
 
-        } else if(id == R.id.nav_disclaimer){
-            BaseDialog.newInstance(getString(R.string.action_disclaimer), getString(R.string.disclaimer_text)).show(getSupportFragmentManager().beginTransaction(),"disclaimer");
+        } else if(id == R.id.nav_about){
+            BaseDialog.newInstance(getString(R.string.action_about), getString(R.string.disclaimer_text)).show(getSupportFragmentManager().beginTransaction(),"disclaimer");
+        } else if(id == R.id.nav_open_source_licenses){
+            new LicensesDialog.Builder(this)
+                    .setNotices(R.raw.notices)
+                    .setIncludeOwnLicense(true)
+                    .build()
+                    .show();
+        } else if(id == R.id.nav_rate){
+            AppRate.with(this).showRateDialog(this);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
     class HomeContentPagerAdapter extends FragmentPagerAdapter {
        private final static int HOME = 0;
        private final static int CHAMPIONS = 1;

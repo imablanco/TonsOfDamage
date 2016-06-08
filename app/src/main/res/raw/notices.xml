@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<notices>
+    <notice>
+        <name>Floating Search View</name>
+        <url>https://github.com/arimorty/floatingsearchview</url>
+        <copyright>Copyright (C) 2015 Ari C.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>CircleImageView</name>
+        <url>https://github.com/hdodenhof/CircleImageView</url>
+        <copyright>Copyright 2014 - 2015 Henning Dodenhof</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Glide</name>
+        <url>https://github.com/bumptech/glide</url>
+        <copyright>Copyright 2014 Google, Inc. All rights reserved.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Toro</name>
+        <url>https://github.com/eneim/Toro</url>
+        <copyright>Copyright 2016 eneim@Eneim Labs, nam@ene.im</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>DecoView</name>
+        <url>https://github.com/bmarrdev/android-DecoView-charting</url>
+        <copyright>Copyright 2016 Brent Marriott</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>InkPageIndicator</name>
+        <url>https://github.com/DavidPacioianu/InkPageIndicator</url>
+        <copyright>Copyright 2015 Google Inc., David Pacioianu</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Teemo</name>
+        <url>https://github.com/imablanco/Teemo</url>
+        <copyright>Copyright 2016 Álvaro Blanco Cabrero</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>AnimateHorizontalProgressBar</name>
+        <url>https://github.com/MasayukiSuda/AnimateHorizontalProgressBar</url>
+        <copyright>Copyright 2015 MasayukiSuda</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>Calligraphy</name>
+        <url>https://github.com/chrisjenx/Calligraphy</url>
+        <copyright>Copyright 2013 Christopher Jenkins</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>BottomBar</name>
+        <url>https://github.com/roughike/BottomBar</url>
+        <copyright>Copyright (c) 2016 Iiro Krankka</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Butter Knife</name>
+        <url>http://jakewharton.github.io/butterknife/</url>
+        <copyright>Copyright 2013 Jake Wharton</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>RxJava</name>
+        <url>https://github.com/ReactiveX/RxJava</url>
+        <copyright>Copyright 2013 Netflix, Inc.</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>RxAndroid</name>
+        <url>https://github.com/ReactiveX/RxAndroid</url>
+        <copyright>Copyright 2015 The RxAndroid authors</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Android-Rate</name>
+        <url>https://github.com/hotchemi/Android-Rate</url>
+        <copyright>Copyright (c) 2015 Shintaro Katafuchi</copyright>
+        <license>MIT License</license>
+    </notice>
+
+</notices>

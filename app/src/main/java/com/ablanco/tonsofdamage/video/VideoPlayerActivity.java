@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.VideoView;
 
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -70,7 +71,6 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
         setContentView(R.layout.activity_video_player);
         ButterKnife.bind(this);
 
-
         String mUrl = getIntent().getStringExtra(EXTRA_URL);
         if (mUrl != null) {
             videoView.setVideoURI(Uri.parse(mUrl));
@@ -94,6 +94,7 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
     protected void onResume() {
         super.onResume();
         videoView.start();
+        AnalyticsHandler.getInstance(this).trackScreenName(AnalyticsHandler.CLASS_NAME_VIDEO);
 
     }
 

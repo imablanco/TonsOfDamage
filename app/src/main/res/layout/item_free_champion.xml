@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_margin="12dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:id="@+id/img_champion"
+        app:civ_border_color="@color/colorAccent"
+        app:civ_border_width="1dp"
+        android:layout_width="70dp"
+        tools:src = "@drawable/default_profile"
+        android:layout_centerInParent="true"
+        android:layout_height="70dp" />
+
+    <TextView
+        android:id="@+id/tv_champion_name"
+        android:padding="4dp"
+        android:background="@drawable/rounded_tv_bg_2"
+        android:layout_marginBottom="-10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/img_champion"
+        tools:text = "Ashe"
+        android:textColor="@color/text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

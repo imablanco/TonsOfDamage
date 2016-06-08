@@ -120,6 +120,8 @@
     <string name="view_more">View more</string>
     <string name="featured_games">Featured Games</string>
     <string name="masteries">Masteries</string>
+    <string name="your_masteries">Your masteries</string>
+    <string name="your_runes">Your runes</string>
     <string name="runes">Runes</string>
     <string name="mastery_rank">%1$s/%2$s</string>
     <string name="view_summoner">View Summoner</string>
@@ -131,8 +133,10 @@
     <string name="no_stats_for_summoner">There is no ranked stats for this summoner</string>
     <string name="at_a_glance">At a glance</string>
     <string name="more">More</string>
+    <string name="action_osl">Open Source Licenses</string>
     <string name="action_about">About TonsOfDamage</string>
-    <string name="action_disclaimer">Disclaimer</string>
-    <string name="disclaimer_text">Teemo isn\'t endorsed by Riot Games and doesn\'t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</string>
+    <string name="disclaimer_text">TonsOfDamage isn\'t endorsed by Riot Games and doesn\'t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</string>
+    <string name="action_rate">Rate app</string>
+    <string name="week_rotation">Week Rotation</string>
 
 </resources>

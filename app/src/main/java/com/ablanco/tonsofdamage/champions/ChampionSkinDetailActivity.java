@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +21,7 @@ import android.widget.ImageView;
 
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.DownloadsHandler;
 import com.bumptech.glide.Glide;
 
@@ -84,6 +84,11 @@ public class ChampionSkinDetailActivity extends BaseActivity {
         }
 
         hideUI();
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_CHAMPION_SKIN_DETAIL;
     }
 
     @Override

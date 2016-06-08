@@ -7,7 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +34,7 @@ import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.RecentGamesData;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
@@ -241,6 +241,11 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
             });
         }
 
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_MATCH_DETAIL;
     }
 
     private void setUpStats(RawStats stats) {

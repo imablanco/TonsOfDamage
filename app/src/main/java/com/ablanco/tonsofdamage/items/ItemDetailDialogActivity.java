@@ -15,6 +15,7 @@ import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
@@ -99,6 +100,11 @@ public class ItemDetailDialogActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_ITEM_DETAIL;
     }
 
 

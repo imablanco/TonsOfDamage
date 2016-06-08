@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +25,8 @@ import com.ablanco.teemo.model.summoners.MasteryPages;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.MasteryListNameAdapter;
+import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
@@ -39,7 +40,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MasteriesActivity extends AppCompatActivity implements MasteryTreeDetailItem.MasteryRequestListener {
+public class MasteriesActivity extends BaseActivity implements MasteryTreeDetailItem.MasteryRequestListener {
 
     public final static String EXTRA_SUMMONER_ID = "extra_summoner_id";
 
@@ -186,6 +187,11 @@ public class MasteriesActivity extends AppCompatActivity implements MasteryTreeD
         }
 
 
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_MASTERIES;
     }
 
     @Override

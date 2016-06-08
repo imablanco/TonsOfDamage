@@ -11,6 +11,7 @@ import com.ablanco.teemo.model.staticdata.RuneDto;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -56,6 +57,11 @@ public class RuneDetailDialogActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    public String getClassName() {
+        return AnalyticsHandler.CLASS_NAME_RUNE_DETAIL;
     }
 
     @Override
