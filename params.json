@@ -1,0 +1,6 @@
+{
+  "name": "TonsOfDamage",
+  "tagline": "TonsOfDamage is your League of Legends Android app for stay tuned and know everything about League of Legends",
+  "body": "# TonsOfDamage\r\nTonsOfDamage is your League of Legends Android app for stay tuned and know everything about League of Legends\r\n\r\nIt uses Teemo library for comunicate with Riot API.\r\n \r\n# Disclaimer\r\nTonsOfDamage isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.\r\n\r\n# LICENSE\r\nTonsOfDamage is licensed under a Apache License 2.0.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
