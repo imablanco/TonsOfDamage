@@ -72,7 +72,7 @@ public class ItemDetailDialogActivity extends BaseActivity {
         Teemo.getInstance(this).getStaticDataHandler().getItemById(mId, SettingsHandler.getLanguage(this), null, StaticAPIQueryParams.Items.all, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
-                if (!isDestroyed()) {
+                if (!isDestroyed() && !isFinishing()) {
                     mIcCoins.setImageResource(R.drawable.ic_gold);
                     mTvTitle.setText(response.getName());
                     mTvItemDescription.setText(Html.fromHtml(response.getDescription()));

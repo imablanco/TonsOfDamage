@@ -10,6 +10,92 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="4dp"
+        android:id="@+id/cv_champion_mastery"
+        app:cardBackgroundColor="@color/colorPrimaryDarkAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:padding="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_champion_mastery"
+            android:paddingLeft="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:text="@string/champion_mastery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tv_champion_mastery"
+            android:id="@+id/tv_total_exp_needed"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/text_color"
+            tools:text="Total experience 4300"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <com.hookedonplay.decoviewlib.DecoView
+            android:layout_below="@id/tv_total_exp_needed"
+            android:id="@+id/dv_champion_mastery"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:dv_lineWidth="5dp" />
+
+        <TextView
+            android:textColor="@color/colorFallBackAccent"
+            android:gravity="center"
+            android:textSize="35sp"
+            tools:text ="5"
+            android:layout_alignBottom="@id/dv_champion_mastery"
+            android:layout_alignTop="@id/dv_champion_mastery"
+            android:layout_alignRight="@id/dv_champion_mastery"
+            android:layout_alignLeft="@id/dv_champion_mastery"
+            android:id="@+id/tv_champion_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/dv_champion_mastery"
+            android:id="@+id/tv_highest_grade_label"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_color"
+            android:text="@string/total_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_champion_points"
+            android:layout_toRightOf="@id/tv_highest_grade_label"
+            android:textSize="20sp"
+            android:layout_alignBaseline="@id/tv_highest_grade_label"
+            android:paddingLeft="20dp"
+            android:textColor="@color/colorAccent"
+            tools:text = "30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="2dp"
@@ -23,7 +109,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/tv_attributes_label"
+                    android:paddingLeft="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/tv_attributes_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <RelativeLayout
+                    android:layout_below="@id/tv_attributes_label"
+                    android:layout_marginTop="15dp"
                     android:id="@+id/attributes_layout"
                     android:padding="15dp"
                     android:layout_marginBottom="10dp"

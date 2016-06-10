@@ -9,17 +9,27 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ablanco.teemo.Teemo;
+import com.ablanco.teemo.TeemoException;
+import com.ablanco.teemo.model.championmastery.ChampionMasteryDto;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.model.staticdata.StatsDto;
+import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
+import com.ablanco.tonsofdamage.utils.Utils;
 import com.daasuu.ahp.AnimateHorizontalProgressBar;
+import com.hookedonplay.decoviewlib.DecoView;
+import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
+import com.hookedonplay.decoviewlib.charts.SeriesItem;
+import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
 /**
@@ -69,6 +79,16 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
     LinearLayout mLayoutAllytips;
     @Bind(R.id.layout_enemytipstips)
     LinearLayout mLayoutEnemytipstips;
+    @Bind(R.id.dv_champion_mastery)
+    DecoView dvChampionMastery;
+    @Bind(R.id.tv_champion_level)
+    TextView tvChampionLevel;
+    @Bind(R.id.cv_champion_mastery)
+    View cvChampionMastery;
+    @Bind(R.id.tv_champion_points)
+    TextView tvChampionPoints;
+    @Bind(R.id.tv_total_exp_needed)
+    TextView tvExpNeeded;
 
     public static Fragment newInstance(ChampionDto champion) {
         ChampionDetailBaseFragment f = new ChampionOverviewFragment();
@@ -80,19 +100,73 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_champion_overview, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+       return inflater.inflate(R.layout.activity_champion_overview, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        fillChampionMastery();
         fillAttributes();
         fillStats();
         fillTips();
         fillLore();
+    }
+
+    private void fillChampionMastery() {
+        Teemo.getInstance(getActivity()).getChampionMasteryHandler().getChampionMastery(Utils.getPlatformForRegion(getActivity()), SettingsHandler.getSummoner(getActivity()), mChampion.getId().longValue(), new ServiceResponseListener<ChampionMasteryDto>() {
+            @Override
+            public void onResponse(ChampionMasteryDto response) {
+                if (getActivity() != null) {
+
+                    cvChampionMastery.setVisibility(View.VISIBLE);
+                    long max = response.getChampionPointsSinceLastLevel() + response.getChampionPointsUntilNextLevel();
+                    SeriesItem championTotalMasteryItem = new SeriesItem.Builder(ContextCompat.getColor(getActivity(), R.color.colorAccent))
+                            .setRange(0, max, 0)
+                            .setInitialVisibility(false)
+                            .setCapRounded(false)
+                            .setInterpolator(new AccelerateDecelerateInterpolator())
+                            .build();
+
+                    SeriesItem championSinceMasteryItem = new SeriesItem.Builder(ContextCompat.getColor(getActivity(), R.color.magenta))
+                            .setRange(0, max, 0)
+                            .setInitialVisibility(false)
+                            .setCapRounded(false)
+                            .setInterpolator(new AccelerateDecelerateInterpolator())
+                            .build();
+
+
+                    int index = dvChampionMastery.addSeries(championTotalMasteryItem);
+                    startAnimation(dvChampionMastery, index, 300, 1500, 800, max);
+                    index = dvChampionMastery.addSeries(championSinceMasteryItem);
+                    startAnimation(dvChampionMastery, index, 600, 1500, 800, response.getChampionPointsSinceLastLevel());
+
+                    tvChampionPoints.setText(String.valueOf(response.getChampionPoints()));
+                    tvChampionLevel.setText(String.valueOf(response.getChampionLevel()));
+                    tvExpNeeded.setText(getString(R.string.total_exp_needed, response.getChampionPointsSinceLastLevel(), response.getChampionPointsSinceLastLevel() + response.getChampionPointsUntilNextLevel()));
+                }
+            }
+
+            @Override
+            public void onError(TeemoException e) {
+
+            }
+        });
+    }
+
+    private void startAnimation(DecoView view, int index, long spiralDelay, long spiralDuration, long fillDuration, float fillValue) {
+        view.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                .setIndex(index)
+                .setDuration(spiralDuration)
+                .setDelay(spiralDelay)
+                .build());
+
+        view.addEvent(new DecoEvent.Builder(fillValue)
+                .setIndex(index)
+                .setDuration(fillDuration)
+                .setDelay(spiralDelay + spiralDuration)
+                .build());
     }
 
     private void fillLore() {
@@ -111,12 +185,12 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
         }
     }
 
-    private void fillTips(){
+    private void fillTips() {
 
         TextView tv;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.topMargin = SizeUtils.convertDpToPixel(6);
-        for (String tip : mChampion.getAllytips()){
+        for (String tip : mChampion.getAllytips()) {
             tv = new TextView(getActivity());
             tv.setLayoutParams(params);
             tv.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color));
@@ -125,7 +199,7 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
             mLayoutAllytips.addView(tv);
         }
 
-        for (String tip : mChampion.getEnemytips()){
+        for (String tip : mChampion.getEnemytips()) {
             tv = new TextView(getActivity());
             tv.setLayoutParams(params);
             tv.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color));
@@ -134,6 +208,7 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
             mLayoutEnemytipstips.addView(tv);
         }
     }
+
     private void fillStats() {
         if (mChampion.getStats() != null) {
             StatsDto stats = mChampion.getStats();
@@ -297,5 +372,4 @@ public class ChampionOverviewFragment extends ChampionDetailBaseFragment {
 
         return String.valueOf(value % 1 == 0 ? Math.round(value) : value);
     }
-
 }

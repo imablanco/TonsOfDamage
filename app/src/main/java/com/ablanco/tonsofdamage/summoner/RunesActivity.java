@@ -37,6 +37,7 @@ import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
+import com.ablanco.tonsofdamage.utils.ErrorUtils;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
 
 import java.lang.reflect.Field;
@@ -73,6 +74,8 @@ public class RunesActivity extends BaseActivity {
     @Bind(R.id.recycler_view_stats)
     RecyclerView mRecyclerViewStats;
 
+    private long mId;
+
     private StatsAdapter mStatsAdapter;
     private Map<Long, List<RuneProxyModel>> mProxyRunes = new HashMap<>();
     private Map<String, RuneDto> mRunes = new HashMap<>();
@@ -92,7 +95,7 @@ public class RunesActivity extends BaseActivity {
         setContentView(R.layout.activity_summoner_runes);
         ButterKnife.bind(this);
 
-        final long mId = getIntent().getLongExtra(EXTRA_SUMMONER_ID, 0);
+        mId = getIntent().getLongExtra(EXTRA_SUMMONER_ID, 0);
 
         if (mId > 0) {
 
@@ -139,7 +142,7 @@ public class RunesActivity extends BaseActivity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (!isDestroyed()) {
+                    if (!isDestroyed() && !isFinishing()) {
                         fabExpand.setVisibility(View.INVISIBLE);
                         AnimationUtils.revealView(fabCollapse);
                         mExpanded = true;
@@ -174,7 +177,7 @@ public class RunesActivity extends BaseActivity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (!isDestroyed()) {
+                    if (!isDestroyed() && !isFinishing()) {
                         fabCollapse.setVisibility(View.INVISIBLE);
                         AnimationUtils.revealView(fabExpand);
                         mExpanded = false;
@@ -215,75 +218,94 @@ public class RunesActivity extends BaseActivity {
                 }
             });
 
-            Teemo.getInstance(this).getStaticDataHandler().getRunes(SettingsHandler.getLanguage(this), null, new StaticAPIQueryParams.StaticQueryParamsBuilder()
-                    .include(StaticAPIQueryParams.Runes.image)
-                    .include(StaticAPIQueryParams.Runes.stats).build(), new ServiceResponseListener<RuneListDto>() {
-                @Override
-                public void onResponse(RuneListDto response) {
+            loadData();
 
-                    mRunes.putAll(response.getData());
-
-                    Teemo.getInstance(RunesActivity.this).getSummonersHandler().getSummonerRunePages(String.valueOf(mId), new ServiceResponseListener<RunePages>() {
-                        @SuppressLint("UseSparseArrays")
-                        @Override
-                        public void onResponse(RunePages response) {
-                            HashMap<Integer, Integer> mRuneCountMap = new HashMap<>();
-                            for (RunePage runePage : response.getPages()) {
-                                mRunePages.add(new RunePageProxyModel(runePage));
-
-                                mRuneCountMap.clear();
-
-                                for (RuneSlot runeSlot : runePage.getSlots()) {
-                                    if (mRuneCountMap.get(runeSlot.getRuneId()) == null) {
-                                        mRuneCountMap.put(runeSlot.getRuneId(), 0);
-                                    }
-                                    mRuneCountMap.put(runeSlot.getRuneId(), mRuneCountMap.get(runeSlot.getRuneId()) + 1);
-                                }
-
-                                RuneDto dto;
-                                mProxyRunes.put(runePage.getId(), new ArrayList<RuneProxyModel>());
-                                for (Integer runeId : mRuneCountMap.keySet()) {
-                                    dto = mRunes.get(String.valueOf(runeId));
-                                    if (dto != null) {
-                                        mProxyRunes.get(runePage.getId()).add(new RuneProxyModel(dto, mRuneCountMap.get(runeId)));
-                                    }
-                                }
-
-                            }
-
-
-                            spinnerAdapter.notifyDataSetChanged();
-
-                            for (int i = 0; i < response.getPages().size(); i++) {
-                                if (response.getPages().get(i) != null && response.getPages().get(i).isCurrent() != null && response.getPages().get(i).isCurrent()) {
-                                    mSpinnerPageName.setSelection(i, false);
-                                }
-                            }
-
-                            mLoading.setVisibility(View.GONE);
-
-                        }
-
-                        @Override
-                        public void onError(TeemoException e) {
-                            // TODO: 28/05/2016 handler error
-                            mLoading.setVisibility(View.GONE);
-
-                        }
-                    });
-                }
-
-                @Override
-                public void onError(TeemoException e) {
-                    // TODO: 28/05/2016 handler error
-                    mLoading.setVisibility(View.GONE);
-                }
-            });
         } else {
             finish();
         }
 
 
+    }
+
+    private void loadData(){
+        mLoading.setVisibility(View.VISIBLE);
+        mRunePages.clear();
+        mRunes.clear();
+        mProxyRunes.clear();
+        mCombinedStatsByRunePageMap.clear();
+
+        Teemo.getInstance(this).getStaticDataHandler().getRunes(SettingsHandler.getLanguage(this), null, new StaticAPIQueryParams.StaticQueryParamsBuilder()
+                .include(StaticAPIQueryParams.Runes.image)
+                .include(StaticAPIQueryParams.Runes.stats).build(), new ServiceResponseListener<RuneListDto>() {
+            @Override
+            public void onResponse(RuneListDto response) {
+
+                mRunes.putAll(response.getData());
+
+                Teemo.getInstance(RunesActivity.this).getSummonersHandler().getSummonerRunePages(String.valueOf(mId), new ServiceResponseListener<RunePages>() {
+                    @SuppressLint("UseSparseArrays")
+                    @Override
+                    public void onResponse(RunePages response) {
+                        HashMap<Integer, Integer> mRuneCountMap = new HashMap<>();
+                        for (RunePage runePage : response.getPages()) {
+                            mRunePages.add(new RunePageProxyModel(runePage));
+
+                            mRuneCountMap.clear();
+
+                            for (RuneSlot runeSlot : runePage.getSlots()) {
+                                if (mRuneCountMap.get(runeSlot.getRuneId()) == null) {
+                                    mRuneCountMap.put(runeSlot.getRuneId(), 0);
+                                }
+                                mRuneCountMap.put(runeSlot.getRuneId(), mRuneCountMap.get(runeSlot.getRuneId()) + 1);
+                            }
+
+                            RuneDto dto;
+                            mProxyRunes.put(runePage.getId(), new ArrayList<RuneProxyModel>());
+                            for (Integer runeId : mRuneCountMap.keySet()) {
+                                dto = mRunes.get(String.valueOf(runeId));
+                                if (dto != null) {
+                                    mProxyRunes.get(runePage.getId()).add(new RuneProxyModel(dto, mRuneCountMap.get(runeId)));
+                                }
+                            }
+
+                        }
+
+
+                        spinnerAdapter.notifyDataSetChanged();
+
+                        for (int i = 0; i < response.getPages().size(); i++) {
+                            if (response.getPages().get(i) != null && response.getPages().get(i).isCurrent() != null && response.getPages().get(i).isCurrent()) {
+                                mSpinnerPageName.setSelection(i, false);
+                            }
+                        }
+
+                        mLoading.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onError(TeemoException e) {
+                        showError();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onError(TeemoException e) {
+                showError();
+            }
+        });
+    }
+
+    private void showError(){
+        mLoading.setVisibility(View.GONE);
+        ErrorUtils.showPersistentError(mRecyclerView, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
     }
 
     @Override

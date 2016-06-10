@@ -16,6 +16,7 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.summoner.SummonerDetailActivity;
+import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
@@ -64,10 +65,12 @@ public class ProfileHeaderNavigationView extends RelativeLayout {
         Teemo.getInstance(getContext()).getSummonersHandler().getSummonerById(String.valueOf(SettingsHandler.getSummoner(getContext())), new ServiceResponseListener<Summoner>() {
             @Override
             public void onResponse(final Summoner response) {
-                tvSummonerRegion.setText(SettingsHandler.getRegion(getContext()).toUpperCase());
-                tvSummonerName.setText(response.getName());
-                Glide.with(getContext()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(response.getProfileIconId()))).into(avatarImageView);
-            }
+                if(Utils.isContextValid(getContext())){
+                    tvSummonerRegion.setText(SettingsHandler.getRegion(getContext()).toUpperCase());
+                    tvSummonerName.setText(response.getName());
+                    Glide.with(getContext()).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(response.getProfileIconId()))).into(avatarImageView);
+                }
+               }
 
             @Override
             public void onError(TeemoException e) {

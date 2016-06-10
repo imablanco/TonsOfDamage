@@ -51,7 +51,7 @@ public class FeaturedGamesPlayerView extends RelativeLayout {
             this.setBackgroundResource(outValue.resourceId);
         }
 
-        if(!((Activity)getContext()).isDestroyed()){
+        if(Utils.isContextValid(getContext())){
 
             this.setOnClickListener(new OnClickListener() {
                 @Override

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:background="?selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textStyle="bold"
+            tools:text="1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_summoner"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/default_profile"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/tv_summoner_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingLeft="5dp"
+                android:textColor="@color/text_color"
+                tools:text="Sympherion" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_wins"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            tools:text="234" />
+
+        <TextView
+            android:id="@+id/tv_points"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="50" />
+
+    </LinearLayout>
+
+</RelativeLayout>

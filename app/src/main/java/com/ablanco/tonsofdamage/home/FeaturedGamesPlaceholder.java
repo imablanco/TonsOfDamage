@@ -37,6 +37,8 @@ public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholde
     @Bind(R.id.loading)
     View mLoading;
 
+
+    private FeaturedGames featuredGames;
     private List<FeaturedGameInfo> mFeaturedGameInfos = new ArrayList<>();
 
     public FeaturedGamesPlaceholder(Context context, AttributeSet attrs) {
@@ -51,23 +53,27 @@ public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholde
 
 
     @Override
-    public void update() {
-        mLoading.setVisibility(VISIBLE);
-        Teemo.getInstance(getContext()).getFeaturedGamesHandler().getFeaturedGames(new ServiceResponseListener<FeaturedGames>() {
-            @Override
-            public void onResponse(FeaturedGames response) {
-                mLoading.setVisibility(GONE);
-                mFeaturedGameInfos.clear();
-                mFeaturedGameInfos.addAll(response.getGameList());
-                mPager.setAdapter(new FeaturedGamesPagerAdapter());
-                mCircleIndicator.setViewPager(mPager);
-                mPager.setOffscreenPageLimit(response.getGameList().size() - 1);
-            }
+    public void update(boolean forceUpdate) {
 
-            @Override
-            public void onError(TeemoException e) {
-            }
-        });
+        if(forceUpdate || featuredGames == null || shouldUpdate()){
+            Teemo.getInstance(getContext()).getFeaturedGamesHandler().getFeaturedGames(new ServiceResponseListener<FeaturedGames>() {
+                @Override
+                public void onResponse(FeaturedGames response) {
+                    mLoading.setVisibility(GONE);
+                    featuredGames = response;
+                    mFeaturedGameInfos.clear();
+                    mFeaturedGameInfos.addAll(response.getGameList());
+                    mPager.setAdapter(new FeaturedGamesPagerAdapter());
+                    mCircleIndicator.setViewPager(mPager);
+                    mPager.setOffscreenPageLimit(response.getGameList().size() - 1);
+                }
+
+                @Override
+                public void onError(TeemoException e) {
+                }
+            });
+        }
+
     }
 
     private class FeaturedGamesPagerAdapter extends PagerAdapter{
@@ -93,5 +99,9 @@ public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholde
             return view == object;
         }
 
+    }
+
+    private boolean shouldUpdate(){
+        return System.currentTimeMillis() - featuredGames.getLastUpdate().getTime() > featuredGames.getClientRefreshInterval() * 1000;
     }
 }

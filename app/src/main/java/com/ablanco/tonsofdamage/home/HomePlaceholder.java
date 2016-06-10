@@ -5,5 +5,5 @@ package com.ablanco.tonsofdamage.home;
  * TonsOfDamage
  */
 public interface HomePlaceholder{
-    void update();
+    void update(boolean forceUpdate);
 }

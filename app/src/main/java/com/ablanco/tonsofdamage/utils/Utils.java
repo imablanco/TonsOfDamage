@@ -14,9 +14,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.ablanco.teemo.constants.LeagueTier;
+import com.ablanco.teemo.constants.Platform;
+import com.ablanco.teemo.constants.Regions;
 import com.ablanco.teemo.model.games.RawStats;
 import com.ablanco.teemo.model.stats.AggregatedStats;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
 import java.util.Locale;
 
@@ -150,5 +153,34 @@ public class Utils {
 
     public static void resetColorFilter(ImageView imageView) {
         imageView.setColorFilter(null);
+    }
+
+    public static boolean isContextValid(Context context){
+        return !((Activity)context).isFinishing() && !((Activity)context).isDestroyed();
+    }
+
+    public static String getPlatformForRegion(Context context){
+        switch (SettingsHandler.getRegion(context)){
+            case Regions.REGION_EUW:default:
+                return Platform.EUW1;
+            case Regions.REGION_BR:
+                return Platform.BR1;
+            case Regions.REGION_EUNE:
+                return Platform.EUN1;
+            case Regions.REGION_KR:
+                return Platform.KR;
+            case Regions.REGION_LAN:
+                return Platform.LA1;
+            case Regions.REGION_LAS:
+                return Platform.LA2;
+            case Regions.REGION_NA:
+                return Platform.NA1;
+            case Regions.REGION_OCE:
+                return Platform.OC1;
+            case Regions.REGION_RU:
+                return Platform.RU;
+            case Regions.REGION_TR:
+                return Platform.TR1;
+        }
     }
 }

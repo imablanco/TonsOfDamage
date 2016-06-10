@@ -123,7 +123,8 @@
     <string name="your_masteries">Your masteries</string>
     <string name="your_runes">Your runes</string>
     <string name="runes">Runes</string>
-    <string name="mastery_rank">%1$s/%2$s</string>
+    <string name="mastery_rank">%1$d/%2$d</string>
+    <string name="total_exp_needed">Level exp. %1$d / %2$d</string>
     <string name="view_summoner">View Summoner</string>
     <string name="combined_stats">Combined stats</string>
     <string name="favorite_champions">Your Favorite Champions</string>
@@ -138,5 +139,14 @@
     <string name="disclaimer_text">TonsOfDamage isn\'t endorsed by Riot Games and doesn\'t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</string>
     <string name="action_rate">Rate app</string>
     <string name="week_rotation">Week Rotation</string>
+    <string name="league">League</string>
+    <string name="emblems">Emblems</string>
+    <string name="wins">Wins</string>
+    <string name="points">Points</string>
+    <string name="no_league_for_summoner">There is no current league ranking for this summoner</string>
+    <string name="champion_mastery">Your Champion Mastery</string>
+    <string name="total_points">Champion Points</string>
+    <string name="tv_attributes_label">Attributes</string>
+    <string name="summoner_champion_mastery">Top Champion Mastery</string>
 
 </resources>

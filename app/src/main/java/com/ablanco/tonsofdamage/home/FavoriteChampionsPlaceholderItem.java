@@ -1,7 +1,6 @@
 package com.ablanco.tonsofdamage.home;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -20,7 +19,7 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.utils.AnimationUtils;
+import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -81,8 +80,8 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
                     new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.TAGS).build(), new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {
-                            if (!((Activity) getContext()).isDestroyed()) {
-                                AnimationUtils.revealView(cvLeft);
+                            if (Utils.isContextValid(getContext())) {
+                                cvLeft.setVisibility(VISIBLE);
                                 cvLeft.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
                                 Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionLeft);
                                 tvChampionLeftName.setText(response.getName());
@@ -104,8 +103,8 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
                     new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.TAGS).build(), new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {
-                            if (!((Activity) getContext()).isDestroyed()) {
-                                AnimationUtils.revealView(cvMiddle);
+                            if (Utils.isContextValid(getContext())) {
+                                cvMiddle.setVisibility(VISIBLE);
                                 cvMiddle.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
                                 Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionMiddle);
                                 tvChampionMiddleName.setText(response.getName());
@@ -125,8 +124,8 @@ public class FavoriteChampionsPlaceholderItem extends LinearLayout implements Vi
                     new StaticAPIQueryParams.StaticQueryParamsBuilder().include(StaticAPIQueryParams.Champions.IMAGE).include(StaticAPIQueryParams.Champions.TAGS).build(), new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {
-                            if (!((Activity) getContext()).isDestroyed()) {
-                                AnimationUtils.revealView(cvRight);
+                            if (Utils.isContextValid(getContext())) {
+                                cvRight.setVisibility(VISIBLE);
                                 cvRight.setOnClickListener(FavoriteChampionsPlaceholderItem.this);
                                 Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), response.getImage().getFull())).into(imgChampionRight);
                                 tvChampionRightName.setText(response.getName());

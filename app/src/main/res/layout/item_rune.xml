@@ -29,7 +29,7 @@
             android:background="@drawable/rounded_tv_bg"
             android:layout_marginBottom="-15dp"
             android:layout_alignBottom="@id/img_rune"
-            android:textColor="@color/colorFallBackAccent"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="30dp"
             android:layout_height="30dp" />
 

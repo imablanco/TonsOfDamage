@@ -48,6 +48,8 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
     RecyclerView recyclerView;
     @Bind(R.id.loading)
     ProgressBar loading;
+    @Bind(R.id.tv_error)
+    TextView tvError;
 
     private List<ChampionDto> champions = new ArrayList<>();
 
@@ -81,10 +83,12 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
     }
 
     @Override
-    public void update() {
+    public void update(boolean forceUpdate) {
 
         champions.clear();
         adapter.notifyDataSetChanged();
+
+        tvError.setVisibility(GONE);
 
         Teemo.getInstance(getContext()).getChampionsHandler().getChampions(true, new ServiceResponseListener<ChampionList>() {
             @Override
@@ -107,7 +111,8 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
 
             @Override
             public void onError(TeemoException e) {
-                // TODO: 8/6/16 show error
+                loading.setVisibility(GONE);
+                tvError.setVisibility(VISIBLE);
             }
         });
 

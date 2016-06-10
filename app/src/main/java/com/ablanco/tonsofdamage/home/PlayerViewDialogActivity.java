@@ -85,7 +85,7 @@ public class PlayerViewDialogActivity extends BaseActivity {
                     @Override
                     public void onResponse(Summoner response) {
                         final Long summonerId = response.getId();
-                        if(!isDestroyed()){
+                        if(!isDestroyed() && !isFinishing()){
                             AnimationUtils.revealView(mBtViewSummoner);
                             mBtViewSummoner.setOnClickListener(new View.OnClickListener() {
                                 @Override

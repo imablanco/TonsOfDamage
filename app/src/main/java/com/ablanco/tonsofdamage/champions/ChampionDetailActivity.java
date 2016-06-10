@@ -111,6 +111,7 @@ public class ChampionDetailActivity extends BaseActivity {
 
     private void setUpViewPager(){
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()));
+        pager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(pager);
     }
 

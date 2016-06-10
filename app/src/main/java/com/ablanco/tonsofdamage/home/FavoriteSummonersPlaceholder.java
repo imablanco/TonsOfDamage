@@ -1,6 +1,5 @@
 package com.ablanco.tonsofdamage.home;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
@@ -18,6 +17,7 @@ import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
+import com.ablanco.tonsofdamage.utils.Utils;
 import com.pixelcan.inkpageindicator.InkPageIndicator;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco Cabrero on 6/6/16
  * TonsOfDamage
  */
-public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceholder{
+public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceholder {
 
     @Bind(R.id.pager)
     ViewPager pager;
@@ -43,6 +43,7 @@ public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceh
     TextView tvNoFavoriteYet;
 
     private List<List<Summoner>> mPagedSummoners = new ArrayList<>();
+    private List<String> mFavSummonersIds = new ArrayList<>();
 
     public FavoriteSummonersPlaceholder(Context context) {
         this(context, null);
@@ -61,64 +62,76 @@ public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceh
     }
 
     @Override
-    public void update() {
+    public void update(boolean forceUpdate) {
 
-        mPagedSummoners.clear();
+
         List<String> mSummonerIds = SettingsHandler.getFavoriteSummoners(getContext());
 
-        if(!mSummonerIds.isEmpty()){
-            Teemo.getInstance(getContext()).getSummonersHandler().getSummonersByIds(mSummonerIds, new ServiceResponseListener<Map<String, Summoner>>() {
-                @Override
-                public void onResponse(Map<String, Summoner> response) {
+        if (mFavSummonersIds.size() != mSummonerIds.size() || forceUpdate) {
 
-                    if(!((Activity)getContext()).isDestroyed()){
-                        List<Summoner> row = new ArrayList<>();
+            mFavSummonersIds = mSummonerIds;
 
-                        List<Summoner> summoners = new ArrayList<Summoner>(response.values());
-                        Collections.sort(summoners, new Comparator<Summoner>() {
-                            @Override
-                            public int compare(Summoner lhs, Summoner rhs) {
-                                return lhs.getId().compareTo(rhs.getId());
+            mPagedSummoners.clear();
+            pager.setAdapter(new FavoriteSummonersAdapter());
+
+            if(!mFavSummonersIds.isEmpty()){
+
+                Teemo.getInstance(getContext()).getSummonersHandler().getSummonersByIds(mFavSummonersIds, new ServiceResponseListener<Map<String, Summoner>>() {
+                    @Override
+                    public void onResponse(Map<String, Summoner> response) {
+
+                        if (Utils.isContextValid(getContext())) {
+
+                            List<Summoner> row = new ArrayList<>();
+
+                            List<Summoner> summoners = new ArrayList<Summoner>(response.values());
+                            Collections.sort(summoners, new Comparator<Summoner>() {
+                                @Override
+                                public int compare(Summoner lhs, Summoner rhs) {
+                                    return lhs.getId().compareTo(rhs.getId());
+                                }
+                            });
+
+                            for (Summoner summoner : summoners) {
+                                row.add(summoner);
+
+                                if (row.size() % 2 == 0) {
+                                    mPagedSummoners.add(row);
+                                    row = new ArrayList<>();
+                                }
                             }
-                        });
 
-                        for (Summoner summoner : summoners) {
-                            row.add(summoner);
 
-                            if (row.size() % 2 == 0) {
+                            if (!row.isEmpty()) {
                                 mPagedSummoners.add(row);
-                                row = new ArrayList<>();
+                            }
+
+                            pager.setAdapter(new FavoriteSummonersAdapter());
+
+                            if (!mPagedSummoners.isEmpty()) {
+                                pager.setOffscreenPageLimit(mPagedSummoners.size() - 1);
+                                circleIndicator.setViewPager(pager);
+                                tvNoFavoriteYet.setVisibility(GONE);
+                            } else {
+                                tvNoFavoriteYet.setVisibility(VISIBLE);
                             }
                         }
 
-
-                        if (!row.isEmpty()) {
-                            mPagedSummoners.add(row);
-                        }
-
-                        pager.setAdapter(new FavoriteSummonersAdapter());
-
-                        if (!mPagedSummoners.isEmpty()) {
-                            pager.setOffscreenPageLimit(mPagedSummoners.size() - 1);
-                            circleIndicator.setViewPager(pager);
-                            tvNoFavoriteYet.setVisibility(GONE);
-                        } else {
-                            tvNoFavoriteYet.setVisibility(VISIBLE);
-                        }
                     }
 
-                }
-
-                @Override
-                public void onError(TeemoException e) {
-                    // TODO: 6/6/16 show error
-                }
-            });
-
-        } else {
-            pager.setAdapter(new FavoriteSummonersAdapter());
+                    @Override
+                    public void onError(TeemoException e) {
+                        tvNoFavoriteYet.setVisibility(VISIBLE);
+                        tvNoFavoriteYet.setText(R.string.error_text);
+                    }
+                });
+            } else {
+                tvNoFavoriteYet.setVisibility(VISIBLE);
+            }
+        } else if(mSummonerIds.isEmpty()){
             tvNoFavoriteYet.setVisibility(VISIBLE);
         }
+
 
     }
 

@@ -1,7 +1,6 @@
 package com.ablanco.tonsofdamage.home;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -98,7 +97,7 @@ public class FavoriteSummonersPlaceholderItem extends LinearLayout implements Vi
             @Override
             public void onResponse(Map<String, List<League>> response) {
 
-                if(!((Activity)getContext()).isDestroyed()){
+                if(Utils.isContextValid(getContext())){
                     List<League> leagues;
                     if(summoners.size() >= 1 && summoners.get(0) != null){
                         leagues = response.get(String.valueOf(summoners.get(0).getId()));

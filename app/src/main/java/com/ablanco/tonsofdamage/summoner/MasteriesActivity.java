@@ -29,6 +29,7 @@ import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.ErrorUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,80 +114,100 @@ public class MasteriesActivity extends BaseActivity implements MasteryTreeDetail
         });
 
         if (summonerId > 0) {
-            Teemo.getInstance(this).getStaticDataHandler().getMasteries(SettingsHandler.getLanguage(this), null,
-                    new StaticAPIQueryParams.StaticQueryParamsBuilder()
-                            .include(StaticAPIQueryParams.Masteries.image)
-                            .include(StaticAPIQueryParams.Masteries.tree)
-                            .include(StaticAPIQueryParams.Masteries.ranks)
-                            .include(StaticAPIQueryParams.Masteries.masteryTree)
-                            .build(), new ServiceResponseListener<MasteryListDto>() {
-                        @Override
-                        public void onResponse(MasteryListDto response) {
-                            if (response.getTree().getCunning() != null && response.getTree().getFerocity() != null && response.getTree().getResolve() != null) {
-                                masteryData.putAll(response.getData());
-                                masteryTreeDtos.add(response.getTree().getFerocity());
-                                masteryTreeDtos.add(response.getTree().getCunning());
-                                masteryTreeDtos.add(response.getTree().getResolve());
-
-                                mTree = response.getTree();
-
-                                mMasteriesNames.add(ResourcesHandler.getInstance(MasteriesActivity.this).getResourceForKey("masteryFerocity"));
-                                mMasteriesNames.add(ResourcesHandler.getInstance(MasteriesActivity.this).getResourceForKey("masteryCunning"));
-                                mMasteriesNames.add(ResourcesHandler.getInstance(MasteriesActivity.this).getResourceForKey("masteryResolve"));
-
-                                mPager.getAdapter().notifyDataSetChanged();
-
-                                Teemo.getInstance(MasteriesActivity.this).getSummonersHandler().getSummonerMasteryPages(String.valueOf(summonerId), new ServiceResponseListener<MasteryPages>() {
-                                    @Override
-                                    public void onResponse(MasteryPages response) {
-                                        loading.setVisibility(View.GONE);
-                                        Collections.sort(response.getPages(), new Comparator<MasteryPage>() {
-                                            @Override
-                                            public int compare(MasteryPage lhs, MasteryPage rhs) {
-                                                return lhs.getId().compareTo(rhs.getId());
-                                            }
-                                        });
-
-                                        for (MasteryPage masteryPage : response.getPages()) {
-                                            mMasteryPages.add(new MasteryPageProxyModel(masteryPage));
-                                        }
-                                        spinnerAdapter.notifyDataSetChanged();
-
-                                        for (int i = 0; i < mMasteryPages.size(); i++) {
-                                            if(mMasteryPages.get(i) != null && mMasteryPages.get(i).isCurrent() != null && mMasteryPages.get(i).isCurrent()){
-                                                mSpinnerPageName.setSelection(i, false);
-                                            }
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onError(TeemoException e) {
-                                        loading.setVisibility(View.GONE);
-
-                                    }
-                                });
-
-                            } else {
-                                // TODO: 26/05/2016 handler error
-                                loading.setVisibility(View.GONE);
-                            }
-
-                        }
-
-                        @Override
-                        public void onError(TeemoException e) {
-                            // TODO: 26/05/2016 handler error
-                            loading.setVisibility(View.GONE);
-                        }
-                    });
-
-
+           loadData();
         } else {
             finish();
         }
 
 
+    }
+
+    private void loadData(){
+
+        mMasteriesNames.clear();
+        masteryData.clear();
+        masteryTreeDtos.clear();
+        mMasteryPages.clear();
+        mMasteryConfigByPage.clear();
+
+        Teemo.getInstance(this).getStaticDataHandler().getMasteries(SettingsHandler.getLanguage(this), null,
+                new StaticAPIQueryParams.StaticQueryParamsBuilder()
+                        .include(StaticAPIQueryParams.Masteries.image)
+                        .include(StaticAPIQueryParams.Masteries.tree)
+                        .include(StaticAPIQueryParams.Masteries.ranks)
+                        .include(StaticAPIQueryParams.Masteries.masteryTree)
+                        .build(), new ServiceResponseListener<MasteryListDto>() {
+                    @Override
+                    public void onResponse(MasteryListDto response) {
+                        if (response.getTree().getCunning() != null && response.getTree().getFerocity() != null && response.getTree().getResolve() != null) {
+                            masteryData.putAll(response.getData());
+                            masteryTreeDtos.add(response.getTree().getFerocity());
+                            masteryTreeDtos.add(response.getTree().getCunning());
+                            masteryTreeDtos.add(response.getTree().getResolve());
+
+                            mTree = response.getTree();
+
+                            mMasteriesNames.add(ResourcesHandler.getInstance(MasteriesActivity.this).getResourceForKey("masteryFerocity"));
+                            mMasteriesNames.add(ResourcesHandler.getInstance(MasteriesActivity.this).getResourceForKey("masteryCunning"));
+                            mMasteriesNames.add(ResourcesHandler.getInstance(MasteriesActivity.this).getResourceForKey("masteryResolve"));
+
+                            mPager.getAdapter().notifyDataSetChanged();
+
+                            Teemo.getInstance(MasteriesActivity.this).getSummonersHandler().getSummonerMasteryPages(String.valueOf(summonerId), new ServiceResponseListener<MasteryPages>() {
+                                @Override
+                                public void onResponse(MasteryPages response) {
+                                    loading.setVisibility(View.GONE);
+                                    Collections.sort(response.getPages(), new Comparator<MasteryPage>() {
+                                        @Override
+                                        public int compare(MasteryPage lhs, MasteryPage rhs) {
+                                            return lhs.getId().compareTo(rhs.getId());
+                                        }
+                                    });
+
+                                    for (MasteryPage masteryPage : response.getPages()) {
+                                        mMasteryPages.add(new MasteryPageProxyModel(masteryPage));
+                                    }
+                                    spinnerAdapter.notifyDataSetChanged();
+
+                                    for (int i = 0; i < mMasteryPages.size(); i++) {
+                                        if(mMasteryPages.get(i) != null && mMasteryPages.get(i).isCurrent() != null && mMasteryPages.get(i).isCurrent()){
+                                            mSpinnerPageName.setSelection(i, false);
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onError(TeemoException e) {
+                                    showError();
+
+                                }
+                            });
+
+                        } else {
+                            showError();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(TeemoException e) {
+                        showError();
+                    }
+                });
+
+
+    }
+
+    private void showError(){
+        loading.setVisibility(View.GONE);
+        ErrorUtils.showPersistentError(mPager, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
     }
 
     @Override

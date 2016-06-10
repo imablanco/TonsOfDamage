@@ -60,11 +60,11 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
         super.onResume();
         if (hasToUpdate()) {
             mLastUpdate = System.currentTimeMillis();
-            mPhFeaturedGames.update();
-            phWeekRotation.update();
+            phWeekRotation.update(true);
         }
-        phFavoriteChamp.update();
-        phFavoriteSummoners.update();
+        mPhFeaturedGames.update(false);
+        phFavoriteChamp.update(false);
+        phFavoriteSummoners.update(false);
     }
 
     @Override
@@ -83,10 +83,10 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
             @Override
             public void run() {
                 mLastUpdate = System.currentTimeMillis();
-                mPhFeaturedGames.update();
-                phFavoriteChamp.update();
-                phFavoriteSummoners.update();
-                phWeekRotation.update();
+                mPhFeaturedGames.update(true);
+                phFavoriteChamp.update(true);
+                phFavoriteSummoners.update(true);
+                phWeekRotation.update(true);
                 mSwipeRefresh.setRefreshing(false);
             }
         }, 500);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.Queue;
 import com.ablanco.teemo.constants.Season;
 import com.ablanco.teemo.constants.StaticAPIQueryParams;
+import com.ablanco.teemo.model.championmastery.ChampionMasteryDto;
 import com.ablanco.teemo.model.leagues.League;
 import com.ablanco.teemo.model.leagues.LeagueEntry;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
@@ -26,8 +28,13 @@ import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.ChampionStatsData;
+import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.SummonerMostPlayedChampionsAdapter;
+import com.ablanco.tonsofdamage.adapter.TopChampionMasteryAdapter;
+import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
+import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.home.SmartChampionMastery;
 import com.ablanco.tonsofdamage.utils.ErrorUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
@@ -79,8 +86,13 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
     TextView mTvSummonerLevel;
     @Bind(R.id.cv_most_played_champions)
     View cvMostPlayedChampions;
+    @Bind(R.id.recycler_view_top_champion_mastery)
+    RecyclerView recyclerTopChampionMastery;
+    @Bind(R.id.cv_champion_mastery)
+    View cvChampionMastery;
 
     private SummonerMostPlayedChampionsAdapter mostPlayedChampionsAdapter;
+    private TopChampionMasteryAdapter topChampionMasteryAdapter;
 
     public static Fragment newInstance(long id) {
         BaseSummonerDetailFragment fragment = new SummonerOverviewFragment();
@@ -101,7 +113,52 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
         mostPlayedChampionsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mostPlayedChampionsAdapter = new SummonerMostPlayedChampionsAdapter(getActivity());
         mostPlayedChampionsRecyclerView.setAdapter(mostPlayedChampionsAdapter);
+
+        recyclerTopChampionMastery.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        topChampionMasteryAdapter = new TopChampionMasteryAdapter(getActivity());
+        recyclerTopChampionMastery.setAdapter(topChampionMasteryAdapter);
+
+        topChampionMasteryAdapter.setOnItemClickListener(new ItemClickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(ChampionDetailActivity.EXTRA_CHAMPION_ID, topChampionMasteryAdapter.getItemAtPosition(position).getChampion().getId());
+                NavigationHandler.navigateTo(getContext(), NavigationHandler.CHAMPION_DETAIL, bundle);
+            }
+        });
+
+        loadTopChampions();
         loadSummoner();
+    }
+
+    private void loadTopChampions() {
+        Teemo.getInstance(getActivity()).getChampionMasteryHandler().getTopChampionsMastery(Utils.getPlatformForRegion(getActivity()), summonerId, 3, new ServiceResponseListener<List<ChampionMasteryDto>>() {
+            @Override
+            public void onResponse(List<ChampionMasteryDto> response) {
+                if (getActivity() != null) {
+                    cvChampionMastery.setVisibility(View.VISIBLE);
+                    for (final ChampionMasteryDto championMasteryDto : response) {
+                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(championMasteryDto.getChampionId().intValue(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                            @Override
+                            public void onResponse(ChampionDto response) {
+                                topChampionMasteryAdapter.addChampionMastery(new SmartChampionMastery(response, championMasteryDto));
+                            }
+
+                            @Override
+                            public void onError(TeemoException e) {
+
+                            }
+                        });
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(TeemoException e) {
+
+            }
+        });
     }
 
     private void loadSummoner() {
@@ -129,7 +186,7 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
         Teemo.getInstance(getActivity()).getStatsHandler().getRankedStatsBySummonerAndSeason(summonerId, Season.SEASON2016, new ServiceResponseListener<RankedStats>() {
             @Override
             public void onResponse(RankedStats response) {
-                if(getActivity() != null){
+                if (getActivity() != null) {
                     cvMostPlayedChampions.setVisibility(View.VISIBLE);
                     List<ChampionStats> mostPlayed = response.getChampions();
                     Collections.sort(mostPlayed, new Comparator<ChampionStats>() {
@@ -141,8 +198,8 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
 
                     Iterator<ChampionStats> championStatsIterator = mostPlayed.iterator();
 
-                    while (championStatsIterator.hasNext()){
-                        if(championStatsIterator.next().getId() == 0){
+                    while (championStatsIterator.hasNext()) {
+                        if (championStatsIterator.next().getId() == 0) {
                             championStatsIterator.remove();
                         }
                     }

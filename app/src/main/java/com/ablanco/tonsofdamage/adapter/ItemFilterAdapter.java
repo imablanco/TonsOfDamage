@@ -53,7 +53,7 @@ public class ItemFilterAdapter extends RecyclerView.Adapter<ItemFilterAdapter.Ch
     @Override
     public void onBindViewHolder(CheckBoxViewHolder holder, int position) {
 
-        holder.checkBox.setText(ResourcesHandler.getInstance(mContext).getResourceForKey(tags.get(position))); // TODO: 10/04/2016 change for sanitized description
+        holder.checkBox.setText(ResourcesHandler.getInstance(mContext).getResourceForKey(tags.get(position)));
         holder.checkBox.setTag(tags.get(position));
         holder.checkBox.setChecked(mSelectedTags.contains(tags.get(position)));
         holder.checkBox.setOnCheckedChangeListener(checkedChangeListener);

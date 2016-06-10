@@ -37,6 +37,7 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
     TextView tvNoFavoriteYet;
 
     private List<List<String>> mPagedChampionIds = new ArrayList<>();
+    private List<String> mChampionsIds = new ArrayList<>();
 
     public FavoriteChampionsPlaceholder(Context context) {
         this(context, null);
@@ -53,43 +54,59 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
     }
 
     @Override
-    public void update() {
-        mPagedChampionIds.clear();
-        List<String> mChampionIds = SettingsHandler.getFavoriteChampions(getContext());
+    public void update(boolean forceUpdate) {
 
-        List<String> row = new ArrayList<>();
+        List<String> championIds = SettingsHandler.getFavoriteChampions(getContext());
 
-        Collections.sort(mChampionIds, new Comparator<String>() {
-            @Override
-            public int compare(String lhs, String rhs) {
-                return lhs.compareTo(rhs);
+        if(mChampionsIds.size() != championIds.size() || forceUpdate){
+
+            this.mChampionsIds = championIds;
+
+            if(!mChampionsIds.isEmpty()){
+                mPagedChampionIds.clear();
+
+                List<String> row = new ArrayList<>();
+
+                Collections.sort(championIds, new Comparator<String>() {
+                    @Override
+                    public int compare(String lhs, String rhs) {
+                        return lhs.compareTo(rhs);
+                    }
+                });
+
+
+                for (String mChampionId : championIds) {
+
+                    row.add(mChampionId);
+
+                    if (row.size() % 3 == 0) {
+                        mPagedChampionIds.add(row);
+                        row = new ArrayList<>();
+                    }
+                }
+
+                if (!row.isEmpty()) {
+                    mPagedChampionIds.add(row);
+                }
+
+                pager.setAdapter(new FavoriteChampionAdapter());
+
+                if (!mPagedChampionIds.isEmpty()) {
+                    pager.setOffscreenPageLimit(mPagedChampionIds.size() - 1);
+                    circleIndicator.setViewPager(pager);
+                    tvNoFavoriteYet.setVisibility(GONE);
+                } else {
+                    tvNoFavoriteYet.setVisibility(VISIBLE);
+                }
+            }else {
+                tvNoFavoriteYet.setVisibility(VISIBLE);
             }
-        });
 
-
-        for (String mChampionId : mChampionIds) {
-
-            row.add(mChampionId);
-
-            if (row.size() % 3 == 0) {
-                mPagedChampionIds.add(row);
-                row = new ArrayList<>();
-            }
-        }
-
-        if (!row.isEmpty()) {
-            mPagedChampionIds.add(row);
-        }
-
-        pager.setAdapter(new FavoriteChampionAdapter());
-
-        if (!mPagedChampionIds.isEmpty()) {
-            pager.setOffscreenPageLimit(mPagedChampionIds.size() - 1);
-            circleIndicator.setViewPager(pager);
-            tvNoFavoriteYet.setVisibility(GONE);
-        } else {
+        }else if(championIds.isEmpty()){
             tvNoFavoriteYet.setVisibility(VISIBLE);
         }
+
+
     }
 
     class FavoriteChampionAdapter extends PagerAdapter {

@@ -32,8 +32,8 @@ public class SummonerDetailActivity extends BaseActivity {
 
     private final static int PAGE_OVERVIEW = 0;
     private final static int PAGE_MATCH_LIST = 1;
-    private final static int PAGE_STATS = 2;
-    private final static int PAGE_MASTERIES = 3;
+    private final static int PAGE_LEAGUE = 2;
+    private final static int PAGE_STATS = 3;
 
     public static final String EXTRA_ID = "extra_id";
     @Bind(R.id.toolbar)
@@ -123,6 +123,7 @@ public class SummonerDetailActivity extends BaseActivity {
 
                     mPages.add(SummonerOverviewFragment.newInstance(mId));
                     mPages.add(RecentGamesFragment.newInstance(mId));
+                    mPages.add(LeagueRankingFragment.newInstance(mId));
                     mPages.add(SummonerStatisticsFragment.newInstance(mId));
 
                     mPager.setAdapter(new SummonerDetailPagerAdapter());
@@ -175,6 +176,8 @@ public class SummonerDetailActivity extends BaseActivity {
                     return getString(R.string.recent_games);
                 case PAGE_STATS:
                     return getString(R.string.stats);
+                case PAGE_LEAGUE:
+                    return getString(R.string.league);
             }
         }
 

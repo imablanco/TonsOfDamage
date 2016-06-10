@@ -72,6 +72,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
     private final static String CHART_DAMAGE_TAKEN = "DAMAGE_TAKEN";
 
     public static final String EXTRA_TRANSITION_NAME = "extra_transition_name";
+    public static final String EXTRA_SUMMONER_ID = "extra_summoner_id";
     public static final String EXTRA_DATA = "extra_data";
 
     @Bind(R.id.tv_game_type)
@@ -155,6 +156,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
         setSupportActionBar(mToolbar);
 
         final RecentGamesData data = (RecentGamesData) getIntent().getSerializableExtra(EXTRA_DATA);
+        long summonerId = getIntent().getLongExtra(EXTRA_SUMMONER_ID, 0);
 
         Utils.setTransitionNameForView(mImgChampion, getIntent().getStringExtra(EXTRA_TRANSITION_NAME));
         mAppBarLayout.addOnOffsetChangedListener(this);
@@ -199,7 +201,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
             tvMinions.setText(String.valueOf(data.getGame().getStats().getMinionsKilled()));
 
             //teams participants
-            TeamsAdapter adapter = new TeamsAdapter(this, data.getGame());
+            TeamsAdapter adapter = new TeamsAdapter(this, data.getGame(), summonerId);
             for (int i = 0; i < adapter.getCount(); i++) {
                 llParticipants.addView(adapter.getView(i, null, null));
             }
@@ -506,11 +508,13 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
         private Context mContext;
         private LayoutInflater inflater;
         private List<Pair<Player, Player>> mParticipants = new ArrayList<>();
+        private long summonerId = 0;
 
-        public TeamsAdapter(Context context, Game game) {
+        public TeamsAdapter(Context context, Game game, long summonerId) {
             this.mContext = context;
             this.mParticipants.addAll(buildData(game));
             this.inflater = LayoutInflater.from(context);
+            this.summonerId = summonerId;
 
         }
 
@@ -548,7 +552,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
 
             final Pair<Player, Player> item = mParticipants.get(position);
             if (item.first != null) {
-                if (item.first.getSummonerId() != SettingsHandler.getSummoner(mContext)) {
+                if (item.first.getSummonerId() != summonerId) {
                     holder.root1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -558,8 +562,6 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
                         }
                     });
 
-                } else {
-                    //TODO go to summoner specific page
                 }
 
                 Teemo.getInstance(mContext).getSummonersHandler().getSummonerNameById(String.valueOf(item.first.getSummonerId()), new ServiceResponseListener<String>() {
@@ -591,7 +593,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
 
             if (item.second != null) {
 
-                if (item.second.getSummonerId() != SettingsHandler.getSummoner(mContext)) {
+                if (item.second.getSummonerId() != summonerId) {
                     holder.root2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -600,8 +602,6 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
                             NavigationHandler.navigateTo(mContext, NavigationHandler.SUMMONER_DETAIL, bundle);
                         }
                     });
-                } else {
-                    //TODO go to summoner specific page
                 }
 
                 Teemo.getInstance(mContext).getSummonersHandler().getSummonerNameById(String.valueOf(item.second.getSummonerId()), new ServiceResponseListener<String>() {

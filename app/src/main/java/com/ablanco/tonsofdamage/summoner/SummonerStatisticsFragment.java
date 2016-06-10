@@ -343,6 +343,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
                         .setColorText(Color.argb(255, 255, 255, 255))
                         .setFontSize(10f)
                         .build())*/
+                .setCapRounded(false)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .build();
     }
@@ -351,6 +352,7 @@ public class SummonerStatisticsFragment extends BaseSummonerDetailFragment {
         return new SeriesItem.Builder(color)
                 .setRange(0, max, 0)
                 .setInitialVisibility(false)
+                .setCapRounded(false)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .build();
     }
