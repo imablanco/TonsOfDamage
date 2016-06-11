@@ -135,21 +135,25 @@ public class SummonerOverviewFragment extends BaseSummonerDetailFragment {
         Teemo.getInstance(getActivity()).getChampionMasteryHandler().getTopChampionsMastery(Utils.getPlatformForRegion(getActivity()), summonerId, 3, new ServiceResponseListener<List<ChampionMasteryDto>>() {
             @Override
             public void onResponse(List<ChampionMasteryDto> response) {
-                if (getActivity() != null) {
-                    cvChampionMastery.setVisibility(View.VISIBLE);
-                    for (final ChampionMasteryDto championMasteryDto : response) {
-                        Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(championMasteryDto.getChampionId().intValue(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                            @Override
-                            public void onResponse(ChampionDto response) {
-                                topChampionMasteryAdapter.addChampionMastery(new SmartChampionMastery(response, championMasteryDto));
-                            }
+                if (getActivity() != null && response != null) {
 
-                            @Override
-                            public void onError(TeemoException e) {
+                    if(!response.isEmpty()){
+                        cvChampionMastery.setVisibility(View.VISIBLE);
+                        for (final ChampionMasteryDto championMasteryDto : response) {
+                            Teemo.getInstance(getActivity()).getStaticDataHandler().getChampionById(championMasteryDto.getChampionId().intValue(), SettingsHandler.getLanguage(getActivity()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                                @Override
+                                public void onResponse(ChampionDto response) {
+                                    topChampionMasteryAdapter.addChampionMastery(new SmartChampionMastery(response, championMasteryDto));
+                                }
 
-                            }
-                        });
+                                @Override
+                                public void onError(TeemoException e) {
+
+                                }
+                            });
+                        }
                     }
+
                 }
 
             }

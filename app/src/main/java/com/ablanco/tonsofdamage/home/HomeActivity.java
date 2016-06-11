@@ -15,7 +15,6 @@ import android.view.MenuItem;
 
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
-import com.ablanco.tonsofdamage.base.BaseDialog;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.ResourcesHandler;
@@ -31,7 +30,6 @@ import com.roughike.bottombar.OnTabClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.psdev.licensesdialog.LicensesDialog;
 import hotchemi.android.rate.AppRate;
 
 public class HomeActivity extends BaseActivity
@@ -113,6 +111,7 @@ public class HomeActivity extends BaseActivity
     private void monitorRateApp(){
         AppRate.with(this)
                 .setInstallDays(2)
+                .setCancelable(true)
                 .monitor();
 
         // Show a dialog if meets conditions
@@ -148,16 +147,8 @@ public class HomeActivity extends BaseActivity
             bundle.putLong(RunesActivity.EXTRA_SUMMONER_ID, SettingsHandler.getSummoner(this));
             NavigationHandler.navigateTo(this, NavigationHandler.RUNES_DETAIL, bundle);
 
-        } else if(id == R.id.nav_about){
-            BaseDialog.newInstance(getString(R.string.action_about), getString(R.string.disclaimer_text)).show(getSupportFragmentManager().beginTransaction(),"disclaimer");
-        } else if(id == R.id.nav_open_source_licenses){
-            new LicensesDialog.Builder(this)
-                    .setNotices(R.raw.notices)
-                    .setIncludeOwnLicense(true)
-                    .build()
-                    .show();
-        } else if(id == R.id.nav_rate){
-            AppRate.with(this).showRateDialog(this);
+        }else if(id == R.id.nav_settings){
+            NavigationHandler.navigateTo(this, NavigationHandler.SETTINGS);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

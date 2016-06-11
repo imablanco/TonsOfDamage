@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,10 +15,7 @@ import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.base.BaseFragment;
-import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
-import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +33,7 @@ import rx.functions.Func1;
  * Created by Álvaro Blanco on 29/04/2016.
  * TonsOfDamage
  */
-public class ChooseLanguageFragment extends BaseFragment {
+public class ChooseLanguageFragment extends SetupFragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView mRecycler;
@@ -50,8 +46,10 @@ public class ChooseLanguageFragment extends BaseFragment {
     private Locale selectedLocale;
     private LanguageAdapter mLanguageAdapter;
 
-    public static Fragment newInstance() {
-        return new ChooseLanguageFragment();
+    public static Fragment newInstance(SetupListener listener) {
+        SetupFragment f = new ChooseLanguageFragment();
+        f.setSetupListener(listener);
+        return f;
     }
 
     @Nullable
@@ -121,12 +119,11 @@ public class ChooseLanguageFragment extends BaseFragment {
 
     @OnClick(R.id.fab_choose_language)
     public void setRegionAndNavigate() {
-        SettingsHandler.setLanguage(getActivity(), selectedLocale.toString());
-        Utils.updateLanguage(getActivity(), SettingsHandler.getLanguage(getActivity()));
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.content, PickSummonerFragment.newInstance())
-                .commit();
+
+        if(setupListener != null){
+            setupListener.onLanguageSelected(selectedLocale.toString());
+        }
+
     }
 
     class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHolder> {
@@ -144,7 +141,6 @@ public class ChooseLanguageFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.tv.setAllCaps(false);
             holder.tv.setText(locales.get(position).getDisplayName(Locale.getDefault()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

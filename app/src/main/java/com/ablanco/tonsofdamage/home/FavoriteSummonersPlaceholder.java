@@ -126,9 +126,13 @@ public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceh
                     }
                 });
             } else {
+                mPagedSummoners.clear();
+                pager.setAdapter(new FavoriteSummonersAdapter());
                 tvNoFavoriteYet.setVisibility(VISIBLE);
             }
         } else if(mSummonerIds.isEmpty()){
+            mPagedSummoners.clear();
+            pager.setAdapter(new FavoriteSummonersAdapter());
             tvNoFavoriteYet.setVisibility(VISIBLE);
         }
 

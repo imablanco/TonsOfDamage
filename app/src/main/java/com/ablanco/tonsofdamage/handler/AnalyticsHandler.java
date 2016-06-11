@@ -13,6 +13,7 @@ import com.google.android.gms.analytics.Tracker;
  */
 public class AnalyticsHandler {
 
+    public static final String CLASS_NAME_SETTINGS = "Settings";
     public static String CLASS_NAME_CHAMPION_DETAIL = "ChampionDetail";
     public static String CLASS_NAME_CHAMPION_SKIN_DETAIL = "ChampionSkin";
     public static String CLASS_NAME_HOMEACTIVIY = "Home";

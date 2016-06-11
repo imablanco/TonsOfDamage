@@ -25,11 +25,11 @@
             android:id="@+id/tv_rune_count"
             android:layout_centerHorizontal="true"
             tools:text = "9x"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:background="@drawable/rounded_tv_bg"
             android:layout_marginBottom="-15dp"
             android:layout_alignBottom="@id/img_rune"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
             android:layout_width="30dp"
             android:layout_height="30dp" />
 

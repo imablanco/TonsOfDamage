@@ -99,10 +99,14 @@ public class FavoriteChampionsPlaceholder extends CardView implements HomePlaceh
                     tvNoFavoriteYet.setVisibility(VISIBLE);
                 }
             }else {
+                mPagedChampionIds.clear();
+                pager.setAdapter(new FavoriteChampionAdapter());
                 tvNoFavoriteYet.setVisibility(VISIBLE);
             }
 
         }else if(championIds.isEmpty()){
+            mPagedChampionIds.clear();
+            pager.setAdapter(new FavoriteChampionAdapter());
             tvNoFavoriteYet.setVisibility(VISIBLE);
         }
 

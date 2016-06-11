@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,13 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ablanco.teemo.Teemo;
-import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.Regions;
-import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.base.BaseFragment;
-import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
 
 import java.util.List;
@@ -31,7 +25,7 @@ import butterknife.OnClick;
  * Created by Álvaro Blanco on 30/03/2016.
  * TonsOfDamage
  */
-public class ChooseRegionFragment extends BaseFragment {
+public class ChooseRegionFragment extends SetupFragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView mRecycler;
@@ -42,8 +36,10 @@ public class ChooseRegionFragment extends BaseFragment {
 
     private String selectedRegion;
 
-    public static Fragment newInstance() {
-        return new ChooseRegionFragment();
+    public static Fragment newInstance(SetupListener listener) {
+        SetupFragment f = new ChooseRegionFragment();
+        f.setSetupListener(listener);
+        return f;
     }
 
     @Nullable
@@ -69,32 +65,10 @@ public class ChooseRegionFragment extends BaseFragment {
 
     @OnClick(R.id.fab_choose_region)
     public void setRegionAndNavigate() {
-        SettingsHandler.setRegion(getActivity(), selectedRegion);
-        Teemo.getInstance(getActivity()).setRegion(selectedRegion);
 
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
-            @Override
-            public void onResponse(List<String> response) {
-                if (getActivity() != null) {
-                    SettingsHandler.setCDNVersion(getActivity(), response.get(0));
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .replace(R.id.content, ChooseLanguageFragment.newInstance())
-                            .commit();
-                }
-
-            }
-
-            @Override
-            public void onError(TeemoException e) {
-                if (getActivity() != null) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .replace(R.id.content, ChooseLanguageFragment.newInstance())
-                            .commit();
-                }
-            }
-        });
+        if(setupListener != null){
+            setupListener.onRegionSelected(selectedRegion);
+        }
 
     }
 

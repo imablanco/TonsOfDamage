@@ -82,6 +82,11 @@ public class TopChampionMasteryAdapter extends ItemClickAdapter<TopChampionMaste
         return masteryDtos.get(position);
     }
 
+    public void clearAdapter(){
+        masteryDtos.clear();
+        notifyDataSetChanged();
+    }
+
     public void addChampionMastery(SmartChampionMastery smartChampionMastery){
         this.masteryDtos.add(smartChampionMastery);
         Collections.sort(masteryDtos, new Comparator<SmartChampionMastery>() {

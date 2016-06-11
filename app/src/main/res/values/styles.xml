@@ -35,6 +35,11 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="SettingsTitleStyle">
+        <item name="android:textColor">@color/colorFallBackAccent</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="SummonerStatsValueStyle">
         <item name="android:gravity">left</item>
         <item name="android:textColor">@color/text_color</item>

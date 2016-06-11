@@ -65,6 +65,7 @@
     <string name="built_from">Built from</string>
     <string name="built_into">Built into</string>
     <string name="error_text">Ups! Something went wrong</string>
+    <string name="error_no_champion_mastery">You do not have any mastery on Champions!</string>
     <string name="summoners">Summoners</string>
     <string name="leagues">Leagues</string>
     <string name="solo_duo">Solo/Duo</string>
@@ -148,5 +149,21 @@
     <string name="total_points">Champion Points</string>
     <string name="tv_attributes_label">Attributes</string>
     <string name="summoner_champion_mastery">Top Champion Mastery</string>
+    <string name="top_champion_mastery">Your Top Champions</string>
+    <string name="settings">Settings</string>
+    <string name="stop_sending_analytics_data">Stop sending analytics data</string>
+    <string name="stop_sending_notifications">Stop sending notifications</string>
+    <string name="clear_favorite_champions_and_summoners">Clear favorite champions and summoners</string>
+    <string name="check_server_status">Check server status</string>
+    <string name="other">Other</string>
+    <string name="action_contact">Contact us</string>
+    <string name="atention">Atention</string>
+    <string name="are_you_sure">Are you sure to delete all your favorite champions and summoners?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="change_language">Change language</string>
+    <string name="change_region">Change region</string>
+    <string name="change_summoner">Change summoner</string>
+    <string name="server_status">Server status</string>
 
 </resources>

@@ -18,6 +18,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <com.ablanco.tonsofdamage.home.TopChampionMasteryPlaceholder
+                android:id="@+id/ph_top_champion_mastery"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
             <com.ablanco.tonsofdamage.home.WeekRotationPlaceholder
                 android:id="@+id/ph_week_rotation"
                 android:layout_width="match_parent"

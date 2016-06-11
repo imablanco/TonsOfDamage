@@ -13,6 +13,11 @@
             android:id="@+id/nav_runes"
             android:icon="@drawable/ic_rune"
             android:title="@string/your_runes" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
     </group>
 
     <group
@@ -20,15 +25,7 @@
         android:checkableBehavior="none">
 
         <item
-            android:id="@+id/nav_about"
-            android:title="@string/action_about" />
-
-        <item
-            android:id="@+id/nav_rate"
-            android:title="@string/action_rate" />
-
-        <item
-            android:id="@+id/nav_open_source_licenses"
-            android:title="@string/action_osl" />
+            android:id="@+id/nav_contact"
+            android:title="@string/action_contact" />
     </group>
 </menu>

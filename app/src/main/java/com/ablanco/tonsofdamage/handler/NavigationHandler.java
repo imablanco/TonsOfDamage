@@ -9,8 +9,10 @@ import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.champions.ChampionSkinDetailActivity;
 import com.ablanco.tonsofdamage.home.PlayerViewDialogActivity;
 import com.ablanco.tonsofdamage.items.ItemDetailDialogActivity;
-import com.ablanco.tonsofdamage.splash.FirstAccessSetupActivity;
+import com.ablanco.tonsofdamage.settings.SettingsActivity;
+import com.ablanco.tonsofdamage.splash.SetupActivity;
 import com.ablanco.tonsofdamage.home.HomeActivity;
+import com.ablanco.tonsofdamage.splash.SplashActivity;
 import com.ablanco.tonsofdamage.summoner.MasteriesActivity;
 import com.ablanco.tonsofdamage.summoner.MasteryDetailActivityDialog;
 import com.ablanco.tonsofdamage.summoner.MatchDetailActivity;
@@ -25,6 +27,7 @@ import com.ablanco.tonsofdamage.summoner.SummonerDetailActivity;
 public class NavigationHandler {
 
     public static final String SETUP = "SETUP";
+    public static final String SPLASH = "SPLASH";
     public static final String HOME = "HOME";
     public static final String CHAMPION_DETAIL = "CHAMPION_DETAIL";
     public static final String CHAMPION_SKIN_DETAIL = "CHAMPION_SKIN_DETAIL";
@@ -36,6 +39,7 @@ public class NavigationHandler {
     public static final String PLAYER_DETAIL = "PLAYER_DETAIL";
     public static final String ITEM_DETAIL = "ITEM_DETAIL";
     public static final String RUNE_DETAIL = "RUNE_DETAIL";
+    public static final String SETTINGS = "SETTINGS";
 
     private NavigationHandler(){}
 
@@ -64,6 +68,10 @@ public class NavigationHandler {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
 
+            if(destination.equalsIgnoreCase(SPLASH)){
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+
             if(options != null){
                 context.startActivity(intent, options.toBundle());
             }else {
@@ -78,7 +86,7 @@ public class NavigationHandler {
         if(destination.equalsIgnoreCase(HOME)){
             classDestination = HomeActivity.class;
         } else if(destination.equalsIgnoreCase(SETUP)){
-            classDestination = FirstAccessSetupActivity.class;
+            classDestination = SetupActivity.class;
         } else if(destination.equalsIgnoreCase(CHAMPION_DETAIL)){
             classDestination = ChampionDetailActivity.class;
         } else if(destination.equalsIgnoreCase(CHAMPION_SKIN_DETAIL)){
@@ -99,9 +107,11 @@ public class NavigationHandler {
             classDestination = ItemDetailDialogActivity.class;
         } else if(destination.equalsIgnoreCase(RUNE_DETAIL)){
             classDestination = RuneDetailDialogActivity.class;
+        } else if(destination.equalsIgnoreCase(SETTINGS)){
+            classDestination = SettingsActivity.class;
+        } else if(destination.equalsIgnoreCase(SPLASH)){
+            classDestination = SplashActivity.class;
         }
-
-
 
         return classDestination;
     }

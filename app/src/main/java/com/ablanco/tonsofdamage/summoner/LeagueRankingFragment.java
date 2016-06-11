@@ -22,7 +22,6 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.LeaguesEntryAdapter;
-import com.ablanco.tonsofdamage.utils.AnimationUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
@@ -131,7 +130,7 @@ public class LeagueRankingFragment extends BaseSummonerDetailFragment {
                             if(league.getQueue().equals(Queue.RANKED_SOLO_5x5)){
                                 found = true;
                                 loading.setVisibility(View.GONE);
-                                AnimationUtils.revealView(cvLeague);
+                                cvLeague.setVisibility(View.VISIBLE);
                                 fillData(league);
                                 break;
                             }

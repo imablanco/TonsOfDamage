@@ -19,18 +19,14 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.base.BaseFragment;
-import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.views.AvatarImageView;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
+import com.ablanco.tonsofdamage.views.AvatarImageView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -39,7 +35,7 @@ import butterknife.OnClick;
  * Created by Álvaro Blanco on 30/03/2016.
  * TonsOfDamage
  */
-public class PickSummonerFragment extends BaseFragment {
+public class PickSummonerFragment extends SetupFragment {
 
     @Bind(R.id.floating_search_view) FloatingSearchView floatingSearchView;
     @Bind(R.id.profile_image) AvatarImageView avatarImageView;
@@ -52,8 +48,10 @@ public class PickSummonerFragment extends BaseFragment {
     private String mSearchQuery = "";
     private Summoner mSummoner;
 
-    public static Fragment newInstance(){
-        return new PickSummonerFragment();
+    public static Fragment newInstance(SetupListener listener){
+        SetupFragment f = new PickSummonerFragment();
+        f.setSetupListener(listener);
+        return f;
     }
 
     @Nullable
@@ -134,21 +132,9 @@ public class PickSummonerFragment extends BaseFragment {
 
     @OnClick(R.id.fab_continue)
     public void navigateToHome(){
-        SettingsHandler.setSummoner(getActivity(), mSummoner.getId());
-        Teemo.getInstance(getActivity()).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
-            @Override
-            public void onResponse(List<String> response) {
-                SettingsHandler.setCDNVersion(getActivity(), response.get(0));
-                NavigationHandler.navigateTo(getActivity(), NavigationHandler.HOME);
-                getActivity().finish();
-            }
-
-            @Override
-            public void onError(TeemoException e) {
-                NavigationHandler.navigateTo(getActivity(), NavigationHandler.HOME);
-                getActivity().finish();
-            }
-        });
+        if(setupListener != null){
+            setupListener.onSummonerSelected(mSummoner.getId());
+        }
 
     }
 

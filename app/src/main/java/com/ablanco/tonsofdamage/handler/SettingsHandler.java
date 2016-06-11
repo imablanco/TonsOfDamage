@@ -19,6 +19,8 @@ public class SettingsHandler {
     private static final String KEY_FAVORITE_CHAMPIONS = "favorite_champions";
     private static final String KEY_FAVORITE_SUMMONERS = "favorite_summoners";
     private static final String KEY_CDN_VERSION = "cdn_version";
+    private static final String KEY_SEND_NOTIFS = "send_notifs";
+    private static final String KEY_SEND_ANALYTICS = "send_analytics";
     private static final String KEY_LANGUAGE = "language";
 
 
@@ -48,6 +50,22 @@ public class SettingsHandler {
 
     public static String getLanguage(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(KEY_LANGUAGE, "");
+    }
+
+    public static void setSendNotifs(Context context, boolean send) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(KEY_SEND_NOTIFS, send).apply();
+    }
+
+    public static boolean getSendNotifs(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_SEND_NOTIFS, true);
+    }
+
+    public static void setSendAnalytics(Context context, boolean send) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(KEY_SEND_ANALYTICS, send).apply();
+    }
+
+    public static boolean getSendAnalytics(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_SEND_ANALYTICS, true);
     }
 
     public static void setCDNVersion(Context context, String version) {
@@ -114,5 +132,13 @@ public class SettingsHandler {
 
     public static List<String> getFavoriteSummoners(Context context) {
         return new ArrayList<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>()));
+    }
+
+    public static void clearFavoriteSummoners(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_SUMMONERS, new HashSet<String>()).apply();
+    }
+
+    public static void clearFavoriteChampions(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(KEY_FAVORITE_CHAMPIONS, new HashSet<String>()).apply();
     }
 }
