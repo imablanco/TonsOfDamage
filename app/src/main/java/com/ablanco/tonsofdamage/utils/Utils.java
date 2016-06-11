@@ -2,10 +2,13 @@ package com.ablanco.tonsofdamage.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
@@ -149,6 +152,25 @@ public class Utils {
             grayScaleFilter = new ColorMatrixColorFilter(matrix);
         }
         imageView.setColorFilter(grayScaleFilter);
+    }
+
+    public static String getDeviceModel() {
+        return Build.MANUFACTURER + " " + Build.MODEL;
+    }
+
+    public static String getDeviceOS() {
+        return "Android " + Build.VERSION.RELEASE + " (" + Build.VERSION.SDK_INT + ")";
+    }
+
+    public static String getAppVersion(Context ctx) {
+        PackageInfo pInfo;
+        try {
+            pInfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+
     }
 
     public static void resetColorFilter(ImageView imageView) {

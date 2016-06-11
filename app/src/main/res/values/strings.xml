@@ -158,7 +158,8 @@
     <string name="other">Other</string>
     <string name="action_contact">Contact us</string>
     <string name="atention">Atention</string>
-    <string name="are_you_sure">Are you sure to delete all your favorite champions and summoners?</string>
+    <string name="are_you_sure_delete_favs">Are you sure to delete all your favorite champions and summoners?</string>
+    <string name="are_you_sure">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="change_language">Change language</string>

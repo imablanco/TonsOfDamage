@@ -1,5 +1,6 @@
 package com.ablanco.tonsofdamage.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -149,6 +150,19 @@ public class HomeActivity extends BaseActivity
 
         }else if(id == R.id.nav_settings){
             NavigationHandler.navigateTo(this, NavigationHandler.SETTINGS);
+        } else if(id == R.id.nav_contact){
+            String defaultMessage = "Phone model: " + Utils.getDeviceModel() + "\n"+
+                    "Phone OS Version: " + Utils.getDeviceOS()+"\n"+
+                    "Language: " + SettingsHandler.getLanguage(this) +"\n"+
+                    "App Version: "+ Utils.getAppVersion(this);
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("message/rfc822");
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"alvaro.bl91@gmail.com"}); // TODO: 11/6/16 change for correct email
+            intent.putExtra(Intent.EXTRA_SUBJECT, "");
+            intent.putExtra(Intent.EXTRA_TEXT, defaultMessage);
+
+            startActivity(Intent.createChooser(intent, getString(R.string.action_contact)));
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

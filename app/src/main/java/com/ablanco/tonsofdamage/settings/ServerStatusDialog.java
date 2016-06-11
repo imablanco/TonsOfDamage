@@ -13,8 +13,10 @@ import android.widget.TextView;
 import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.model.status.Incident;
+import com.ablanco.teemo.model.status.Message;
 import com.ablanco.teemo.model.status.Service;
 import com.ablanco.teemo.model.status.ShardStatus;
+import com.ablanco.teemo.model.status.Translation;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseAnimatedDialog;
@@ -172,9 +174,13 @@ public class ServerStatusDialog extends BaseAnimatedDialog {
 
             Incident incident = (Incident) getChild(groupPosition, childPosition);
 
-            if(!incident.getUpdates().isEmpty()){
-                holder.tvIncident.setText(incident.getUpdates().get(0).getContent());
-                holder.tvSeverity.setText(incident.getUpdates().get(0).getSeverity());
+            if(incident.getUpdates() != null && !incident.getUpdates().isEmpty()){
+                Message m = incident.getUpdates().get(0);
+                if(m != null){
+                    holder.tvSeverity.setText(m.getSeverity());
+                    holder.tvIncident.setText(getMessageForLanguage(m, SettingsHandler.getLanguage(getActivity())));
+                }
+
             }else {
                 holder.tvIncident.setText("");
                 holder.tvSeverity.setText("");
@@ -201,6 +207,16 @@ public class ServerStatusDialog extends BaseAnimatedDialog {
             TextView tvIncident;
             TextView tvSeverity;
         }
+    }
+
+    private String getMessageForLanguage(Message m, String lang){
+        if(m.getTranslations() != null && !m.getTranslations().isEmpty()){
+            for (Translation translation : m.getTranslations()) {
+                if(translation.getLocale().equals(lang)) return translation.getContent();
+            }
+
+        }
+        return m.getContent();
     }
 
 

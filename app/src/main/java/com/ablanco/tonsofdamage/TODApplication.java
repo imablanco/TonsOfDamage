@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ablanco.teemo.Teemo;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -27,6 +28,8 @@ public class TODApplication extends Application {
         );
 
         Utils.updateLanguage(this, SettingsHandler.getLanguage(this));
+
+        GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(!SettingsHandler.getSendAnalytics(this));
 
         Teemo.setArmedAndReady(this);
         if(SettingsHandler.getRegion(this) != null){

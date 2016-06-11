@@ -17,6 +17,7 @@ import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.DialogUtils;
+import com.google.android.gms.analytics.GoogleAnalytics;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,7 +93,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 BaseDialog.newInstance(getString(R.string.action_about), getString(R.string.disclaimer_text)).show(getSupportFragmentManager().beginTransaction(), "disclaimer");
                 break;
             case R.id.tv_clear_favs:
-                DialogUtils.showDialog(this, R.string.atention, R.string.are_you_sure, R.string.yes, new DialogInterface.OnClickListener() {
+                DialogUtils.showDialog(this, R.string.atention, R.string.are_you_sure_delete_favs, R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SettingsHandler.clearFavoriteChampions(SettingsActivity.this);
@@ -119,29 +120,60 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 new ServerStatusDialog().show(getSupportFragmentManager(), null);
                 break;
             case R.id.tv_change_lang:
-                SettingsHandler.setLanguage(this, "");
-                NavigationHandler.navigateTo(this, NavigationHandler.SPLASH);
+                DialogUtils.showDialog(this, R.string.atention, R.string.are_you_sure, R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SettingsHandler.setLanguage(SettingsActivity.this, "");
+                        NavigationHandler.navigateTo(SettingsActivity.this, NavigationHandler.SPLASH);
+                    }
+                }, R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
                 break;
             case R.id.tv_change_region:
-                SettingsHandler.setRegion(this, null);
-                SettingsHandler.setSummoner(this, -1);
-
-                new Thread(new Runnable() {
+                DialogUtils.showDialog(this, R.string.atention, R.string.are_you_sure, R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
-                    public void run() {
-                        DBContext.clearDb();
-                        runOnUiThread(new Runnable() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SettingsHandler.setRegion(SettingsActivity.this, null);
+                        SettingsHandler.setSummoner(SettingsActivity.this, -1);
+                        new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                NavigationHandler.navigateTo(SettingsActivity.this, NavigationHandler.SPLASH);
+                                DBContext.clearDb();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        NavigationHandler.navigateTo(SettingsActivity.this, NavigationHandler.SPLASH);
+                                    }
+                                });
                             }
-                        });
+                        }).start();
                     }
-                }).start();
+                }, R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
                 break;
             case R.id.tv_change_summoner:
-                SettingsHandler.setSummoner(this, -1);
-                NavigationHandler.navigateTo(this, NavigationHandler.SPLASH);
+                DialogUtils.showDialog(this, R.string.atention, R.string.are_you_sure, R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SettingsHandler.setSummoner(SettingsActivity.this, -1);
+                        NavigationHandler.navigateTo(SettingsActivity.this, NavigationHandler.SPLASH);
+                    }
+                }, R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
                 break;
         }
     }
@@ -150,11 +182,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == cbStopSendingAnalytics) {
             SettingsHandler.setSendAnalytics(this, !isChecked);
-            if (isChecked) {
+            GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(isChecked);
 
-            } else {
-
-            }
 
         } else if (buttonView == cbStopSendingNotifs) {
             SettingsHandler.setSendNotifs(this, !isChecked);
