@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -36,6 +39,8 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
     HomePlaceholder phFavoriteChamp;
     @Bind(R.id.ph_favorite_summoner)
     HomePlaceholder phFavoriteSummoners;
+
+    private boolean mIsInEditMode = false;
 
     public static Fragment newInstance() {
         return new HomeFragment();
@@ -68,6 +73,37 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
         phFavoriteChamp.update(false);
         phFavoriteSummoners.update(false);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.home, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_edit) {
+            mIsInEditMode = !mIsInEditMode;
+            if(mIsInEditMode){
+                mPhFeaturedGames.onEditStarted();
+                phFavoriteChamp.onEditStarted();
+                phTopChampionMastery.onEditStarted();
+                phFavoriteSummoners.onEditStarted();
+                phWeekRotation.onEditStarted();
+            }else {
+                mPhFeaturedGames.onEditFinished();
+                phFavoriteChamp.onEditFinished();
+                phTopChampionMastery.onEditFinished();
+                phFavoriteSummoners.onEditFinished();
+                phWeekRotation.onEditFinished();
+            }
+        }
+
+        return true;
+    }
+
 
     @Override
     public void onDestroyView() {

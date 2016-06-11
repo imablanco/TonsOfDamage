@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:visibility="invisible"
+    tools:visibility="visible"
+    android:background="@color/colorAccent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_title"
+        tools:text = "Placeholder title"
+        android:paddingLeft="10dp"
+        android:textSize="17sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.ablanco.tonsofdamage.views.Separator
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tv_title"
+        android:layout_marginLeft="10dp"
+        app:separatorColor="@color/colorPrimary"/>
+
+
+
+</RelativeLayout>

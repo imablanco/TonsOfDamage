@@ -2,8 +2,6 @@ package com.ablanco.tonsofdamage.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -26,7 +24,6 @@ import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -42,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Álvaro Blanco Cabrero on 8/6/16
  * TonsOfDamage
  */
-public class WeekRotationPlaceholder extends CardView implements HomePlaceholder {
+public class WeekRotationPlaceholder extends HomePlaceholder {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -61,13 +58,6 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
 
     public WeekRotationPlaceholder(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        inflate(context, R.layout.ph_week_rotation, this);
-        ButterKnife.bind(this);
-
-        this.setUseCompatPadding(true);
-        this.setRadius(SizeUtils.convertDpToPixel(2));
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         adapter = new FreeChampionsAdapter();
         recyclerView.setAdapter(adapter);
@@ -116,6 +106,11 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
             }
         });
 
+    }
+
+    @Override
+    int getLayout() {
+        return R.layout.ph_week_rotation;
     }
 
     class FreeChampionsAdapter extends ItemClickAdapter<FreeChampionsAdapter.ChampionViehwHolder> {
