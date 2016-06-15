@@ -18,7 +18,6 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.constants.Queue;
 import com.ablanco.teemo.model.leagues.League;
 import com.ablanco.teemo.model.leagues.LeagueEntry;
-import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.LeaguesEntryAdapter;
@@ -65,9 +64,6 @@ public class LeagueRankingFragment extends BaseSummonerDetailFragment {
 
     private List<String> mDivisions = new ArrayList<>();
 
-    private Map<String, List<List<String>>> mSummonerIdsByDivision = new HashMap<>();
-    private Map<String, List<Summoner>> mSummonersByDivision = new HashMap<>();
-
     public static BaseSummonerDetailFragment newInstance(long summonerId) {
         BaseSummonerDetailFragment f = new LeagueRankingFragment();
         f.setSummonerId(summonerId);
@@ -96,16 +92,6 @@ public class LeagueRankingFragment extends BaseSummonerDetailFragment {
                 if(entries != null){
                     adapter.addEntries(mDivisions.get(position), entries);
                     recyclerView.smoothScrollToPosition(0);
-                }
-
-                //download pending summoners
-                if(mSummonerIdsByDivision.get(mDivisions.get(position)) != null && !mSummonerIdsByDivision.get(mDivisions.get(position)).isEmpty()){
-                    getSummoners(mDivisions.get(position), mSummonerIdsByDivision.get(mDivisions.get(position)));
-                }
-
-                //already downloaded summoners to fill the list
-                if(mSummonersByDivision.get(mDivisions.get(position)) != null){
-                    adapter.addSummoners(mSummonersByDivision.get(mDivisions.get(position)));
                 }
 
             }
@@ -174,8 +160,6 @@ public class LeagueRankingFragment extends BaseSummonerDetailFragment {
 
         }
 
-        buildSummonersIdsList();
-
         //add found divisions to spinner
         mDivisions.addAll(mLeagueEntriesByDivision.keySet());
 
@@ -206,59 +190,6 @@ public class LeagueRankingFragment extends BaseSummonerDetailFragment {
             }
         }
 
-    }
-
-    private void buildSummonersIdsList(){
-        List<String> summonerIds;
-
-        for (String divisionKey : mLeagueEntriesByDivision.keySet()) {
-            summonerIds = new ArrayList<>();
-            for (LeagueEntry leagueEntry : mLeagueEntriesByDivision.get(divisionKey)) {
-
-                if(mSummonerIdsByDivision.get(divisionKey) == null){
-                    mSummonerIdsByDivision.put(divisionKey, new ArrayList<List<String>>());
-                }
-
-                //fill a list for every 40 summoners (is the maximum size the api is allowed to handle at once)
-                summonerIds.add(leagueEntry.getPlayerOrTeamId());
-
-                if(summonerIds.size() % 40 == 0){
-                    mSummonerIdsByDivision.get(divisionKey).add(summonerIds);
-                    summonerIds = new ArrayList<>();
-                }
-            }
-
-            //add remaing summoners
-            if(!summonerIds.isEmpty()){
-                mSummonerIdsByDivision.get(divisionKey).add(summonerIds);
-            }
-        }
-    }
-
-    private void getSummoners(final String division, List<List<String>> summonerIds){
-
-        for (final List<String> id : summonerIds) {
-            Teemo.getInstance(getActivity()).getSummonersHandler().getSummonersByIds(id, new ServiceResponseListener<Map<String, Summoner>>() {
-                @Override
-                public void onResponse(Map<String, Summoner> response) {
-                    if(mSummonersByDivision.get(division) == null){
-                        mSummonersByDivision.put(division, new ArrayList<Summoner>());
-                    }
-
-                    mSummonersByDivision.get(division).addAll(response.values());
-
-                    //remove already downloaded ids from list
-                    mSummonerIdsByDivision.get(division).remove(id);
-
-                    if(adapter.getCurrentShowingDivision().equals(division)){
-                        adapter.addSummoners(new ArrayList<Summoner>(response.values()));
-                    }
-                }
-
-                @Override
-                public void onError(TeemoException e) {}
-            });
-        }
     }
 
 }

@@ -137,7 +137,7 @@ public class RecentGamesFragment extends BaseSummonerDetailFragment {
                             }),  new Func3<ChampionDto, SummonerSpellDto, SummonerSpellDto, RecentGamesData>() {
                                 @Override
                                 public RecentGamesData call(ChampionDto championDto, SummonerSpellDto summonerSpellDto, SummonerSpellDto summonerSpellDto2) {
-                                    return new RecentGamesData(game, championDto, summonerSpellDto, summonerSpellDto2);
+                                    return new RecentGamesData(game, summonerId, championDto, summonerSpellDto, summonerSpellDto2);
                                 }
                             });
 

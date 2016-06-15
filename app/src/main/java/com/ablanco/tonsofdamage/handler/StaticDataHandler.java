@@ -49,6 +49,11 @@ public class StaticDataHandler {
         return mInstance;
     }
 
+    public static void finish() {
+        mInstance = null;
+    }
+
+
     private StaticDataHandler() {
         this.mChampions = new ArrayList<>();
         this.mItems = new ArrayList<>();

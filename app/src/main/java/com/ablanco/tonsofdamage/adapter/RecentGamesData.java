@@ -13,14 +13,16 @@ import java.io.Serializable;
 public class RecentGamesData implements Serializable{
 
     private Game game;
+    private Long summonerId;
     private SummonerSpellDto summonerSpellDto1;
     private SummonerSpellDto summonerSpellDto2;
     private ChampionDto championDto;
 
-    public RecentGamesData(Game game, ChampionDto championDto, SummonerSpellDto summonerSpellDto1, SummonerSpellDto summonerSpellDto2) {
+    public RecentGamesData(Game game, long summonerId, ChampionDto championDto, SummonerSpellDto summonerSpellDto1, SummonerSpellDto summonerSpellDto2) {
         this.game = game;
         this.summonerSpellDto1 = summonerSpellDto1;
         this.summonerSpellDto2 = summonerSpellDto2;
+        this.summonerId = summonerId;
         this.championDto = championDto;
     }
 
@@ -41,4 +43,7 @@ public class RecentGamesData implements Serializable{
         return championDto;
     }
 
+    public Long getSummonerId() {
+        return summonerId;
+    }
 }

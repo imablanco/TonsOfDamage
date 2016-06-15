@@ -6,7 +6,6 @@ import com.ablanco.teemo.Teemo;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -15,7 +14,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * TonsOfDamage
  */
 public class TODApplication extends Application {
-    private Tracker mTracker;
 
     @Override
     public void onCreate() {

@@ -16,6 +16,7 @@ import com.ablanco.tonsofdamage.base.BaseDialog;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.utils.DialogUtils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -123,6 +124,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 DialogUtils.showDialog(this, R.string.atention, R.string.are_you_sure, R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        StaticDataHandler.finish();
                         SettingsHandler.setLanguage(SettingsActivity.this, "");
                         NavigationHandler.navigateTo(SettingsActivity.this, NavigationHandler.SPLASH);
                     }
@@ -139,6 +141,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                     public void onClick(DialogInterface dialog, int which) {
                         SettingsHandler.setRegion(SettingsActivity.this, null);
                         SettingsHandler.setSummoner(SettingsActivity.this, -1);
+                        StaticDataHandler.finish();
                         new Thread(new Runnable() {
                             @Override
                             public void run() {

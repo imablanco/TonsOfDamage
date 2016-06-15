@@ -7,22 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ablanco.teemo.model.leagues.LeagueEntry;
-import com.ablanco.teemo.model.summoners.Summoner;
-import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
-import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.summoner.SummonerDetailActivity;
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,8 +31,6 @@ public class LeaguesEntryAdapter extends RecyclerView.Adapter<LeaguesEntryAdapte
     private LayoutInflater inflater;
     private long summonerId;
     private String currentShowingDivision;
-
-    private Map<String, Summoner> mSummoners = new HashMap<>();
 
 
     public LeaguesEntryAdapter(Context context, long summonerId) {
@@ -79,21 +70,9 @@ public class LeaguesEntryAdapter extends RecyclerView.Adapter<LeaguesEntryAdapte
 
         }
 
-        if(mSummoners.get(entry.getPlayerOrTeamId()) != null){
-            Glide.with(context).load(ImageUris.getProfileIcon(SettingsHandler.getCDNVersion(context), String.valueOf(mSummoners.get(entry.getPlayerOrTeamId()).getProfileIconId()))).into(holder.imgSummoner);
-        }else {
-            holder.imgSummoner.setImageResource(R.drawable.default_profile);
-        }
-
         holder.itemView.setBackgroundColor(ContextCompat.getColor(context, position % 2 == 0 ? R.color.colorPrimary : R.color.colorPrimaryDark));
     }
 
-    public void addSummoners(List<Summoner> summoners){
-        for (Summoner summoner : summoners) {
-            mSummoners.put(String.valueOf(summoner.getId()), summoner);
-        }
-        notifyDataSetChanged();
-    }
 
     public String getCurrentShowingDivision(){
         return currentShowingDivision;
@@ -120,8 +99,6 @@ public class LeaguesEntryAdapter extends RecyclerView.Adapter<LeaguesEntryAdapte
         TextView tvWins;
         @Bind(R.id.tv_points)
         TextView tvPoints;
-        @Bind(R.id.img_summoner)
-        ImageView imgSummoner;
 
         public EntryViewHolder(View itemView) {
             super(itemView);

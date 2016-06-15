@@ -322,7 +322,7 @@ public class RunesActivity extends BaseActivity {
             mCombinedStatsByRunePageMap.put(runePage.getPage().getId(), summarizedStats);
 
             BasicDataStatsDto statsDto;
-            Double field;
+            Double value;
 
             if (mProxyRunes.get(runePage.getPage().getId()) != null) {
 
@@ -331,14 +331,14 @@ public class RunesActivity extends BaseActivity {
 
                     for (Field f : BasicDataStatsDto.class.getDeclaredFields()) {
                         f.setAccessible(true);
-                        field = (Double) f.get(statsDto);
-                        if (field != null) {
-                            field = field * runeProxyModel.getCount();
+                        value = (Double) f.get(statsDto);
+                        if (value != null) {
+                            value = value * runeProxyModel.getCount();
 
                             if (summarizedStats.get(f.getName()) == null) {
-                                summarizedStats.put(f.getName(), field);
+                                summarizedStats.put(f.getName(), value);
                             } else {
-                                summarizedStats.put(f.getName(), summarizedStats.get(f.getName()) != null ? summarizedStats.get(f.getName()) + field : field);
+                                summarizedStats.put(f.getName(), summarizedStats.get(f.getName()) != null ? summarizedStats.get(f.getName()) + value : value);
                             }
                         }
                     }
@@ -393,7 +393,12 @@ public class RunesActivity extends BaseActivity {
         public void onBindViewHolder(StatsAdapter.StatViewHolder holder, int position) {
             RuneStat stat = mStats.get(position);
 
-            ((TextView) holder.itemView).setText(String.format("%s %s", ResourcesHandler.getInstance(RunesActivity.this).getResourceForKey(stat.getStatName()), String.format(Locale.getDefault(), "%.2f", stat.getStatValue())));
+            if(stat.getStatName().startsWith("Percent")){
+                double newValue = stat.getStatValue() * 100;
+                ((TextView) holder.itemView).setText(String.format("%s %s", ResourcesHandler.getInstance(RunesActivity.this).getResourceForKey(stat.getStatName()), String.format(Locale.getDefault(), "+ %.2f%%", newValue)));
+            }else {
+                ((TextView) holder.itemView).setText(String.format("%s %s", ResourcesHandler.getInstance(RunesActivity.this).getResourceForKey(stat.getStatName()), String.format(Locale.getDefault(), "+ %.2f", stat.getStatValue())));
+            }
         }
 
         @Override
