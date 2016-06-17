@@ -118,15 +118,15 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
 
     }
 
-    class FreeChampionsAdapter extends ItemClickAdapter<FreeChampionsAdapter.ChampionViehwHolder> {
+    class FreeChampionsAdapter extends ItemClickAdapter<FreeChampionsAdapter.ChampionViewHolder> {
 
         @Override
-        public ChampionViehwHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ChampionViehwHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_free_champion, parent, false));
+        public ChampionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ChampionViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_free_champion, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(ChampionViehwHolder holder, int position) {
+        public void onBindViewHolder(ChampionViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
 
             Glide.with(getContext()).load(ImageUris.getChampionSquareIcon(SettingsHandler.getCDNVersion(getContext()), champions.get(position).getImage().getFull())).into(holder.imgChampion);
@@ -152,14 +152,14 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
             return champions.size();
         }
 
-        public class ChampionViehwHolder extends RecyclerView.ViewHolder {
+        public class ChampionViewHolder extends RecyclerView.ViewHolder {
 
             @Bind(R.id.img_champion)
             CircleImageView imgChampion;
             @Bind(R.id.tv_champion_name)
             TextView tvChampionName;
 
-            public ChampionViehwHolder(View itemView) {
+            public ChampionViewHolder(View itemView) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
             }

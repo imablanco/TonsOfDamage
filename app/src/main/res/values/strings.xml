@@ -65,7 +65,7 @@
     <string name="built_from">Built from</string>
     <string name="built_into">Built into</string>
     <string name="error_text">Ups! Something went wrong</string>
-    <string name="error_no_champion_mastery">You do not have any mastery on Champions!</string>
+    <string name="error_no_champion_mastery">You don\'t have any mastery on champions!</string>
     <string name="summoners">Summoners</string>
     <string name="leagues">Leagues</string>
     <string name="solo_duo">Solo/Duo</string>
@@ -129,9 +129,9 @@
     <string name="view_summoner">View Summoner</string>
     <string name="combined_stats">Combined stats</string>
     <string name="favorite_champions">Your Favorite Champions</string>
-    <string name="no_favorite_champions">You don not have favorite champions yet!</string>
+    <string name="no_favorite_champions">You don\'t have favorite champions yet!</string>
     <string name="favorite_summoners">Your Favorite Summoners</string>
-    <string name="no_favorite_summoners">You don not have favorite summoners yet!</string>
+    <string name="no_favorite_summoners">You don\'t have favorite summoners yet!</string>
     <string name="no_stats_for_summoner">There is no ranked stats for this summoner</string>
     <string name="at_a_glance">At a glance</string>
     <string name="more">More</string>
@@ -151,8 +151,8 @@
     <string name="summoner_champion_mastery">Top Champion Mastery</string>
     <string name="top_champion_mastery">Your Top Champions</string>
     <string name="settings">Settings</string>
-    <string name="stop_sending_analytics_data">Stop sending analytics data</string>
-    <string name="stop_sending_notifications">Stop sending notifications</string>
+    <string name="stop_sending_analytics_data">Don\'t send analytics data</string>
+    <string name="stop_sending_notifications">Don\'t send notifications</string>
     <string name="clear_favorite_champions_and_summoners">Clear favorite champions and summoners</string>
     <string name="check_server_status">Check server status</string>
     <string name="other">Other</string>
@@ -168,5 +168,9 @@
     <string name="server_status">Server status</string>
 
     <string name="the_door"></string>
+    <string name="counter_picks">Counter Picks</string>
+    <string name="lore">Lore</string>
+    <string name="weak_against">Weak Against</string>
+    <string name="strong_against">Strong Against</string>
 
 </resources>

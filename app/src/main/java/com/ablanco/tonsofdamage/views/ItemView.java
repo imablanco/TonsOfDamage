@@ -65,7 +65,7 @@ public class ItemView extends SquareRelativeLayout implements View.OnClickListen
         Teemo.getInstance(getContext()).getStaticDataHandler().getItemById(id, SettingsHandler.getLanguage(getContext()), null, StaticAPIQueryParams.Items.gold, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
-                if (response.getGold() != null && mImgItem != null) {
+                if (response.getGold() != null && mImgItem != null && Utils.isContextValid(getContext())) {
                     Glide.with(getContext()).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(getContext()), String.valueOf(mId))).into(mImgItem);
                     if (!mCollapsedPrice) {
                         mTvPrice.setText(Utils.getItemPrice(response.getGold().getTotal(), response.getGold().getBase()));

@@ -35,8 +35,9 @@ public class ChampionDetailActivity extends BaseActivity {
 
     private static final int CHAMPION_OVERVIEW = 0;
     private static final int CHAMPION_ABILITIES = 1;
-    private static final int CHAMPION_RECOMMENDED = 2;
-    private static final int CHAMPION_SKINS = 3;
+    private static final int CHAMPION_COUNTERS = 2;
+    private static final int CHAMPION_RECOMMENDED = 3;
+    private static final int CHAMPION_SKINS = 4;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -72,12 +73,12 @@ public class ChampionDetailActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         championId = getIntent().getIntExtra(EXTRA_CHAMPION_ID, -1);
 
-        if(championId >= 0){
+        if (championId >= 0) {
             Teemo.getInstance(this).getStaticDataHandler().getChampionById(championId, SettingsHandler.getLanguage(this), null,
                     Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.ALL), new ServiceResponseListener<ChampionDto>() {
                         @Override
                         public void onResponse(ChampionDto response) {
-                            if(getSupportActionBar() != null){
+                            if (getSupportActionBar() != null) {
                                 getSupportActionBar().setTitle(response.getName());
                                 getSupportActionBar().setSubtitle(response.getTitle());
                                 Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getKey(), response.getSkins().get(0).getNum())).into(championSplashImage);
@@ -109,9 +110,9 @@ public class ChampionDetailActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
 
-    private void setUpViewPager(){
+    private void setUpViewPager() {
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()));
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(pager);
     }
 
@@ -119,7 +120,7 @@ public class ChampionDetailActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.champion_detail, menu);
         MenuItem m = menu.findItem(R.id.action_like);
-        if(m != null){
+        if (m != null) {
             m.setIcon(SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId) ? R.drawable.ic_like_filled : R.drawable.ic_like);
             m.setTitle(SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId) ? R.string.remove_from_favorites : R.string.add_to_favorites);
         }
@@ -131,14 +132,14 @@ public class ChampionDetailActivity extends BaseActivity {
 
         int id = item.getItemId();
 
-        if(id == android.R.id.home){
+        if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
-        }else if(id == R.id.action_like){
-            if(!SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId)){
+        } else if (id == R.id.action_like) {
+            if (!SettingsHandler.isChampionMarkedAsFavorite(ChampionDetailActivity.this, championId)) {
                 SettingsHandler.addFavoriteChampion(ChampionDetailActivity.this, championId);
                 item.setIcon(R.drawable.ic_like_filled);
                 item.setTitle(R.string.remove_from_favorites);
-            }else {
+            } else {
                 SettingsHandler.removeFavoriteChampion(ChampionDetailActivity.this, championId);
                 item.setIcon(R.drawable.ic_like);
                 item.setTitle(R.string.add_to_favorites);
@@ -163,6 +164,8 @@ public class ChampionDetailActivity extends BaseActivity {
                     return ChampionOverviewFragment.newInstance(mChampion);
                 case CHAMPION_ABILITIES:
                     return ChampionSpellsFragment.newInstance(mChampion);
+                case CHAMPION_COUNTERS:
+                    return ChampionCounterPicksFragment.newInstance(mChampion);
                 case CHAMPION_RECOMMENDED:
                     return ChampionRecommendedItemsFragment.newInstance(mChampion);
                 case CHAMPION_SKINS:
@@ -173,11 +176,13 @@ public class ChampionDetailActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            switch (position){
+            switch (position) {
                 case CHAMPION_OVERVIEW:default:
                     return getString(R.string.overview);
                 case CHAMPION_ABILITIES:
                     return getString(R.string.champion_abilities);
+                case CHAMPION_COUNTERS:
+                    return getString(R.string.counter_picks);
                 case CHAMPION_RECOMMENDED:
                     return getString(R.string.champion_recommended);
                 case CHAMPION_SKINS:
