@@ -167,4 +167,6 @@
     <string name="change_summoner">Change summoner</string>
     <string name="server_status">Server status</string>
 
+    <string name="the_door"></string>
+
 </resources>

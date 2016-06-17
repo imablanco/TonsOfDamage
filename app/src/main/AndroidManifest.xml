@@ -13,9 +13,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <meta-data
-            android:name="com.ablanco.teemo.apikey"
-            android:value="ce700ddc-51d4-44f5-b220-139e33e3d92d" />
 
         <activity
             android:name=".splash.SplashActivity"

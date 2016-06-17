@@ -7,17 +7,15 @@ android {
 
     defaultConfig {
         applicationId "com.ablanco.tonsofdamage"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
 
-        renderscriptTargetApi 20
-        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -53,6 +51,7 @@ dependencies {
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.1'
     compile 'com.github.hotchemi:android-rate:1.0.1'
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
+    compile 'com.scottyab:aescrypt:0.0.1'
 
     compile 'io.reactivex:rxandroid:1.1.0'
 // Because RxAndroid releases are few and far between, it is recommended you also

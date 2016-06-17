@@ -16,12 +16,49 @@
 #   public *;
 #}
 
+#retrofit
+-dontwarn retrofit2.**
+-dontwarn okio.**
+
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+#teemo
+
+-keep class com.ablanco.teemo.** { *; }
+#rxJava
+-dontwarn rx.**
+
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    long producerNode;
+    long consumerNode;
+}
+
+#Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
 
+#ButterKnife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
@@ -34,5 +71,9 @@
     @butterknife.* <methods>;
 }
 
+#PrettyTime
 -keep class org.ocpsoft.prettytime.i18n.**
+
+#android support libraries
+-keep class android.support.v7.widget.SearchView { *; }
 
