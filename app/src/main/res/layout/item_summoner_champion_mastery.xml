@@ -16,27 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_margin="1dp"
-        android:background="@drawable/tc_item_summoner_champion_mastery_overlay"
-        android:textStyle="bold"
-        android:id="@+id/tv_champion_level"
-        android:shadowDy="2"
-        android:shadowDx="2"
-        android:shadowRadius="5"
-        android:shadowColor="@color/text_color"
-        android:textSize="30sp"
-        android:textColor="@color/colorAccent"
-        tools:text = "35"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <com.hookedonplay.decoviewlib.DecoView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/dv_champion_mastery"
         app:dv_lineWidth="4dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:background="@drawable/hexagon"
+        android:layout_margin="1dp"
+        android:textStyle="bold"
+        android:id="@+id/tv_champion_level"
+        android:textColor="@color/text_color"
+        tools:text = "35"
+        android:textSize="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
 
 
