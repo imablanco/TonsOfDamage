@@ -36,8 +36,6 @@ import butterknife.ButterKnife;
  */
 public class TopChampionMasteryPlaceholder extends CardView implements HomePlaceholder {
 
-    @Bind(R.id.tv_title)
-    TextView tvTitle;
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
     @Bind(R.id.tv_error)
@@ -46,6 +44,7 @@ public class TopChampionMasteryPlaceholder extends CardView implements HomePlace
     ProgressBar loading;
 
     private TopChampionMasteryAdapter adapter;
+    private boolean firstTime = true;
 
     public TopChampionMasteryPlaceholder(Context context) {
         this(context, null);
@@ -75,7 +74,8 @@ public class TopChampionMasteryPlaceholder extends CardView implements HomePlace
 
     @Override
     public void update(boolean forceUpdate) {
-        if(forceUpdate){
+        if(forceUpdate || firstTime){
+            firstTime = false;
             adapter.clearAdapter();
             Teemo.getInstance(getContext()).getChampionMasteryHandler().getTopChampionsMastery(Utils.getPlatformForRegion(getContext()), SettingsHandler.getSummoner(getContext()), 3, new ServiceResponseListener<List<ChampionMasteryDto>>() {
                 @Override

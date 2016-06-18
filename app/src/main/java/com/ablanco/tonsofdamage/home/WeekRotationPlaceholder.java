@@ -54,6 +54,7 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
     private List<ChampionDto> champions = new ArrayList<>();
 
     private FreeChampionsAdapter adapter;
+    private boolean isFirstTime = true;
 
     public WeekRotationPlaceholder(Context context) {
         this(context, null);
@@ -85,36 +86,39 @@ public class WeekRotationPlaceholder extends CardView implements HomePlaceholder
     @Override
     public void update(boolean forceUpdate) {
 
-        champions.clear();
-        adapter.notifyDataSetChanged();
+        if(forceUpdate || isFirstTime){
+            isFirstTime = false;
+            Teemo.getInstance(getContext()).getChampionsHandler().getChampions(true, new ServiceResponseListener<ChampionList>() {
+                @Override
+                public void onResponse(ChampionList response) {
+                    loading.setVisibility(GONE);
+                    for (Champion champion : response.getChampions()) {
+                        Teemo.getInstance(getContext()).getStaticDataHandler().getChampionById(champion.getId(), SettingsHandler.getLanguage(getContext()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
+                            @Override
+                            public void onResponse(ChampionDto response) {
+                                adapter.addChampion(response);
+                            }
 
-        tvError.setVisibility(GONE);
+                            @Override
+                            public void onError(TeemoException e) {
 
-        Teemo.getInstance(getContext()).getChampionsHandler().getChampions(true, new ServiceResponseListener<ChampionList>() {
-            @Override
-            public void onResponse(ChampionList response) {
-                loading.setVisibility(GONE);
-                for (Champion champion : response.getChampions()) {
-                    Teemo.getInstance(getContext()).getStaticDataHandler().getChampionById(champion.getId(), SettingsHandler.getLanguage(getContext()), null, StaticAPIQueryParams.Champions.IMAGE, new ServiceResponseListener<ChampionDto>() {
-                        @Override
-                        public void onResponse(ChampionDto response) {
-                            adapter.addChampion(response);
-                        }
-
-                        @Override
-                        public void onError(TeemoException e) {
-
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
-            }
 
-            @Override
-            public void onError(TeemoException e) {
-                loading.setVisibility(GONE);
-                tvError.setVisibility(VISIBLE);
-            }
-        });
+                @Override
+                public void onError(TeemoException e) {
+                    loading.setVisibility(GONE);
+                    tvError.setVisibility(VISIBLE);
+                }
+            });
+
+
+            champions.clear();
+            adapter.notifyDataSetChanged();
+            tvError.setVisibility(GONE);
+        }
 
     }
 

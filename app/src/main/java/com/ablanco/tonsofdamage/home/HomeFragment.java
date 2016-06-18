@@ -21,9 +21,6 @@ import butterknife.ButterKnife;
  */
 public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final static long UPDATE_TIME = 1800000;
-    private Long mLastUpdate;
-
     @Bind(R.id.ph_week_rotation)
     HomePlaceholder phWeekRotation;
     @Bind(R.id.ph_top_champion_mastery)
@@ -59,11 +56,8 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
     @Override
     public void onResume() {
         super.onResume();
-        if (hasToUpdate()) {
-            mLastUpdate = System.currentTimeMillis();
-            phWeekRotation.update(true);
-            phTopChampionMastery.update(true);
-        }
+        phWeekRotation.update(false);
+        phTopChampionMastery.update(false);
         mPhFeaturedGames.update(false);
         phFavoriteChamp.update(false);
         phFavoriteSummoners.update(false);
@@ -75,16 +69,12 @@ public class HomeFragment extends BaseHomeFragment implements SwipeRefreshLayout
         ButterKnife.unbind(this);
     }
 
-    private boolean hasToUpdate() {
-        return mLastUpdate == null || System.currentTimeMillis() - mLastUpdate > UPDATE_TIME;
-    }
 
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mLastUpdate = System.currentTimeMillis();
                 mPhFeaturedGames.update(true);
                 phFavoriteChamp.update(true);
                 phTopChampionMastery.update(true);
