@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "371639311724",
-    "project_id": "tonsofdamage-15ac8"
+    "firebase_url": "https://tonsofdamage-15ac8.firebaseio.com",
+    "project_id": "tonsofdamage-15ac8",
+    "storage_bucket": "tonsofdamage-15ac8.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,16 @@
           "package_name": "com.ablanco.tonsofdamage"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "371639311724-bsao7n8qbod70ubdidg93gbshhp251j8.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "371639311724-5hj2jrd9qr7utg0q6mnt25isvn8itmoi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDsvNJKDNND1b6IAv7Y7-RkkDqYmW0-C0Q"
@@ -29,7 +40,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

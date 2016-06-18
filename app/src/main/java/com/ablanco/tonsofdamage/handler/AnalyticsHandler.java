@@ -1,11 +1,10 @@
 package com.ablanco.tonsofdamage.handler;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
-import com.ablanco.tonsofdamage.R;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Created by Álvaro Blanco Cabrero on 8/6/16
@@ -14,21 +13,35 @@ import com.google.android.gms.analytics.Tracker;
 public class AnalyticsHandler {
 
     public static final String CLASS_NAME_SETTINGS = "Settings";
-    public static String CLASS_NAME_CHAMPION_DETAIL = "ChampionDetail";
-    public static String CLASS_NAME_CHAMPION_SKIN_DETAIL = "ChampionSkin";
-    public static String CLASS_NAME_HOMEACTIVIY = "Home";
-    public static String CLASS_NAME_HOME_PLAYER_VIEW = "HomePlayerView";
-    public static String CLASS_NAME_ITEM_DETAIL = "ItemDetail";
-    public static String CLASS_NAME_SETUP = "Setup";
-    public static String CLASS_NAME_MASTERY_DETAIL = "MasteryDetail";
-    public static String CLASS_NAME_MASTERIES = "Masteries";
-    public static String CLASS_NAME_MATCH_DETAIL = "MatchDetail";
-    public static String CLASS_NAME_RUNE_DETAIL = "RuneDetail";
-    public static String CLASS_NAME_RUNES = "Runes";
-    public static String CLASS_NAME_SUMMONER_DETAIL = "SummonerDetail";
-    public static String CLASS_NAME_VIDEO = "Video";
+    public static final String CLASS_NAME_CHAMPION_DETAIL = "ChampionDetail";
+    public static final String CLASS_NAME_CHAMPION_SKIN_DETAIL = "ChampionSkin";
+    public static final String CLASS_NAME_HOMEACTIVIY = "Home";
+    public static final String CLASS_NAME_HOME_PLAYER_VIEW = "HomePlayerView";
+    public static final String CLASS_NAME_ITEM_DETAIL = "ItemDetail";
+    public static final String CLASS_NAME_SETUP = "Setup";
+    public static final String CLASS_NAME_MASTERY_DETAIL = "MasteryDetail";
+    public static final String CLASS_NAME_MASTERIES = "Masteries";
+    public static final String CLASS_NAME_MATCH_DETAIL = "MatchDetail";
+    public static final String CLASS_NAME_RUNE_DETAIL = "RuneDetail";
+    public static final String CLASS_NAME_RUNES = "Runes";
+    public static final String CLASS_NAME_SUMMONER_DETAIL = "SummonerDetail";
+    public static final String CLASS_NAME_VIDEO = "Video";
 
-    private Tracker tracker;
+    public final static class UserProperty {
+        public final static String PROPERTY_LANG = "Language";
+        public final static String PROPERTY_REGION = "Region";
+        public final static String PROPERTY_NOTIFS = "NotificationsEnabled";
+    }
+
+    public final static class Event {
+        public static final String EVENT_SCREEN = "screen_navigation";
+    }
+
+    public final static class Param {
+        public static final String PARAM_SCREEN_NAME = "screen_name";
+    }
+
+    private FirebaseAnalytics analytics;
 
     private static AnalyticsHandler mInstance;
 
@@ -41,26 +54,29 @@ public class AnalyticsHandler {
     }
 
     private AnalyticsHandler(Context context){
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(context.getApplicationContext());
-        tracker = analytics.newTracker(R.xml.global_tracker);
-        tracker.enableExceptionReporting(true);
+        this.analytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
+        if(!SettingsHandler.getLanguage(context).isEmpty()){
+            this.analytics.setUserProperty(UserProperty.PROPERTY_LANG, SettingsHandler.getLanguage(context));
+        }
+        if(SettingsHandler.getRegion(context) != null){
+            this.analytics.setUserProperty(UserProperty.PROPERTY_REGION, SettingsHandler.getRegion(context));
+        }
 
-    }
+        this.analytics.setUserProperty(UserProperty.PROPERTY_NOTIFS, String.valueOf(SettingsHandler.getSendNotifs(context)));
 
-    /***
-     * Tracking event
-     *
-     * @param action   action of the event
-     * @param label    label
-     */
-    public void trackEvent(String action, String label) {
-
-        // Build and send an Event.
-        tracker.send(new HitBuilders.EventBuilder().setAction(action).setLabel(label).build());
     }
 
     public void trackScreenName(String screen){
-        tracker.setScreenName(screen);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        Bundle params = new Bundle();
+        params.putString(Param.PARAM_SCREEN_NAME, screen);
+        analytics.logEvent(Event.EVENT_SCREEN, params);
+    }
+
+    public void enableSendAnalyticsEvents(boolean enable){
+        analytics.setAnalyticsCollectionEnabled(enable);
+    }
+
+    public void setUserProperty(String property, @Nullable String value){
+        this.analytics.setUserProperty(property, value);
     }
 }

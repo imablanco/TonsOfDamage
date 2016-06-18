@@ -30,6 +30,7 @@ public class SettingsHandler {
 
     public static void setRegion(Context context, String region) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(KEY_REGION, region).apply();
+        AnalyticsHandler.getInstance(context).setUserProperty(AnalyticsHandler.UserProperty.PROPERTY_REGION, region);
     }
 
     public static String getRegion(Context context) {
@@ -46,6 +47,7 @@ public class SettingsHandler {
 
     public static void setLanguage(Context context, String lang) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(KEY_LANGUAGE, lang).apply();
+        AnalyticsHandler.getInstance(context).setUserProperty(AnalyticsHandler.UserProperty.PROPERTY_LANG, lang);
     }
 
     public static String getLanguage(Context context) {

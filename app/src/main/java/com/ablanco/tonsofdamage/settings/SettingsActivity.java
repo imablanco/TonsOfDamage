@@ -18,7 +18,6 @@ import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.utils.DialogUtils;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -185,13 +184,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == cbStopSendingAnalytics) {
             SettingsHandler.setSendAnalytics(this, !isChecked);
-            GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(isChecked);
+            AnalyticsHandler.getInstance(this).enableSendAnalyticsEvents(!isChecked);
 
 
         } else if (buttonView == cbStopSendingNotifs) {
             SettingsHandler.setSendNotifs(this, !isChecked);
+            AnalyticsHandler.getInstance(this).setUserProperty(AnalyticsHandler.UserProperty.PROPERTY_NOTIFS, String.valueOf(!isChecked));
             if (isChecked) {
-
             } else {
 
             }

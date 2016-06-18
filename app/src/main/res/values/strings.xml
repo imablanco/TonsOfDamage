@@ -167,10 +167,13 @@
     <string name="change_summoner">Change summoner</string>
     <string name="server_status">Server status</string>
 
-    <string name="the_door"></string>
+    <string name="the_door">the_door</string>
     <string name="counter_picks">Counter Picks</string>
     <string name="lore">Lore</string>
     <string name="weak_against">Weak Against</string>
     <string name="strong_against">Strong Against</string>
+    <string name="init_error">There was an error while fetching server config</string>
+    <string name="retry">Retry</string>
+    <string name="exit">Exit</string>
 
 </resources>
