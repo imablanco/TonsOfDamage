@@ -48,7 +48,6 @@ public class SetupActivity extends BaseActivity implements SetupListener {
         } else if (!isRegionSelected()) {
             chooseRegion();
         } else {
-            Teemo.getInstance(getApplicationContext()).setRegion(SettingsHandler.getRegion(SetupActivity.this));
             getCDNVersions();
         }
 

@@ -2,8 +2,10 @@ package com.ablanco.tonsofdamage;
 
 import android.app.Application;
 
+import com.ablanco.teemo.Teemo;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.SecurityUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.google.android.gms.ads.MobileAds;
 
@@ -29,6 +31,12 @@ public class TODApplication extends Application {
         Utils.updateLanguage(this, SettingsHandler.getLanguage(this));
 
         AnalyticsHandler.getInstance(getApplicationContext()).enableSendAnalyticsEvents(SettingsHandler.getSendAnalytics(this));
+
+        Teemo.setArmedAndReady(this, SecurityUtils.getWhatIsMine(this));
+        if(SettingsHandler.getRegion(this) != null){
+            Teemo.getInstance(getApplicationContext()).setRegion(SettingsHandler.getRegion(this));
+        }
+
     }
 
 }
