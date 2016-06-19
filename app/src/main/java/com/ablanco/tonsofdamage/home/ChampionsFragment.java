@@ -31,6 +31,7 @@ import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.ChampionsAdapter;
 import com.ablanco.tonsofdamage.adapter.ItemClickAdapter;
 import com.ablanco.tonsofdamage.adapter.ListPopUpWindowAdapter;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
@@ -320,6 +321,7 @@ public class ChampionsFragment extends BaseHomeFragment implements SearchView.On
     }
 
     private void search(final String queryText){
+        AnalyticsHandler.getInstance(getActivity()).trackSearchEvent(AnalyticsHandler.CLASS_NAME_HOME_CHAMPIONS, queryText);
         mSearchedChampions.clear();
         Observable.from(mFilteredChampions).filter(new Func1<ChampionDto, Boolean>() {
             @Override

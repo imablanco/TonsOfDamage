@@ -186,10 +186,28 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
         if (buttonView == cbStopSendingAnalytics) {
-            SettingsHandler.setSendAnalytics(this, !isChecked);
-            AnalyticsHandler.getInstance(this).enableSendAnalyticsEvents(!isChecked);
+            if(isChecked){
+                DialogUtils.showDialog(this, R.string.atention, R.string.analytics_warn, R.string.keep_sending, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        cbStopSendingAnalytics.setChecked(false);
+                    }
+                }, R.string.do_not_send, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SettingsHandler.setSendAnalytics(SettingsActivity.this, false);
+                        AnalyticsHandler.getInstance(SettingsActivity.this).enableSendAnalyticsEvents(false);
+                    }
+                });
+            }else {
+                SettingsHandler.setSendAnalytics(SettingsActivity.this, true);
+                AnalyticsHandler.getInstance(SettingsActivity.this).enableSendAnalyticsEvents(true);
+            }
+
+
 
 
         } else if (buttonView == cbStopSendingNotifs) {

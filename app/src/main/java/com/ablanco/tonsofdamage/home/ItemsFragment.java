@@ -19,6 +19,7 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.model.staticdata.ItemDto;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.ItemsGridAdapter;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
 import com.ablanco.tonsofdamage.items.ItemsFilterDialog;
 import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
@@ -188,6 +189,7 @@ public class ItemsFragment extends BaseHomeFragment implements SearchView.OnQuer
     }
 
     private void search(final String queryText){
+        AnalyticsHandler.getInstance(getActivity()).trackSearchEvent(AnalyticsHandler.CLASS_NAME_HOME_ITEMS, queryText);
         mSearchedItems.clear();
         Observable.from(mFilteredItems).filter(new Func1<ItemDto, Boolean>() {
             @Override

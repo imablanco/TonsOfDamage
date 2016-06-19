@@ -175,5 +175,8 @@
     <string name="init_error">There was an error while fetching server config</string>
     <string name="retry">Retry</string>
     <string name="exit">Exit</string>
+    <string name="analytics_warn">Sending app analytics help us to understand what apps section are most used and allow us to improve the app building better updates</string>
+    <string name="keep_sending">Keep sending</string>
+    <string name="do_not_send">Don\'t send</string>
 
 </resources>
