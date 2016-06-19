@@ -33,13 +33,11 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseRemoteConfig.getInstance().fetch().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    FirebaseRemoteConfig.getInstance().activateFetched();
-                    String door = FirebaseRemoteConfig.getInstance().getString(getString(R.string.the_door));
-                    if (door != null && !door.isEmpty()) {
-                        Teemo.setArmedAndReady(SplashActivity.this, door);
-                        goToHome();
-                    }
+                FirebaseRemoteConfig.getInstance().activateFetched();
+                String door = FirebaseRemoteConfig.getInstance().getString(getString(R.string.the_door));
+                if (door != null && !door.isEmpty()) {
+                    Teemo.setArmedAndReady(SplashActivity.this, door);
+                    goToHome();
                 } else {
                     DialogUtils.showDialog(SplashActivity.this, R.string.atention, R.string.init_error, R.string.retry, new DialogInterface.OnClickListener() {
                         @Override
@@ -55,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     });
                 }
+
 
             }
         });

@@ -30,7 +30,6 @@ import com.ablanco.teemo.model.staticdata.MapDataDto;
 import com.ablanco.teemo.model.staticdata.MapDetailsDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
-import com.ablanco.tonsofdamage.BuildConfig;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.adapter.RecentGamesData;
 import com.ablanco.tonsofdamage.base.BaseActivity;
@@ -162,9 +161,9 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
         data = (RecentGamesData) getIntent().getSerializableExtra(EXTRA_DATA);
 
         AdRequest.Builder adBuilder = new AdRequest.Builder();
-        if(BuildConfig.DEBUG){
+/*        if(BuildConfig.DEBUG){
             adBuilder.addTestDevice("3995286E7F583229136DBEBA470B1E4A");
-        }
+        }*/
         AdRequest adRequest = adBuilder.build();
         banner.loadAd(adRequest);
 

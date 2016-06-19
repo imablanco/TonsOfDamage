@@ -77,3 +77,6 @@
 #android support libraries
 -keep class android.support.v7.widget.SearchView { *; }
 
+#jsoup
+-keeppackagenames org.jsoup.nodes
+

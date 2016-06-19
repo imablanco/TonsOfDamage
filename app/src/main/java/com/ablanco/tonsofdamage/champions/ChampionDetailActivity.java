@@ -20,7 +20,6 @@ import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
-import com.ablanco.tonsofdamage.BuildConfig;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
@@ -86,9 +85,9 @@ public class ChampionDetailActivity extends BaseActivity {
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
 
         AdRequest.Builder adBuilder = new AdRequest.Builder();
-        if(BuildConfig.DEBUG){
+/*        if(BuildConfig.DEBUG){
             adBuilder.addTestDevice("3995286E7F583229136DBEBA470B1E4A");
-        }
+        }*/
         AdRequest adRequest = adBuilder.build();
         banner.loadAd(adRequest);
 
