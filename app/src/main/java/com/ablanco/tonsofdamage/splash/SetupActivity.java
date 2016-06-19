@@ -48,6 +48,7 @@ public class SetupActivity extends BaseActivity implements SetupListener {
         } else if (!isRegionSelected()) {
             chooseRegion();
         } else {
+            Teemo.getInstance(getApplicationContext()).setRegion(SettingsHandler.getRegion(SetupActivity.this));
             getCDNVersions();
         }
 
@@ -55,7 +56,7 @@ public class SetupActivity extends BaseActivity implements SetupListener {
 
     private void getCDNVersions() {
         loading.setVisibility(View.VISIBLE);
-        Teemo.getInstance(this).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
+        Teemo.getInstance(getApplicationContext()).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
             @Override
             public void onResponse(List<String> response) {
                 SettingsHandler.setCDNVersion(SetupActivity.this, response.get(0));
