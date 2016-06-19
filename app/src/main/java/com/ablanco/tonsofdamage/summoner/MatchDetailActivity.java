@@ -39,6 +39,8 @@ import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
@@ -140,6 +142,8 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
     View rlDmgDealtChart;
     @Bind(R.id.rl_dmg_taken_chart)
     View rlDmgTakenChart;
+    @Bind(R.id.adView)
+    AdView banner;
 
     private Map<String, List<DecoEvent.Builder>> mEventsMap = new HashMap<>();
     boolean goldHandled = false;
@@ -155,6 +159,9 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
         setSupportActionBar(mToolbar);
 
         data = (RecentGamesData) getIntent().getSerializableExtra(EXTRA_DATA);
+
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("3995286E7F583229136DBEBA470B1E4A").build();
+        banner.loadAd(adRequest);
 
         Utils.setTransitionNameForView(mImgChampion, getIntent().getStringExtra(EXTRA_TRANSITION_NAME));
         mAppBarLayout.addOnOffsetChangedListener(this);

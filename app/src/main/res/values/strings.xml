@@ -179,4 +179,9 @@
     <string name="keep_sending">Keep sending</string>
     <string name="do_not_send">Don\'t send</string>
 
+    <string name="admob_app_id">ca-app-pub-5876504740127808~9001040376</string>
+    <string name="summoner_banner_id">ca-app-pub-5876504740127808/7692430778</string>
+    <string name="champion_banner_id">ca-app-pub-5876504740127808/7273628372</string>
+    <string name="match_banner_id">ca-app-pub-5876504740127808/6994426778</string>
+
 </resources>

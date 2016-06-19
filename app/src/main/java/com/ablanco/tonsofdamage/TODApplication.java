@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.Utils;
+import com.google.android.gms.ads.MobileAds;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -23,6 +24,7 @@ public class TODApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+        MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
 
         Utils.updateLanguage(this, SettingsHandler.getLanguage(this));
 

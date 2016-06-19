@@ -53,6 +53,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
+        android:id="@+id/content_layout"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -61,10 +62,26 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
+            android:paddingBottom="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <ProgressBar
+            android:layout_gravity="top"
+            android:id="@+id/loading"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
     </FrameLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        app:layout_anchor="@id/content_layout"
+        app:layout_anchorGravity="bottom|center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/champion_banner_id"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -46,6 +46,7 @@ public class HomeActivity extends BaseActivity
     @Bind(R.id.nav_view) NavigationView mNavigationView;
     @Bind(R.id.pager)
     ViewPager pager;
+
     private BottomBar mBottomBar;
 
     @Override
@@ -73,6 +74,8 @@ public class HomeActivity extends BaseActivity
 
         //// TODO: 10/04/2016 in future, save in DB
         ResourcesHandler.init(getApplicationContext());
+
+
 
         mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.coordinator_layout),
                 findViewById(R.id.content), savedInstanceState);
