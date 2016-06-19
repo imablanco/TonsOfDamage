@@ -15,12 +15,15 @@ import com.ablanco.teemo.Teemo;
 import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
+import com.ablanco.tonsofdamage.BuildConfig;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.ErrorUtils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,8 @@ public class SummonerDetailActivity extends BaseActivity {
     TabLayout mTabLayout;
     @Bind(R.id.pager)
     ViewPager mPager;
-
+    @Bind(R.id.adView)
+    AdView banner;
     private List<Fragment> mPages = new ArrayList<>();
     private long mId;
 
@@ -56,6 +60,13 @@ public class SummonerDetailActivity extends BaseActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        AdRequest.Builder adBuilder = new AdRequest.Builder();
+        if(BuildConfig.DEBUG){
+            adBuilder.addTestDevice("3995286E7F583229136DBEBA470B1E4A");
+        }
+        AdRequest adRequest = adBuilder.build();
+        banner.loadAd(adRequest);
 
         if(mId != 0){
             setUp();

@@ -6,10 +6,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.ablanco.teemo.Teemo;
@@ -18,12 +20,16 @@ import com.ablanco.teemo.constants.StaticAPIQueryParams;
 import com.ablanco.teemo.model.staticdata.ChampionDto;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
+import com.ablanco.tonsofdamage.BuildConfig;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.ErrorUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,6 +60,10 @@ public class ChampionDetailActivity extends BaseActivity {
     @Bind(R.id.pager)
     ViewPager pager;
 
+    @Bind(R.id.adView)
+    AdView banner;
+    @Bind(R.id.loading)
+    View loading;
 
     private ChampionDto mChampion;
     private int championId;
@@ -72,29 +82,55 @@ public class ChampionDetailActivity extends BaseActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         championId = getIntent().getIntExtra(EXTRA_CHAMPION_ID, -1);
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.white));
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+
+        AdRequest.Builder adBuilder = new AdRequest.Builder();
+        if(BuildConfig.DEBUG){
+            adBuilder.addTestDevice("3995286E7F583229136DBEBA470B1E4A");
+        }
+        AdRequest adRequest = adBuilder.build();
+        banner.loadAd(adRequest);
 
         if (championId >= 0) {
-            Teemo.getInstance(this).getStaticDataHandler().getChampionById(championId, SettingsHandler.getLanguage(this), null,
-                    Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.ALL), new ServiceResponseListener<ChampionDto>() {
-                        @Override
-                        public void onResponse(ChampionDto response) {
-                            if (getSupportActionBar() != null) {
-                                getSupportActionBar().setTitle(response.getName());
-                                getSupportActionBar().setSubtitle(response.getTitle());
-                                Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getKey(), response.getSkins().get(0).getNum())).into(championSplashImage);
-
-                                mChampion = response;
-                                setUpViewPager();
-                            }
-                        }
-
-                        @Override
-                        public void onError(TeemoException e) {
-
-                        }
-                    });
+            loadData();
+        } else {
+            finish();
         }
 
+    }
+
+    private void loadData() {
+        Teemo.getInstance(this).getStaticDataHandler().getChampionById(championId, SettingsHandler.getLanguage(this), null,
+                Utils.buildStaticQueryParams(StaticAPIQueryParams.Champions.ALL), new ServiceResponseListener<ChampionDto>() {
+                    @Override
+                    public void onResponse(ChampionDto response) {
+                        if (getSupportActionBar() != null && !isFinishing()) {
+                            getSupportActionBar().setTitle(response.getName());
+                            getSupportActionBar().setSubtitle(response.getTitle());
+                            if(response.getSkins()!= null && !response.getSkins().isEmpty()){
+                                Glide.with(ChampionDetailActivity.this).load(ImageUris.getChampionSplashArt(response.getKey(), response.getSkins().get(0).getNum())).into(championSplashImage);
+                            }
+
+                            loading.setVisibility(View.GONE);
+                            mChampion = response;
+                            setUpViewPager();
+                        }
+                    }
+
+                    @Override
+                    public void onError(TeemoException e) {
+                        if(!isFinishing()){
+                            loading.setVisibility(View.GONE);
+                            ErrorUtils.showPersistentError(pager, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    loadData();
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
     @Override
@@ -165,7 +201,8 @@ public class ChampionDetailActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case CHAMPION_OVERVIEW:default:
+                case CHAMPION_OVERVIEW:
+                default:
                     return ChampionOverviewFragment.newInstance(mChampion);
                 case CHAMPION_ABILITIES:
                     return ChampionSpellsFragment.newInstance(mChampion);
@@ -182,7 +219,8 @@ public class ChampionDetailActivity extends BaseActivity {
         public CharSequence getPageTitle(int position) {
 
             switch (position) {
-                case CHAMPION_OVERVIEW:default:
+                case CHAMPION_OVERVIEW:
+                default:
                     return getString(R.string.overview);
                 case CHAMPION_ABILITIES:
                     return getString(R.string.champion_abilities);
@@ -197,7 +235,7 @@ public class ChampionDetailActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
     }
 }
