@@ -26,11 +26,18 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        getDoor();
+        String door = FirebaseRemoteConfig.getInstance().getString(getString(R.string.the_door));
+        if(door != null && !door.isEmpty()){
+            Teemo.setArmedAndReady(SplashActivity.this, door);
+            goToHome();
+        }else {
+            getDoor();
+        }
     }
 
     private void getDoor() {
-        FirebaseRemoteConfig.getInstance().fetch().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+
+        FirebaseRemoteConfig.getInstance().fetch(0).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 FirebaseRemoteConfig.getInstance().activateFetched();
