@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TonsOfDamage</string>
+    <string translatable="false" name="app_name">TonsOfDamage</string>
     <string name="choose_region">Choose region</string>
     <string name="choose_filter">Choose filter</string>
     <string name="summoner">Summoner name…</string>
@@ -73,7 +73,7 @@
     <string name="last_match">Latest Match</string>
     <string name="recent_games">Recent Games</string>
     <string name="choose_language">Choose Language</string>
-    <string name="shared_transition">transition%1$d</string>
+    <string translatable="false" name="shared_transition">transition%1$d</string>
     <string name="win_at">Win at %1$s</string>
     <string name="lose_at">Lose at %1$s</string>
     <string name="mastery_current">%1$s (current)</string>
@@ -162,7 +162,7 @@
     <string name="change_region">Change region</string>
     <string name="change_summoner">Change summoner</string>
     <string name="server_status">Server status</string>
-    <string name="the_door">5vVMsQOQz6mxx3jdydCJ8LWlNRUNAyXsmO9eEB9UP4BcRNfaYaDagfCju263pYWFXIeC8C1h5wK8ZdPsrbjY9rLAN+pVTXwOkTPgrVh31hcJsVxGtmq5xJ51J8MR7a33iDB0CMRAbwTjB+Ru9D82rqC2m4tmdOGCjAuYNwzHEBE=</string>
+    <string translatable="false" name="the_door">5vVMsQOQz6mxx3jdydCJ8LWlNRUNAyXsmO9eEB9UP4BcRNfaYaDagfCju263pYWFXIeC8C1h5wK8ZdPsrbjY9rLAN+pVTXwOkTPgrVh31hcJsVxGtmq5xJ51J8MR7a33iDB0CMRAbwTjB+Ru9D82rqC2m4tmdOGCjAuYNwzHEBE=</string>
     <string name="counter_picks">Counter Picks</string>
     <string name="lore">Lore</string>
     <string name="weak_against">Weak Against</string>
@@ -173,9 +173,9 @@
     <string name="analytics_warn">Sending app analytics help us to understand what apps section are most used and allow us to improve the app building better updates</string>
     <string name="keep_sending">Keep sending</string>
     <string name="do_not_send">Don\'t send</string>
-    <string name="admob_app_id">ca-app-pub-5876504740127808~9001040376</string>
-    <string name="summoner_banner_id">ca-app-pub-5876504740127808/7692430778</string>
-    <string name="champion_banner_id">ca-app-pub-5876504740127808/7273628372</string>
-    <string name="match_banner_id">ca-app-pub-5876504740127808/6994426778</string>
+    <string translatable="false" name="admob_app_id">ca-app-pub-5876504740127808~9001040376</string>
+    <string translatable="false" name="summoner_banner_id">ca-app-pub-5876504740127808/7692430778</string>
+    <string translatable="false" name="champion_banner_id">ca-app-pub-5876504740127808/7273628372</string>
+    <string translatable="false" name="match_banner_id">ca-app-pub-5876504740127808/6994426778</string>
 
 </resources>
