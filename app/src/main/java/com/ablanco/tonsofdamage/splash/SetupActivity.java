@@ -108,6 +108,11 @@ public class SetupActivity extends BaseActivity implements SetupListener {
     }
 
     @Override
+    public String getNavigationItemId() {
+        return null;
+    }
+
+    @Override
     public void onRegionSelected(String region) {
         SettingsHandler.setRegion(this, region);
         Teemo.getInstance(this).setRegion(region);

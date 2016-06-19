@@ -145,6 +145,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
     boolean goldHandled = false;
     boolean damageTakenHandled = false;
     boolean damageDealtHandled = false;
+    private RecentGamesData data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +154,7 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        final RecentGamesData data = (RecentGamesData) getIntent().getSerializableExtra(EXTRA_DATA);
+        data = (RecentGamesData) getIntent().getSerializableExtra(EXTRA_DATA);
 
         Utils.setTransitionNameForView(mImgChampion, getIntent().getStringExtra(EXTRA_TRANSITION_NAME));
         mAppBarLayout.addOnOffsetChangedListener(this);
@@ -245,6 +246,11 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
     @Override
     public String getClassName() {
         return AnalyticsHandler.CLASS_NAME_MATCH_DETAIL;
+    }
+
+    @Override
+    public String getNavigationItemId() {
+        return data.getGame().getGameId() + ", " + data.getSummonerId() + ", " + data.getChampionDto().getName() + "(" + data.getChampionDto().getId() +")";
     }
 
     private void setUpStats(RawStats stats) {

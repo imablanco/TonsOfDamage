@@ -178,7 +178,7 @@ public class Utils {
     }
 
     public static boolean isContextValid(Context context){
-        return !((Activity)context).isFinishing() && !((Activity)context).isDestroyed();
+        return !((Activity)context).isFinishing();
     }
 
     public static String getPlatformForRegion(Context context){

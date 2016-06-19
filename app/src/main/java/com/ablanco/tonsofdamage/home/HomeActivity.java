@@ -36,6 +36,11 @@ import hotchemi.android.rate.AppRate;
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final static int HOME = 0;
+    public final static int CHAMPIONS = 1;
+    public final static int ITEMS = 2;
+    public final static int SUMMONERS = 3;
+
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @Bind(R.id.nav_view) NavigationView mNavigationView;
@@ -88,12 +93,29 @@ public class HomeActivity extends BaseActivity
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int i) {
-                //toolbar.setTitle(mHomeContentHandler.getTitleForContent(getApplicationContext(), i));
-                //mHomeContentHandler.showContent(i);
                 toolbar.setTitle(adapter.getPageTitle(i));
                 pager.setCurrentItem(i,false);
                 HomeErrorUtils.getInstance().setCurrentPage(i);
                 Utils.hideKeyBoard(HomeActivity.this);
+
+                //send section navigation event
+                String section;
+                switch (i){
+                    case HOME:default:
+                        section = AnalyticsHandler.CLASS_NAME_HOME_HOME;
+                        break;
+                    case CHAMPIONS:
+                        section = AnalyticsHandler.CLASS_NAME_HOME_CHAMPIONS;
+                        break;
+                    case ITEMS:
+                        section = AnalyticsHandler.CLASS_NAME_HOME_ITEMS;
+                        break;
+                    case SUMMONERS:
+                        section = AnalyticsHandler.CLASS_NAME_HOME_SUMMONERS;
+                        break;
+                }
+
+                AnalyticsHandler.getInstance(HomeActivity.this).trackScreenSectionNavigation(AnalyticsHandler.CLASS_NAME_HOMEACTIVIY, section, null);
             }
 
             @Override
@@ -107,6 +129,11 @@ public class HomeActivity extends BaseActivity
     @Override
     public String getClassName() {
         return AnalyticsHandler.CLASS_NAME_HOMEACTIVIY;
+    }
+
+    @Override
+    public String getNavigationItemId() {
+        return null;
     }
 
     private void monitorRateApp(){
@@ -170,10 +197,6 @@ public class HomeActivity extends BaseActivity
     }
 
     class HomeContentPagerAdapter extends FragmentPagerAdapter {
-       private final static int HOME = 0;
-       private final static int CHAMPIONS = 1;
-       private final static int ITEMS = 2;
-       private final static int SUMMONERS = 3;
 
         public HomeContentPagerAdapter() {
             super(getSupportFragmentManager());

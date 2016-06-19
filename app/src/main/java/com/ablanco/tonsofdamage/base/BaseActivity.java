@@ -23,6 +23,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        AnalyticsHandler.getInstance(this).trackScreenName(getClassName());
+        AnalyticsHandler.getInstance(this).trackScreenNavigation(getClassName(), getNavigationItemId());
     }
+
+    public abstract String getNavigationItemId();
 }

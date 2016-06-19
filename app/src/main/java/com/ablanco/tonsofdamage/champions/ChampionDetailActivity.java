@@ -102,6 +102,11 @@ public class ChampionDetailActivity extends BaseActivity {
         return AnalyticsHandler.CLASS_NAME_CHAMPION_DETAIL;
     }
 
+    @Override
+    public String getNavigationItemId() {
+        return String.valueOf(championId);
+    }
+
 
     @Override
     protected void onDestroy() {

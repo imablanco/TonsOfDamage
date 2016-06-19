@@ -1,6 +1,7 @@
 package com.ablanco.tonsofdamage.summoner;
 
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
@@ -42,13 +43,14 @@ public class MasteryDetailActivityDialog extends BaseActivity {
     private ColorMatrix matrix;
     private boolean isGray;
     private ValueAnimator animation;
+    private MasteryDto mMastery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_mastery_detail);
         ButterKnife.bind(this);
-        MasteryDto mMastery = (MasteryDto) getIntent().getSerializableExtra(EXTRA_MASTERY);
+        mMastery = (MasteryDto) getIntent().getSerializableExtra(EXTRA_MASTERY);
         if (mMastery != null) {
 
             Utils.setTransitionNameForView(mImgMastery, getString(R.string.shared_transition, mMastery.getId()));
@@ -92,6 +94,15 @@ public class MasteryDetailActivityDialog extends BaseActivity {
         return AnalyticsHandler.CLASS_NAME_MASTERY_DETAIL;
     }
 
+    @Override
+    public String getNavigationItemId() {
+        if(mMastery != null){
+            return mMastery.getName();
+        }
+
+        return null;
+    }
+
 
     private void animateImageSaturationToIdentity() {
         animation = ValueAnimator.ofFloat(0f, 1f);
@@ -123,6 +134,7 @@ public class MasteryDetailActivityDialog extends BaseActivity {
     }
 
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private static class SimpleTransitionListener implements Transition.TransitionListener {
 
         @Override

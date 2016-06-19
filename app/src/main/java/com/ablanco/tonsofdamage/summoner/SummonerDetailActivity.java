@@ -70,6 +70,11 @@ public class SummonerDetailActivity extends BaseActivity {
     }
 
     @Override
+    public String getNavigationItemId() {
+        return String.valueOf(mId);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.summoner_detail, menu);
         MenuItem m = menu.findItem(R.id.action_like);

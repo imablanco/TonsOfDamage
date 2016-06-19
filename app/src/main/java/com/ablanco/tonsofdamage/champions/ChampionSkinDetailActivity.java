@@ -101,6 +101,11 @@ public class ChampionSkinDetailActivity extends BaseActivity {
     }
 
     @Override
+    public String getNavigationItemId() {
+        return skinName;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiver);

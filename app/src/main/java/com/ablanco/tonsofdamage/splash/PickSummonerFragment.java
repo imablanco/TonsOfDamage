@@ -19,6 +19,7 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
 import com.ablanco.tonsofdamage.views.AvatarImageView;
@@ -66,12 +67,10 @@ public class PickSummonerFragment extends SetupFragment {
 
         floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
-            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-            }
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {}
 
             @Override
             public void onSearchAction() {
-
                 search();
             }
         });
@@ -85,6 +84,9 @@ public class PickSummonerFragment extends SetupFragment {
     }
 
     private void search(){
+
+        AnalyticsHandler.getInstance(getActivity()).trackSearchEvent(AnalyticsHandler.CLASS_NAME_SETUP, mSearchQuery);
+
         avatarImageView.setPlaceholder();
         avatarImageView.hideLevel();
         loading.setVisibility(View.VISIBLE);

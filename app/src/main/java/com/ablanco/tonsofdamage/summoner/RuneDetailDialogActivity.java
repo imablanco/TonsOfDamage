@@ -33,6 +33,7 @@ public class RuneDetailDialogActivity extends BaseActivity {
     TextView mTvRuneDescription;
     @Bind(R.id.root)
     RelativeLayout mRoot;
+    private RuneDto mRune;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class RuneDetailDialogActivity extends BaseActivity {
 
         setContentView(R.layout.dialog_rune_detail);
         ButterKnife.bind(this);
-        RuneDto mRune = (RuneDto) getIntent().getSerializableExtra(EXTRA_RUNE);
+        mRune = (RuneDto) getIntent().getSerializableExtra(EXTRA_RUNE);
 
         if(mRune != null){
             Utils.setTransitionNameForView(mImgRune, String.valueOf(mRune.getId()));
@@ -62,6 +63,14 @@ public class RuneDetailDialogActivity extends BaseActivity {
     @Override
     public String getClassName() {
         return AnalyticsHandler.CLASS_NAME_RUNE_DETAIL;
+    }
+
+    @Override
+    public String getNavigationItemId() {
+        if(mRune != null){
+            return  mRune.getName();
+        }
+        return null;
     }
 
     @Override

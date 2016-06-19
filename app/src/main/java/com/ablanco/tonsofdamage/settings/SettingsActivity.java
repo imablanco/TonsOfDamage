@@ -87,6 +87,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
+    public String getNavigationItemId() {
+        return null;
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_about:

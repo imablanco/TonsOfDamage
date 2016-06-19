@@ -216,6 +216,12 @@ public class MasteriesActivity extends BaseActivity implements MasteryTreeDetail
     }
 
     @Override
+    public String getNavigationItemId() {
+        return String.valueOf(summonerId);
+
+    }
+
+    @Override
     public MasteryDto getMastery(int id) {
         return masteryData.get(String.valueOf(id));
     }

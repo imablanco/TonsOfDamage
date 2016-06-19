@@ -45,6 +45,8 @@ public class PlayerViewDialogActivity extends BaseActivity {
     RelativeLayout mRoot;
     @Bind(R.id.bt_view_summoner)
     Button mBtViewSummoner;
+    private ChampionDto championDto;
+    private Participant participant;
 
 
     @Override
@@ -54,8 +56,8 @@ public class PlayerViewDialogActivity extends BaseActivity {
         setContentView(R.layout.dialog_player_detail);
         ButterKnife.bind(this);
 
-        final ChampionDto championDto = (ChampionDto) getIntent().getSerializableExtra(EXTRA_CHAMPION);
-        Participant participant = (Participant) getIntent().getSerializableExtra(EXTRA_PARTICIPANT);
+        championDto = (ChampionDto) getIntent().getSerializableExtra(EXTRA_CHAMPION);
+        participant = (Participant) getIntent().getSerializableExtra(EXTRA_PARTICIPANT);
 
         mRoot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +87,7 @@ public class PlayerViewDialogActivity extends BaseActivity {
                     @Override
                     public void onResponse(Summoner response) {
                         final Long summonerId = response.getId();
-                        if(!isDestroyed() && !isFinishing()){
+                        if(!isFinishing()){
                             mBtViewSummoner.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -117,6 +119,15 @@ public class PlayerViewDialogActivity extends BaseActivity {
     @Override
     public String getClassName() {
         return AnalyticsHandler.CLASS_NAME_HOME_PLAYER_VIEW;
+    }
+
+    @Override
+    public String getNavigationItemId() {
+        if(championDto != null && participant != null){
+            return participant.getSummonerName() + ", " + championDto.getName() + "(" + championDto.getId() + ")";
+        }else {
+            return null;
+        }
     }
 
     @Override

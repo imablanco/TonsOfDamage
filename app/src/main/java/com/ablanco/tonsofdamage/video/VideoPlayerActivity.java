@@ -63,6 +63,7 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
     };
 
     private Handler mControlsHandler = new Handler();
+    private String mUrl;
 
 
     @Override
@@ -71,7 +72,7 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
         setContentView(R.layout.activity_video_player);
         ButterKnife.bind(this);
 
-        String mUrl = getIntent().getStringExtra(EXTRA_URL);
+        mUrl = getIntent().getStringExtra(EXTRA_URL);
         if (mUrl != null) {
             videoView.setVideoURI(Uri.parse(mUrl));
             videoView.setOnCompletionListener(this);
@@ -94,7 +95,7 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
     protected void onResume() {
         super.onResume();
         videoView.start();
-        AnalyticsHandler.getInstance(this).trackScreenName(AnalyticsHandler.CLASS_NAME_VIDEO);
+        AnalyticsHandler.getInstance(this).trackScreenNavigation(AnalyticsHandler.CLASS_NAME_VIDEO, mUrl);
 
     }
 

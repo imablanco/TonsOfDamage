@@ -18,6 +18,7 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.teemo.utils.ImageUris;
 import com.ablanco.tonsofdamage.R;
+import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.handler.StaticDataHandler;
@@ -142,6 +143,7 @@ public class SummonersFragment extends BaseHomeFragment implements View.OnClickL
 
             @Override
             public void onSearchAction() {
+                AnalyticsHandler.getInstance(getActivity()).trackSearchEvent(AnalyticsHandler.CLASS_NAME_HOME_SUMMONERS, mQuery);
                 loadSummoner(mQuery);
             }
         });

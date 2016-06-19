@@ -58,13 +58,14 @@ public class ItemDetailDialogActivity extends BaseActivity {
 
     private int dp5 = SizeUtils.convertDpToPixel(5);
     private LinearLayout.LayoutParams itemParams = new LinearLayout.LayoutParams(SizeUtils.convertDpToPixel(ITEM_VIEW_SIZE), SizeUtils.convertDpToPixel(ITEM_VIEW_SIZE));
+    private int mId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_item_detail);
         ButterKnife.bind(this);
-        int mId = getIntent().getIntExtra(EXTRA_ID_ITEM, 0);
+        mId = getIntent().getIntExtra(EXTRA_ID_ITEM, 0);
 
         Utils.setTransitionNameForView(mItemImg, String.valueOf(mId));
         Glide.with(ItemDetailDialogActivity.this).load(ImageUris.getItemIcon(SettingsHandler.getCDNVersion(ItemDetailDialogActivity.this), String.valueOf(mId))).into(mItemImg);
@@ -72,7 +73,7 @@ public class ItemDetailDialogActivity extends BaseActivity {
         Teemo.getInstance(this).getStaticDataHandler().getItemById(mId, SettingsHandler.getLanguage(this), null, StaticAPIQueryParams.Items.all, new ServiceResponseListener<ItemDto>() {
             @Override
             public void onResponse(ItemDto response) {
-                if (!isDestroyed() && !isFinishing()) {
+                if (!isFinishing()) {
                     mIcCoins.setImageResource(R.drawable.ic_gold);
                     mTvTitle.setText(response.getName());
                     mTvItemDescription.setText(Html.fromHtml(response.getDescription()));
@@ -105,6 +106,11 @@ public class ItemDetailDialogActivity extends BaseActivity {
     @Override
     public String getClassName() {
         return AnalyticsHandler.CLASS_NAME_ITEM_DETAIL;
+    }
+
+    @Override
+    public String getNavigationItemId() {
+        return String.valueOf(mId);
     }
 
 

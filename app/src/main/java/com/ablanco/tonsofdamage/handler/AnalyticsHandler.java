@@ -3,7 +3,9 @@ package com.ablanco.tonsofdamage.handler;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.ablanco.tonsofdamage.BuildConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
@@ -26,6 +28,10 @@ public class AnalyticsHandler {
     public static final String CLASS_NAME_RUNES = "Runes";
     public static final String CLASS_NAME_SUMMONER_DETAIL = "SummonerDetail";
     public static final String CLASS_NAME_VIDEO = "Video";
+    public static final String CLASS_NAME_HOME_HOME = "HomeMain";
+    public static final String CLASS_NAME_HOME_CHAMPIONS = "HomeChampions";
+    public static final String CLASS_NAME_HOME_ITEMS = "HomeItems";
+    public static final String CLASS_NAME_HOME_SUMMONERS = "HomeSummoners";
 
     public final static class UserProperty {
         public final static String PROPERTY_LANG = "Language";
@@ -35,11 +41,10 @@ public class AnalyticsHandler {
 
     public final static class Event {
         public static final String EVENT_SCREEN = "screen_navigation";
+        public static final String EVENT_SCREEN_SECTION = "screen_navigation_section";
+        public static final String EVENT_CONTENT_CLICK = "content_click";
     }
 
-    public final static class Param {
-        public static final String PARAM_SCREEN_NAME = "screen_name";
-    }
 
     private FirebaseAnalytics analytics;
 
@@ -66,10 +71,70 @@ public class AnalyticsHandler {
 
     }
 
-    public void trackScreenName(String screen){
+
+    public void trackScreenNavigation(String screen, String itemId){
         Bundle params = new Bundle();
-        params.putString(Param.PARAM_SCREEN_NAME, screen);
+        params.putString(FirebaseAnalytics.Param.DESTINATION, screen);
+        if(itemId != null){
+            params.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        }
         analytics.logEvent(Event.EVENT_SCREEN, params);
+
+        if(BuildConfig.DEBUG){
+            StringBuilder builder = new StringBuilder();
+            for (String s : params.keySet()) {
+                builder.append(s);
+                builder.append(" : ");
+                builder.append(params.get(s));
+                builder.append("\n");
+            }
+
+            Log.d("AnalyticsHandler", builder.toString());
+        }
+    }
+
+    public void trackSearchEvent(String screen, String term){
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.SEARCH_TERM, term);
+        params.putString(FirebaseAnalytics.Param.ORIGIN, screen);
+
+        analytics.logEvent(FirebaseAnalytics.Event.SEARCH, params);
+
+        if(BuildConfig.DEBUG){
+            StringBuilder builder = new StringBuilder();
+            for (String s : params.keySet()) {
+                builder.append(s);
+                builder.append(" : ");
+                builder.append(params.get(s));
+                builder.append("\n");
+            }
+
+            Log.d("AnalyticsHandler", builder.toString());
+        }
+    }
+
+    public void trackScreenSectionNavigation(String screenParent, String section, String itemId){
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.ORIGIN, screenParent);
+        params.putString(FirebaseAnalytics.Param.DESTINATION, section);
+
+        if(itemId != null){
+            params.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        }
+
+        analytics.logEvent(Event.EVENT_SCREEN_SECTION, params);
+
+        if(BuildConfig.DEBUG){
+            StringBuilder builder = new StringBuilder();
+            for (String s : params.keySet()) {
+                builder.append(s);
+                builder.append(" : ");
+                builder.append(params.get(s));
+                builder.append("\n");
+            }
+
+            Log.d("AnalyticsHandler", builder.toString());
+        }
     }
 
     public void enableSendAnalyticsEvents(boolean enable){

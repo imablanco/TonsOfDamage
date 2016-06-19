@@ -142,7 +142,7 @@ public class RunesActivity extends BaseActivity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (!isDestroyed() && !isFinishing()) {
+                    if (!isFinishing()) {
                         fabExpand.setVisibility(View.INVISIBLE);
                         AnimationUtils.revealView(fabCollapse);
                         mExpanded = true;
@@ -177,7 +177,7 @@ public class RunesActivity extends BaseActivity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (!isDestroyed() && !isFinishing()) {
+                    if (!isFinishing()) {
                         fabCollapse.setVisibility(View.INVISIBLE);
                         AnimationUtils.revealView(fabExpand);
                         mExpanded = false;
@@ -206,7 +206,9 @@ public class RunesActivity extends BaseActivity {
                     try {
                         buildCombinedStats(mRunePages.get(position));
 
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchFieldException e){
                         e.printStackTrace();
                     }
 
@@ -311,6 +313,11 @@ public class RunesActivity extends BaseActivity {
     @Override
     public String getClassName() {
         return AnalyticsHandler.CLASS_NAME_RUNES;
+    }
+
+    @Override
+    public String getNavigationItemId() {
+        return String.valueOf(mId);
     }
 
     private void buildCombinedStats(RunePageProxyModel runePage) throws NoSuchFieldException, IllegalAccessException {
