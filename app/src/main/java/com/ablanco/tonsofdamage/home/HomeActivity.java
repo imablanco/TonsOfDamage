@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -85,6 +86,7 @@ public class HomeActivity extends BaseActivity
         final HomeContentPagerAdapter adapter = new HomeContentPagerAdapter();
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
+
         mBottomBar.setItems(
                 new BottomBarTab(R.drawable.ic_home, R.string.title_home),
                 new BottomBarTab(R.drawable.ic_champion, R.string.title_champions),
@@ -92,6 +94,9 @@ public class HomeActivity extends BaseActivity
                 new BottomBarTab(R.drawable.ic_person, getString(R.string.summoners))
         );
 
+        if(mBottomBar.findViewById(R.id.bb_bottom_bar_background_view) != null){
+            mBottomBar.findViewById(R.id.bb_bottom_bar_background_view).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
 
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override

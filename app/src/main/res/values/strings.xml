@@ -1,21 +1,18 @@
 <resources>
     <string name="app_name">TonsOfDamage</string>
     <string name="choose_region">Choose region</string>
-    <string name="choose_filter">Choose filter…</string>
+    <string name="choose_filter">Choose filter</string>
     <string name="summoner">Summoner name…</string>
     <string name="Ok">OK</string>
     <string name="title_activity_home">Home</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="action_filter">Filter</string>
     <string name="first_setup_explain">Welcome to TonsOfDamage, we need to do an initial setup before you can start enyoing the app.</string>
     <string name="pick_summoner_hint">Enter your summoner name and enjoy</string>
     <string name="region">Region</string>
     <string name="summoner_not_found">Summoner not found</string>
-
     <string name="title_home">Home</string>
     <string name="title_champions">Champions</string>
     <string name="all">All</string>
@@ -34,7 +31,6 @@
     <string name="champion_abilities">Abilities</string>
     <string name="cooldown">Cooldown:</string>
     <string name="cost">Cost:</string>
-
     <string name="health">Health: </string>
     <string name="mana">Mana: </string>
     <string name="health_regen">Health Regen: </string>
@@ -166,7 +162,6 @@
     <string name="change_region">Change region</string>
     <string name="change_summoner">Change summoner</string>
     <string name="server_status">Server status</string>
-
     <string name="the_door">5vVMsQOQz6mxx3jdydCJ8LWlNRUNAyXsmO9eEB9UP4BcRNfaYaDagfCju263pYWFXIeC8C1h5wK8ZdPsrbjY9rLAN+pVTXwOkTPgrVh31hcJsVxGtmq5xJ51J8MR7a33iDB0CMRAbwTjB+Ru9D82rqC2m4tmdOGCjAuYNwzHEBE=</string>
     <string name="counter_picks">Counter Picks</string>
     <string name="lore">Lore</string>
@@ -178,7 +173,6 @@
     <string name="analytics_warn">Sending app analytics help us to understand what apps section are most used and allow us to improve the app building better updates</string>
     <string name="keep_sending">Keep sending</string>
     <string name="do_not_send">Don\'t send</string>
-
     <string name="admob_app_id">ca-app-pub-5876504740127808~9001040376</string>
     <string name="summoner_banner_id">ca-app-pub-5876504740127808/7692430778</string>
     <string name="champion_banner_id">ca-app-pub-5876504740127808/7273628372</string>
