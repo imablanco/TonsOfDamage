@@ -1,0 +1,194 @@
+{
+  "steps": [{
+    "stepId": 0,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 1,
+      "explain": "Lets start with this",
+      "runeId": 5186,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 1,
+    "stepType": "conditional_simple",
+    "data": {
+      "condition": "I prefer playing AP-Mid champs",
+      "conditionLeft": "Yes",
+      "conditionRight": "No",
+      "conditionLeftStep": 2,
+      "conditionRightStep": 6
+    }
+  }, {
+    "stepId": 2,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 3,
+      "explain": "Lets continue with this",
+      "runeId": 5357,
+      "runeAmount": 3
+    }
+  }, {
+    "stepId": 3,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 4,
+      "explain": "Lets continue with this",
+      "runeId": 5029,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 4,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 5,
+      "explain": "Lets continue with this",
+      "runeId": 5029,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 5,
+    "stepType": "finish",
+    "data": {
+      "explain": "Congratulations"
+    }
+  }, {
+    "stepId": 6,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 7,
+      "explain": "Lets continue with this",
+      "runeId": 5317,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 7,
+    "stepType": "conditional_multiple",
+    "data": {
+      "condition": "Your preferred role",
+      "conditionLeft": "Supportuive Jungler or Tank",
+      "conditionRight": "Support",
+      "conditionMiddle": "Ad Carry/Bruiser",
+      "conditionLeftStep": 8,
+      "conditionRightStep": 11,
+      "conditionMiddleStep": 14
+    }
+  }, {
+    "stepId": 8,
+    "stepType": "mutiple_choice",
+    "data": {
+      "nextStep": 9,
+      "explain": "Lets continue with this",
+      "runeLeftId": 5367,
+      "runeLeftAmount": 3,
+      "runeRightId": 5347,
+      "runeRightAmount": 3
+    }
+  }, {
+    "stepId": 9,
+    "stepType": "mutiple_choice",
+    "data": {
+      "nextStep": 10,
+      "explain": "Lets continue with this",
+      "runeLeftId": 5257,
+      "runeLeftAmount": 9,
+      "runeRightId": 5247,
+      "runeRightAmount": 9
+    }
+  }, {
+    "stepId": 10,
+    "stepType": "finish",
+    "data": {
+      "explain": "Congratulations"
+    }
+  }, {
+    "stepId": 11,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 12,
+      "explain": "Lets continue with this",
+      "runeId": 5367,
+      "runeAmount": 3
+    }
+  }, {
+    "stepId": 12,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 13,
+      "explain": "Lets continue with this",
+      "runeId": 5257,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 13,
+    "stepType": "finish",
+    "data": {
+      "explain": "Congratulations"
+    }
+  }, {
+    "stepId": 14,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 15,
+      "explain": "Lets continue with this",
+      "runeId": 5335,
+      "runeAmount": 3
+    }
+  }, {
+    "stepId": 15,
+    "stepType": "conditional_multiple",
+    "data": {
+      "condition": "Your preferred role",
+      "conditionLeft": "Atc speed dependent jungler",
+      "conditionRight": "AdCarry",
+      "conditionMiddle": "Ad Bruiser",
+      "conditionLeftStep": 16,
+      "conditionRightStep": 18,
+      "conditionMiddleStep": 20
+    }
+  }, {
+    "stepId": 16,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 17,
+      "explain": "Lets continue with this",
+      "runeId": 5247,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 17,
+    "stepType": "finish",
+    "data": {
+      "explain": "Congratulations"
+    }
+  }, {
+    "stepId": 18,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 19,
+      "explain": "Lets continue with this",
+      "runeId": 5245,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 19,
+    "stepType": "finish",
+    "data": {
+      "explain": "Congratulations"
+    }
+  }, {
+    "stepId": 20,
+    "stepType": "single_choice",
+    "data": {
+      "nextStep": 20,
+      "explain": "Lets continue with this",
+      "runeId": 5253,
+      "runeAmount": 9
+    }
+  }, {
+    "stepId": 21,
+    "stepType": "finish",
+    "data": {
+      "explain": "Congratulations"
+    }
+  }]
+}

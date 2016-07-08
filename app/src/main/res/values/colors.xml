@@ -14,6 +14,7 @@
     <color name="controlWhite">#bbFFFFFF</color>
     <color name="black">#000</color>
     <color name="black_alpha">#bb000000</color>
+    <color name="black_alpha_more">#ef000000</color>
     <color name="red">#DF0101</color>
     <color name="red_aplha">#50DF0101</color>
     <color name="green">#088A08</color>

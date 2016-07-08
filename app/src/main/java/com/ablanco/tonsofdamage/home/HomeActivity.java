@@ -14,15 +14,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.base.BaseActivity;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
-import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.summoner.MasteriesActivity;
 import com.ablanco.tonsofdamage.summoner.RunesActivity;
+import com.ablanco.tonsofdamage.utils.Constants;
 import com.ablanco.tonsofdamage.utils.HomeErrorUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.ablanco.tonsofdamage.views.ProfileHeaderNavigationView;
@@ -32,6 +34,10 @@ import com.roughike.bottombar.OnTabClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 import hotchemi.android.rate.AppRate;
 
 public class HomeActivity extends BaseActivity
@@ -42,13 +48,18 @@ public class HomeActivity extends BaseActivity
     public final static int ITEMS = 2;
     public final static int SUMMONERS = 3;
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @Bind(R.id.nav_view) NavigationView mNavigationView;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.nav_view)
+    NavigationView mNavigationView;
     @Bind(R.id.pager)
     ViewPager pager;
 
     private BottomBar mBottomBar;
+
+    private boolean backEnabled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +76,13 @@ public class HomeActivity extends BaseActivity
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                showCaseProfileView();
+            }
+        });
+
         HomeErrorUtils.init();
 
         monitorRateApp();
@@ -72,11 +90,6 @@ public class HomeActivity extends BaseActivity
         ProfileHeaderNavigationView profileHeaderNavigationView = new ProfileHeaderNavigationView(this);
         mNavigationView.addHeaderView(profileHeaderNavigationView);
         profileHeaderNavigationView.update();
-
-        //// TODO: 10/04/2016 in future, save in DB
-        ResourcesHandler.init(getApplicationContext());
-
-
 
         mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.coordinator_layout),
                 findViewById(R.id.content), savedInstanceState);
@@ -94,7 +107,7 @@ public class HomeActivity extends BaseActivity
                 new BottomBarTab(R.drawable.ic_person, getString(R.string.summoners))
         );
 
-        if(mBottomBar.findViewById(R.id.bb_bottom_bar_background_view) != null){
+        if (mBottomBar.findViewById(R.id.bb_bottom_bar_background_view) != null) {
             mBottomBar.findViewById(R.id.bb_bottom_bar_background_view).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
@@ -102,14 +115,15 @@ public class HomeActivity extends BaseActivity
             @Override
             public void onTabSelected(int i) {
                 toolbar.setTitle(adapter.getPageTitle(i));
-                pager.setCurrentItem(i,false);
+                pager.setCurrentItem(i, false);
                 HomeErrorUtils.getInstance().setCurrentPage(i);
                 Utils.hideKeyBoard(HomeActivity.this);
 
                 //send section navigation event
                 String section;
-                switch (i){
-                    case HOME:default:
+                switch (i) {
+                    case HOME:
+                    default:
                         section = AnalyticsHandler.CLASS_NAME_HOME_HOME;
                         break;
                     case CHAMPIONS:
@@ -132,6 +146,8 @@ public class HomeActivity extends BaseActivity
             }
         });
 
+        startsShowCaseFlow();
+
     }
 
     @Override
@@ -144,7 +160,7 @@ public class HomeActivity extends BaseActivity
         return null;
     }
 
-    private void monitorRateApp(){
+    private void monitorRateApp() {
         AppRate.with(this)
                 .setInstallDays(2)
                 .setCancelable(true)
@@ -154,9 +170,10 @@ public class HomeActivity extends BaseActivity
         AppRate.showRateDialogIfMeetsConditions(this);
 
     }
+
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START) && backEnabled) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -183,13 +200,13 @@ public class HomeActivity extends BaseActivity
             bundle.putLong(RunesActivity.EXTRA_SUMMONER_ID, SettingsHandler.getSummoner(this));
             NavigationHandler.navigateTo(this, NavigationHandler.RUNES_DETAIL, bundle);
 
-        }else if(id == R.id.nav_settings){
+        } else if (id == R.id.nav_settings) {
             NavigationHandler.navigateTo(this, NavigationHandler.SETTINGS);
-        } else if(id == R.id.nav_contact){
-            String defaultMessage = "Phone model: " + Utils.getDeviceModel() + "\n"+
-                    "Phone OS Version: " + Utils.getDeviceOS()+"\n"+
-                    "Language: " + SettingsHandler.getLanguage(this) +"\n"+
-                    "App Version: "+ Utils.getAppVersion(this);
+        } else if (id == R.id.nav_contact) {
+            String defaultMessage = "Phone model: " + Utils.getDeviceModel() + "\n" +
+                    "Phone OS Version: " + Utils.getDeviceOS() + "\n" +
+                    "Language: " + SettingsHandler.getLanguage(this) + "\n" +
+                    "App Version: " + Utils.getAppVersion(this);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("message/rfc822");
@@ -214,8 +231,9 @@ public class HomeActivity extends BaseActivity
         public Fragment getItem(int position) {
             Fragment fragment;
 
-            switch (position){
-                case HOME:default:
+            switch (position) {
+                case HOME:
+                default:
                     fragment = HomeFragment.newInstance();
                     break;
                 case CHAMPIONS:
@@ -233,21 +251,22 @@ public class HomeActivity extends BaseActivity
 
         }
 
-       @Override
-       public CharSequence getPageTitle(int position) {
-           switch (position){
-               case HOME:default:
-                   return getString(R.string.title_home);
-               case CHAMPIONS:
-                   return getString(R.string.title_champions);
-               case ITEMS:
-                   return getString(R.string.title_items);
-               case SUMMONERS:
-                   return getString(R.string.summoners);
-           }
-       }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case HOME:
+                default:
+                    return getString(R.string.title_home);
+                case CHAMPIONS:
+                    return getString(R.string.title_champions);
+                case ITEMS:
+                    return getString(R.string.title_items);
+                case SUMMONERS:
+                    return getString(R.string.summoners);
+            }
+        }
 
-       @Override
+        @Override
         public int getCount() {
             return 4;
         }
@@ -257,5 +276,84 @@ public class HomeActivity extends BaseActivity
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+
+
+    /**
+     * Show case methods
+     */
+    public void startsShowCaseFlow() {
+        new MaterialIntroView.Builder(this)
+                .enableFadeAnimation(false)
+                .enableIcon(false)
+                .enableDotAnimation(true)
+                .setMaskColor(ContextCompat.getColor(this, R.color.black_alpha_more))
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.NORMAL)
+                .performClick(false)
+                .setListener(new MaterialIntroListener() {
+                    @Override
+                    public void onUserClicked(String s) {
+                        showCaseMenu();
+                    }
+                })
+                .setTextColor(ContextCompat.getColor(this, R.color.text_color))
+                .setInfoText(getString(R.string.showcase_step1))
+                .setTarget(mBottomBar.getBar())
+                .setUsageId(Constants.ShowCase.SHOW_CASE_FAV) //THIS SHOULD BE UNIQUE ID
+                .show();
+    }
+
+    private void showCaseMenu() {
+        new MaterialIntroView.Builder(this)
+                .enableFadeAnimation(true)
+                .enableIcon(false)
+                .setMaskColor(ContextCompat.getColor(this, R.color.black_alpha_more))
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.MINIMUM)
+                .performClick(true)
+                .setTextColor(ContextCompat.getColor(this, R.color.text_color))
+                .setInfoText(getString(R.string.showcase_step2))
+                .setTarget(getNavButtonView(toolbar))
+                .setUsageId(Constants.ShowCase.SHOW_CASE_MENU) //THIS SHOULD BE UNIQUE ID
+                .show();
+
+        backEnabled = false;
+    }
+
+
+    public void showCaseProfileView() {
+
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+            new MaterialIntroView.Builder(this)
+                    .enableFadeAnimation(true)
+                    .enableIcon(false)
+                    .setMaskColor(ContextCompat.getColor(this, R.color.black_alpha_more))
+                    .setFocusGravity(FocusGravity.CENTER)
+                    .setFocusType(Focus.NORMAL)
+                    .performClick(true)
+                    .setListener(new MaterialIntroListener() {
+                        @Override
+                        public void onUserClicked(String s) {
+                            backEnabled = true;
+                        }
+                    })
+                    .setTextColor(ContextCompat.getColor(this, R.color.text_color))
+                    .setInfoText(getString(R.string.showcase_step3))
+                    .setTarget(((ProfileHeaderNavigationView) mNavigationView.getHeaderView(0)).getHeaderImage())
+                    .setUsageId(Constants.ShowCase.SHOW_CASE_PROFILE) //THIS SHOULD BE UNIQUE ID
+                    .show();
+
+        }
+    }
+
+    private View getNavButtonView(Toolbar toolbar) {
+        for (int i = 0; i < toolbar.getChildCount(); i++)
+            if (toolbar.getChildAt(i) instanceof ImageButton)
+                return toolbar.getChildAt(i);
+
+        return toolbar;
     }
 }

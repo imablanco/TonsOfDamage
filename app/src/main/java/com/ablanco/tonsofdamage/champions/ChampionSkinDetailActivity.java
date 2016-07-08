@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -123,7 +122,7 @@ public class ChampionSkinDetailActivity extends BaseActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
+            finish();
         }else if(id == R.id.action_download){
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                mDownloadId =  DownloadsHandler.getInstance(getApplicationContext()).requestDownLoad(skinName, getString(R.string.downloading),skinUrl, skinName.concat(".png"));

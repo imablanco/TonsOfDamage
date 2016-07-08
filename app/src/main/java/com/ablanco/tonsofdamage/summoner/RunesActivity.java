@@ -248,40 +248,51 @@ public class RunesActivity extends BaseActivity {
                     @SuppressLint("UseSparseArrays")
                     @Override
                     public void onResponse(RunePages response) {
-                        HashMap<Integer, Integer> mRuneCountMap = new HashMap<>();
-                        for (RunePage runePage : response.getPages()) {
-                            mRunePages.add(new RunePageProxyModel(runePage));
+                        if(response != null && response.getPages() != null){
+                            HashMap<Integer, Integer> mRuneCountMap = new HashMap<>();
+                            for (RunePage runePage : response.getPages()) {
 
-                            mRuneCountMap.clear();
+                                if(runePage.getSlots() != null && !runePage.getSlots().isEmpty()){
+                                    mRunePages.add(new RunePageProxyModel(runePage));
 
-                            for (RuneSlot runeSlot : runePage.getSlots()) {
-                                if (mRuneCountMap.get(runeSlot.getRuneId()) == null) {
-                                    mRuneCountMap.put(runeSlot.getRuneId(), 0);
+                                    mRuneCountMap.clear();
+
+                                    for (RuneSlot runeSlot : runePage.getSlots()) {
+                                        if (mRuneCountMap.get(runeSlot.getRuneId()) == null) {
+                                            mRuneCountMap.put(runeSlot.getRuneId(), 0);
+                                        }
+                                        mRuneCountMap.put(runeSlot.getRuneId(), mRuneCountMap.get(runeSlot.getRuneId()) + 1);
+                                    }
+
+                                    RuneDto dto;
+                                    mProxyRunes.put(runePage.getId(), new ArrayList<RuneProxyModel>());
+                                    for (Integer runeId : mRuneCountMap.keySet()) {
+                                        dto = mRunes.get(String.valueOf(runeId));
+                                        if (dto != null) {
+                                            mProxyRunes.get(runePage.getId()).add(new RuneProxyModel(dto, mRuneCountMap.get(runeId)));
+                                        }
+                                    }
                                 }
-                                mRuneCountMap.put(runeSlot.getRuneId(), mRuneCountMap.get(runeSlot.getRuneId()) + 1);
+
+
                             }
 
-                            RuneDto dto;
-                            mProxyRunes.put(runePage.getId(), new ArrayList<RuneProxyModel>());
-                            for (Integer runeId : mRuneCountMap.keySet()) {
-                                dto = mRunes.get(String.valueOf(runeId));
-                                if (dto != null) {
-                                    mProxyRunes.get(runePage.getId()).add(new RuneProxyModel(dto, mRuneCountMap.get(runeId)));
+                            spinnerAdapter.notifyDataSetChanged();
+
+                            for (int i = 0; i < response.getPages().size(); i++) {
+                                if (response.getPages().get(i) != null && response.getPages().get(i).isCurrent() != null && response.getPages().get(i).isCurrent()) {
+                                    mSpinnerPageName.setSelection(i, false);
                                 }
                             }
 
+                            mLoading.setVisibility(View.GONE);
+
+                        }else {
+                            // TODO: 23/06/2016 notify error
                         }
 
 
-                        spinnerAdapter.notifyDataSetChanged();
 
-                        for (int i = 0; i < response.getPages().size(); i++) {
-                            if (response.getPages().get(i) != null && response.getPages().get(i).isCurrent() != null && response.getPages().get(i).isCurrent()) {
-                                mSpinnerPageName.setSelection(i, false);
-                            }
-                        }
-
-                        mLoading.setVisibility(View.GONE);
 
                     }
 

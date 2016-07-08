@@ -51,11 +51,7 @@
         <activity
             android:name=".champions.ChampionSkinDetailActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".champions.ChampionDetailActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".champions.ChampionDetailActivity" />
-        </activity>
+            android:parentActivityName=".champions.ChampionDetailActivity"/>
         <activity
             android:name=".summoner.SummonerDetailActivity"
             android:label=""
@@ -100,6 +96,14 @@
         <activity android:name=".summoner.RuneDetailDialogActivity"
             android:theme="@style/AppTheme.Transparent"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".runecreator.RuneCreatorActivity"
+            android:label="@string/rune_creator"
+            android:screenOrientation="landscape">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".home.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

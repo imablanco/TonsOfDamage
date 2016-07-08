@@ -1,10 +1,8 @@
 package com.ablanco.tonsofdamage.home;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import com.ablanco.teemo.model.featuredgames.FeaturedGameInfo;
 import com.ablanco.teemo.model.featuredgames.FeaturedGames;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.pixelcan.inkpageindicator.InkPageIndicator;
 
 import java.util.ArrayList;
@@ -28,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco on 25/05/2016.
  * TonsOfDamage
  */
-public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholder {
+public class FeaturedGamesPlaceholder extends HomeViewPlaceholder implements HomePlaceholder {
 
     @Bind(R.id.pager)
     ViewPager mPager;
@@ -45,10 +42,6 @@ public class FeaturedGamesPlaceholder extends CardView implements HomePlaceholde
         super(context, attrs);
         inflate(context,  R.layout.ph_featured_games, this);
         ButterKnife.bind(this);
-
-        this.setUseCompatPadding(true);
-        this.setRadius(SizeUtils.convertDpToPixel(2));
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
     }
 
 

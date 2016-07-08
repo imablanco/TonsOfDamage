@@ -177,5 +177,15 @@
     <string translatable="false" name="summoner_banner_id">ca-app-pub-5876504740127808/7692430778</string>
     <string translatable="false" name="champion_banner_id">ca-app-pub-5876504740127808/7273628372</string>
     <string translatable="false" name="match_banner_id">ca-app-pub-5876504740127808/6994426778</string>
+    <string name="rune_creator">Rune creator</string>
+    <string name="showcase_step1">Welcome to TonsOfDamage! This is the land page, you can navigate through bottom bar items to see the different sections</string>
+    <string name="showcase_step2">Tap the menu icon to go to your profile</string>
+    <string name="showcase_step3">Tap your avatar image to access your detailed profile</string>
+    <string name="showcase_fav">Tap fav icon to mark champions and summoners as favorites and have them always in sight</string>
+    <string name="rune_creator_msg">Try out the new rune creator and build awesome rune pages!</string>
+    <string name="no_page_runes_warn">You do not have any rune pages created yet, try adding a new one!</string>
+    <string name="action_add">Add new page</string>
+    <string name="your_created_rune_pages">Your created rune pages</string>
+    <string name="action_udo">Undo</string>
 
 </resources>

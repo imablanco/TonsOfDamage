@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textSize="18sp"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="5dp"
+        android:text="@string/your_created_rune_pages"
+        android:textColor="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.ablanco.tonsofdamage.views.Separator
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        app:separatorColor="@color/colorAccent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:clipToPadding="false"
+        android:paddingTop="15dp"
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

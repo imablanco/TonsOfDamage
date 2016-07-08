@@ -145,6 +145,9 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
     @Bind(R.id.adView)
     AdView banner;
 
+    @Bind(R.id.cv_teams)
+    View cvTeams;
+
     private Map<String, List<DecoEvent.Builder>> mEventsMap = new HashMap<>();
     boolean goldHandled = false;
     boolean damageTakenHandled = false;
@@ -210,10 +213,15 @@ public class MatchDetailActivity extends BaseActivity implements AppBarLayout.On
             tvMinions.setText(String.valueOf(data.getGame().getStats().getMinionsKilled()));
 
             //teams participants
-            TeamsAdapter adapter = new TeamsAdapter(this, data.getGame(), data.getSummonerId());
-            for (int i = 0; i < adapter.getCount(); i++) {
-                llParticipants.addView(adapter.getView(i, null, null));
+            if(data.getGame().getFellowPlayers() != null && !data.getGame().getFellowPlayers().isEmpty()){
+                TeamsAdapter adapter = new TeamsAdapter(this, data.getGame(), data.getSummonerId());
+                for (int i = 0; i < adapter.getCount(); i++) {
+                    llParticipants.addView(adapter.getView(i, null, null));
+                }
+            }else {
+                cvTeams.setVisibility(View.GONE);
             }
+
 
             setUpStats(data.getGame().getStats());
 

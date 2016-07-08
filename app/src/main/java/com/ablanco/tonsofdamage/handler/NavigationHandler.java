@@ -9,6 +9,7 @@ import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.champions.ChampionSkinDetailActivity;
 import com.ablanco.tonsofdamage.home.PlayerViewDialogActivity;
 import com.ablanco.tonsofdamage.items.ItemDetailDialogActivity;
+import com.ablanco.tonsofdamage.runecreator.RuneCreatorActivity;
 import com.ablanco.tonsofdamage.settings.SettingsActivity;
 import com.ablanco.tonsofdamage.splash.SetupActivity;
 import com.ablanco.tonsofdamage.home.HomeActivity;
@@ -40,6 +41,7 @@ public class NavigationHandler {
     public static final String ITEM_DETAIL = "ITEM_DETAIL";
     public static final String RUNE_DETAIL = "RUNE_DETAIL";
     public static final String SETTINGS = "SETTINGS";
+    public static final String RUNE_CREATOR = "RUNE_CREATOR";
 
     private NavigationHandler(){}
 
@@ -111,6 +113,8 @@ public class NavigationHandler {
             classDestination = SettingsActivity.class;
         } else if(destination.equalsIgnoreCase(SPLASH)){
             classDestination = SplashActivity.class;
+        } else if(destination.equalsIgnoreCase(RUNE_CREATOR)){
+            classDestination = RuneCreatorActivity.class;
         }
 
         return classDestination;

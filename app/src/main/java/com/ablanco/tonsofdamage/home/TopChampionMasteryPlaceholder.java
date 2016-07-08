@@ -2,8 +2,6 @@ package com.ablanco.tonsofdamage.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -22,7 +20,6 @@ import com.ablanco.tonsofdamage.adapter.TopChampionMasteryAdapter;
 import com.ablanco.tonsofdamage.champions.ChampionDetailActivity;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.List;
@@ -34,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco Cabrero on 10/6/16
  * TonsOfDamage
  */
-public class TopChampionMasteryPlaceholder extends CardView implements HomePlaceholder {
+public class TopChampionMasteryPlaceholder extends HomeViewPlaceholder implements HomePlaceholder {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -56,9 +53,6 @@ public class TopChampionMasteryPlaceholder extends CardView implements HomePlace
         inflate(context, R.layout.ph_top_champion_mastery, this);
         ButterKnife.bind(this);
 
-        this.setUseCompatPadding(true);
-        this.setRadius(SizeUtils.convertDpToPixel(2));
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         adapter = new TopChampionMasteryAdapter(context);
         recyclerView.setAdapter(adapter);

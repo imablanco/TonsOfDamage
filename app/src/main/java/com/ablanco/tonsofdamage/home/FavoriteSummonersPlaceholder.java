@@ -1,10 +1,8 @@
 package com.ablanco.tonsofdamage.home;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.ablanco.teemo.model.summoners.Summoner;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
-import com.ablanco.tonsofdamage.utils.SizeUtils;
 import com.ablanco.tonsofdamage.utils.Utils;
 import com.pixelcan.inkpageindicator.InkPageIndicator;
 
@@ -33,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Álvaro Blanco Cabrero on 6/6/16
  * TonsOfDamage
  */
-public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceholder {
+public class FavoriteSummonersPlaceholder extends HomeViewPlaceholder implements HomePlaceholder {
 
     @Bind(R.id.pager)
     ViewPager pager;
@@ -54,10 +51,6 @@ public class FavoriteSummonersPlaceholder extends CardView implements HomePlaceh
 
         inflate(context, R.layout.ph_favorite_summoners, this);
         ButterKnife.bind(this);
-
-        this.setUseCompatPadding(true);
-        this.setRadius(SizeUtils.convertDpToPixel(2));
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
     }
 

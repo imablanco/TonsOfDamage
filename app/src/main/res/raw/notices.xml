@@ -84,5 +84,10 @@
         <copyright>Copyright (c) 2015 Shintaro Katafuchi</copyright>
         <license>MIT License</license>
     </notice>
-
+    <notice>
+        <name>MaterialIntroView</name>
+        <url>https://github.com/iammert/MaterialIntroView</url>
+        <copyright>Copyright (c) 2015 Shintaro Katafuchi</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>

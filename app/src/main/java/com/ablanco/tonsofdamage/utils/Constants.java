@@ -8,6 +8,12 @@ public class Constants {
 
     public final static String CHAMPION_VIDEO_URI = "http://cdn.leagueoflegends.com/champion-abilities/videos/mp4/0{0}_0{1}.mp4";
 
+    public static class ShowCase{
+        public static final String SHOW_CASE_BOTTOM_BAR = "show_case_bottom_bar";
+        public static final String SHOW_CASE_MENU = "show_case_menu";
+        public static final String SHOW_CASE_PROFILE = "show_case_profile";
+        public static final String SHOW_CASE_FAV = "show_case_fav";
+    }
 
     public static class Maps{
 

@@ -60,6 +60,10 @@ public class ProfileHeaderNavigationView extends RelativeLayout {
         });
     }
 
+    public View getHeaderImage(){
+        return avatarImageView;
+    }
+
     public void update() {
 
         Teemo.getInstance(getContext()).getSummonersHandler().getSummonerById(String.valueOf(SettingsHandler.getSummoner(getContext())), new ServiceResponseListener<Summoner>() {

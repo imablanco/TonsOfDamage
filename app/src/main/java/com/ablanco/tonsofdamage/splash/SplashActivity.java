@@ -8,6 +8,7 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.NavigationHandler;
+import com.ablanco.tonsofdamage.handler.ResourcesHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public class SplashActivity extends AppCompatActivity {
         } else {
 
             Teemo.getInstance(getApplicationContext()).setRegion(SettingsHandler.getRegion(SplashActivity.this));
+            //// TODO: 10/04/2016 in future, save in DB
+            ResourcesHandler.init(getApplicationContext());
             Teemo.getInstance(SplashActivity.this).getStaticDataHandler().getVersions(new ServiceResponseListener<List<String>>() {
                 @Override
                 public void onResponse(List<String> response) {

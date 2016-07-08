@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_rune"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_width="450dp"
+        android:layout_height="120dp">
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:background="?selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_marginRight="15dp"
+                android:id="@+id/img_rune"
+                android:layout_centerVertical="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:textSize="15sp"
+                android:id="@+id/tv_rune_name"
+                android:layout_alignTop="@id/img_rune"
+                android:layout_toRightOf="@id/img_rune"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                tools:text = "Whatever rune is it"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/tv_rune_details"
+                android:layout_below="@id/tv_rune_name"
+                android:layout_toRightOf="@id/img_rune"
+                android:textColor="@color/text_color"
+                tools:text = "15 damage for every level"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/tv_rune_price"
+                android:layout_below="@id/tv_rune_details"
+                android:layout_toRightOf="@id/img_rune"
+                android:textColor="@color/text_color"
+                tools:text = "x9 = 781234PI"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <TextView
+        android:textSize="17sp"
+        android:id="@+id/tv_explain"
+        android:layout_above="@id/cv_rune"
+        android:layout_marginBottom="30dp"
+        android:maxLines="3"
+        android:gravity="center"
+        tools:text= "Lorem ipsum dolor et sit amet"
+        android:textColor="@color/text_color"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

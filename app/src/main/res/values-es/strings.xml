@@ -34,14 +34,14 @@
     <string name="cost">Precio: </string>
     <string name="health">Salud: </string>
     <string name="mana">Maná: </string>
-    <string name="health_regen">Regeneración de vida: </string>
-    <string name="mana_regen">Regeneración de maná: </string>
+    <string name="health_regen">Reg. de vida: </string>
+    <string name="mana_regen">Reg. de maná: </string>
     <string name="attack">Ataque: </string>
     <string name="attack_speed">Velocidad de ataque: </string>
     <string name="armor">Armadura: </string>
-    <string name="magic_resist">Resistencia mágica: </string>
+    <string name="magic_resist">R. mágica: </string>
     <string name="range">Alcance: </string>
-    <string name="movement">Movimiento: </string>
+    <string name="movement">Mov.: </string>
     <string name="crit">Prob. Crítico: </string>
     <string name="tips">Consejos</string>
     <string name="allytips">Consejos jugándolo</string>
@@ -74,7 +74,7 @@
     <string name="last_match">Última partida</string>
     <string name="recent_games">Partidas recientes</string>
     <string name="choose_language">Escoge idioma</string>
-    <string name="win_at">Victoría contra %1$s</string>
+    <string name="win_at">Victoría con %1$s</string>
     <string name="lose_at">Derrota con %1$s</string>
     <string name="mastery_current">%1$s (actual)</string>
     <string name="teams">Equipos</string>
@@ -93,7 +93,7 @@
     <string name="total_damage_taken">Total recibido %1$s</string>
     <string name="damage_p_taken">Mágico %1$s</string>
     <string name="damage_m_taken">Físico %1$s</string>
-    <string name="damage_t_taken">Verdadero</string>
+    <string name="damage_t_taken">Verdadero %1$s</string>
     <string name="summarized_stats">Resumen de estadísticas</string>
     <string name="games_lost">Partidas perdidas</string>
     <string name="games_won">Partidas ganadas</string>
