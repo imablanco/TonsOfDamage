@@ -16,9 +16,9 @@ import com.ablanco.teemo.TeemoException;
 import com.ablanco.teemo.service.base.ServiceResponseListener;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.utils.AnimationUtils;
+import com.ablanco.tonsofdamage.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -73,7 +73,7 @@ public class ChooseLanguageFragment extends SetupFragment {
                 Observable.create(new Observable.OnSubscribe<Locale>() {
                     @Override
                     public void call(Subscriber<? super Locale> subscriber) {
-                        for (Locale locale : Arrays.asList(Locale.getAvailableLocales())) {
+                        for (Locale locale : Utils.getAvailableLocales()) {
                             subscriber.onNext(locale);
                         }
 
@@ -98,7 +98,6 @@ public class ChooseLanguageFragment extends SetupFragment {
                     @Override
                     public void onNext(Locale locale) {
                         mLanguages.add(locale);
-
                     }
                 });
             }
@@ -141,13 +140,13 @@ public class ChooseLanguageFragment extends SetupFragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.tv.setText(locales.get(position).getDisplayName(Locale.getDefault()));
+            holder.tv.setText(locales.get(position).getDisplayLanguage());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectedLocale = locales.get(holder.getAdapterPosition());
                     revealChooseRegionFab();
-                    tvSelectedLanguage.setText(selectedLocale.getDisplayName(Locale.getDefault()));
+                    tvSelectedLanguage.setText(selectedLocale.getDisplayLanguage());
                 }
             });
         }

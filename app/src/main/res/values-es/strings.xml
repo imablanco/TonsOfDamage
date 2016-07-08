@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="choose_region">Escoge región</string>
     <string name="choose_filter">Escoge filtro</string>
     <string name="summoner">Nombre de invocador…</string>
@@ -91,8 +90,8 @@
     <string name="damage_t_dealt">Verdadero %1$s</string>
     <string name="damage_taken">Daño recibido</string>
     <string name="total_damage_taken">Total recibido %1$s</string>
-    <string name="damage_p_taken">Mágico %1$s</string>
-    <string name="damage_m_taken">Físico %1$s</string>
+    <string name="damage_p_taken">Físico %1$s</string>
+    <string name="damage_m_taken">Mágico %1$s</string>
     <string name="damage_t_taken">Verdadero</string>
     <string name="summarized_stats">Resumen de estadísticas</string>
     <string name="games_lost">Partidas perdidas</string>
@@ -172,5 +171,4 @@
     <string name="analytics_warn">Enviando análisis de la app nos ayuda a saber que secciones son las más utilizadas y nos permite mejorar la aplicación.</string>
     <string name="keep_sending">Seguir enviando</string>
     <string name="do_not_send">No enviar</string>
-
 </resources>
