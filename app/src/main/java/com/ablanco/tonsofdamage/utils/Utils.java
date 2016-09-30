@@ -24,6 +24,8 @@ import com.ablanco.teemo.model.stats.AggregatedStats;
 import com.ablanco.tonsofdamage.R;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -179,6 +181,11 @@ public class Utils {
 
     public static boolean isContextValid(Context context){
         return !((Activity)context).isFinishing();
+    }
+
+
+    public static List<Locale> getAvailableLocales(){
+        return Arrays.asList(Locale.US,  new Locale("es","ES"));
     }
 
     public static String getPlatformForRegion(Context context){

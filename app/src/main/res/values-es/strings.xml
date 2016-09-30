@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="choose_region">Escoge región</string>
     <string name="choose_filter">Escoge filtro</string>
     <string name="summoner">Nombre de invocador…</string>
@@ -94,6 +93,9 @@
     <string name="damage_p_taken">Mágico %1$s</string>
     <string name="damage_m_taken">Físico %1$s</string>
     <string name="damage_t_taken">Verdadero %1$s</string>
+    <string name="damage_p_taken">Físico %1$s</string>
+    <string name="damage_m_taken">Mágico %1$s</string>
+    <string name="damage_t_taken">Verdadero</string>
     <string name="summarized_stats">Resumen de estadísticas</string>
     <string name="games_lost">Partidas perdidas</string>
     <string name="games_won">Partidas ganadas</string>
