@@ -172,5 +172,12 @@
     <string name="analytics_warn">Enviando análisis de la app nos ayuda a saber que secciones son las más utilizadas y nos permite mejorar la aplicación.</string>
     <string name="keep_sending">Seguir enviando</string>
     <string name="do_not_send">No enviar</string>
+    <string name="your_created_rune_pages"></string>
+    <string name="showcase_fav">Pulsa el icono para marcar campeones e invocadores como favoritos y tenerlos siempre al alcance</string>
+    <string name="showcase_step1">¡Bienvenido a TonsOfDamage! Esta es la pagina de inicio, puedes navegar mediante los botones de abajo para ver las diferentes secciones</string>
+    <string name="showcase_step2">Pulsa en el icono de menu para ir a tu perfil</string>
+    <string name="showcase_step3">Pulsa en tu imagen de perfil para acceder a tus datos</string>
+    <string name="rune_creator_msg">¡MUY PRONTO! ¡Estate atento a la llegada del creador de runas, con el que podrás crear tus propias páginas de runas!</string>
+    <string name="rune_creator">Creador de runas</string>
 
 </resources>

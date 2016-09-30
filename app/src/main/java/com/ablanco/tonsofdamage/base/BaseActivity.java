@@ -1,9 +1,13 @@
 package com.ablanco.tonsofdamage.base;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
+import com.ablanco.tonsofdamage.handler.SettingsHandler;
+import com.ablanco.tonsofdamage.utils.Utils;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -12,6 +16,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * TonsOfDamage
  */
 public abstract class BaseActivity extends AppCompatActivity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        Utils.updateLanguage(this, SettingsHandler.getLanguage(this));
+
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -23,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Utils.updateLanguage(this, SettingsHandler.getLanguage(this));
         AnalyticsHandler.getInstance(this).trackScreenNavigation(getClassName(), getNavigationItemId());
     }
 

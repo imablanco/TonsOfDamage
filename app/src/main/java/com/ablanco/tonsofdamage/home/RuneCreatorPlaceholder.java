@@ -2,10 +2,8 @@ package com.ablanco.tonsofdamage.home;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 
 import com.ablanco.tonsofdamage.R;
-import com.ablanco.tonsofdamage.handler.NavigationHandler;
 
 import butterknife.ButterKnife;
 
@@ -21,12 +19,13 @@ public class RuneCreatorPlaceholder extends HomeViewPlaceholder implements HomeP
         inflate(context, R.layout.ph_rune_creator, this);
         ButterKnife.bind(this);
 
-        this.setOnClickListener(new OnClickListener() {
+        // TODO: 1/10/16 coming soon
+        /*this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavigationHandler.navigateTo(context, NavigationHandler.RUNE_CREATOR);
             }
-        });
+        });*/
     }
 
     @Override

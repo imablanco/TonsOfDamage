@@ -12,6 +12,7 @@
         android:layout_height="match_parent" />
 
     <RelativeLayout
+        android:background="@color/transparent"
         android:paddingRight="16dp"
         android:paddingTop="16dp"
         android:paddingLeft="16dp"

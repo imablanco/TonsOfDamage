@@ -63,7 +63,7 @@ public class HomeActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 

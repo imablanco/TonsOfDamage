@@ -57,8 +57,12 @@ public class FeaturedGamesPlaceholder extends HomeViewPlaceholder implements Hom
                     mFeaturedGameInfos.clear();
                     mFeaturedGameInfos.addAll(response.getGameList());
                     mPager.setAdapter(new FeaturedGamesPagerAdapter());
-                    mCircleIndicator.setViewPager(mPager);
-                    mPager.setOffscreenPageLimit(response.getGameList().size() - 1);
+
+                    if(!response.getGameList().isEmpty()){
+                        mCircleIndicator.setViewPager(mPager);
+                        mPager.setOffscreenPageLimit(response.getGameList().size() - 1);
+                    }
+
                 }
 
                 @Override
@@ -92,6 +96,10 @@ public class FeaturedGamesPlaceholder extends HomeViewPlaceholder implements Hom
             return view == object;
         }
 
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
     }
 
     private boolean shouldUpdate(){

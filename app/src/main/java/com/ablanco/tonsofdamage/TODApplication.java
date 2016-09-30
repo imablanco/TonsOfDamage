@@ -6,7 +6,6 @@ import com.ablanco.teemo.Teemo;
 import com.ablanco.tonsofdamage.handler.AnalyticsHandler;
 import com.ablanco.tonsofdamage.handler.SettingsHandler;
 import com.ablanco.tonsofdamage.utils.SecurityUtils;
-import com.ablanco.tonsofdamage.utils.Utils;
 import com.google.android.gms.ads.MobileAds;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -27,8 +26,6 @@ public class TODApplication extends Application {
                 .build()
         );
         MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
-
-        Utils.updateLanguage(this, SettingsHandler.getLanguage(this));
 
         AnalyticsHandler.getInstance(getApplicationContext()).enableSendAnalyticsEvents(SettingsHandler.getSendAnalytics(this));
 
