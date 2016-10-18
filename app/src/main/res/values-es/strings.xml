@@ -9,7 +9,7 @@
     <string name="navigation_drawer_close">Cerrar menú</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_filter">Filtro</string>
-    <string name="first_setup_explain">Bienvenido a LoL Center, necesitamos una configuración inicial antes de que puedas usar la aplicación.</string>
+    <string name="first_setup_explain">Bienvenido a TonsOfDamage, necesitamos una configuración inicial antes de que puedas usar la aplicación.</string>
     <string name="pick_summoner_hint">Introduce tu nombre de invocador y disfruta</string>
     <string name="region">Región</string>
     <string name="summoner_not_found">Invocador no encontrado</string>
@@ -90,9 +90,12 @@
     <string name="damage_t_dealt">Verdadero %1$s</string>
     <string name="damage_taken">Daño recibido</string>
     <string name="total_damage_taken">Total recibido %1$s</string>
+    <string name="damage_p_taken">Mágico %1$s</string>
+    <string name="damage_m_taken">Físico %1$s</string>
+    <string name="damage_t_taken">Verdadero %1$s</string>
     <string name="damage_p_taken">Físico %1$s</string>
     <string name="damage_m_taken">Mágico %1$s</string>
-    <string name="damage_t_taken">Verdadero %1$s</string>
+    <string name="damage_t_taken">Verdadero</string>
     <string name="summarized_stats">Resumen de estadísticas</string>
     <string name="games_lost">Partidas perdidas</string>
     <string name="games_won">Partidas ganadas</string>
@@ -131,8 +134,8 @@
     <string name="at_a_glance">De un vistazo</string>
     <string name="more">Más</string>
     <string name="action_osl">Licencias de código abierto</string>
-    <string name="action_about">Sobre LoL Center</string>
-    <string name="disclaimer_text">LoL Center no recibe la aprobación Riot Games y no refleja los puntos de vista u opiniones de Riot Games o cualquier persona involucrada oficialmente en la producción o la gestión de la League of Legends. League of Legends y Riot Games son marcas comerciales o marcas comerciales registradas de Riot Games, Inc. League of Legends © Riot Games , Inc.</string>
+    <string name="action_about">Sobre TonsOfDamage</string>
+    <string name="disclaimer_text">TonsOfDamage no recibe la aprobación Riot Games y no refleja los puntos de vista u opiniones de Riot Games o cualquier persona involucrada oficialmente en la producción o la gestión de la League of Legends. League of Legends y Riot Games son marcas comerciales o marcas comerciales registradas de Riot Games, Inc. League of Legends © Riot Games , Inc.</string>
     <string name="action_rate">Valorar aplicación</string>
     <string name="week_rotation">Rotación semanal</string>
     <string name="league">Liga</string>
@@ -173,7 +176,7 @@
     <string name="do_not_send">No enviar</string>
     <string name="your_created_rune_pages"></string>
     <string name="showcase_fav">Pulsa el icono para marcar campeones e invocadores como favoritos y tenerlos siempre al alcance</string>
-    <string name="showcase_step1">¡Bienvenido a LoL Center! Esta es la página de inicio, puedes navegar mediante los botones de abajo para ver las diferentes secciones</string>
+    <string name="showcase_step1">¡Bienvenido a TonsOfDamage! Esta es la pagina de inicio, puedes navegar mediante los botones de abajo para ver las diferentes secciones</string>
     <string name="showcase_step2">Pulsa en el icono de menu para ir a tu perfil</string>
     <string name="showcase_step3">Pulsa en tu imagen de perfil para acceder a tus datos</string>
     <string name="rune_creator_msg">¡MUY PRONTO! ¡Estate atento a la llegada del creador de runas, con el que podrás crear tus propias páginas de runas!</string>
